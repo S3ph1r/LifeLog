@@ -1,0 +1,4289 @@
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\AndroidProjectSystem.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidProjectSystem">
+    <option name="providerId" value="com.android.tools.idea.GradleProjectSystem" />
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\AndroidProjectSystem.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\compiler.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="21" />
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\compiler.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\deploymentTargetSelector.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="deploymentTargetSelector">
+    <selectionStates>
+      <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+    </selectionStates>
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\deploymentTargetSelector.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\deviceManager.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DeviceTable">
+    <option name="columnSorters">
+      <list>
+        <ColumnSorterState>
+          <option name="column" value="Name" />
+          <option name="order" value="ASCENDING" />
+        </ColumnSorterState>
+      </list>
+    </option>
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\deviceManager.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\gradle.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\gradle.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\migrations.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectMigrations">
+    <option name="MigrateToGradleLocalJavaHome">
+      <set>
+        <option value="$PROJECT_DIR$" />
+      </set>
+    </option>
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\migrations.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\misc.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\misc.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\runConfigurations.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RunConfigurationProducerService">
+    <option name="ignoredProducers">
+      <set>
+        <option value="com.intellij.execution.junit.AbstractAllInDirectoryConfigurationProducer" />
+        <option value="com.intellij.execution.junit.AllInPackageConfigurationProducer" />
+        <option value="com.intellij.execution.junit.PatternConfigurationProducer" />
+        <option value="com.intellij.execution.junit.TestInClassConfigurationProducer" />
+        <option value="com.intellij.execution.junit.UniqueIdConfigurationProducer" />
+        <option value="com.intellij.execution.junit.testDiscovery.JUnitTestDiscoveryConfigurationProducer" />
+        <option value="org.jetbrains.kotlin.idea.junit.KotlinJUnitRunConfigurationProducer" />
+        <option value="org.jetbrains.kotlin.idea.junit.KotlinPatternConfigurationProducer" />
+      </set>
+    </option>
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\runConfigurations.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\vcs.xml ---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+  </component>
+</project>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\.idea\vcs.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\androidTest\java\com\example\lifelog\ExampleInstrumentedTest.kt ---
+
+package com.example.lifelog
+
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+
+import org.junit.Test
+import org.junit.runner.RunWith
+
+import org.junit.Assert.*
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
+    @Test
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.example.lifelog", appContext.packageName)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\androidTest\java\com\example\lifelog\ExampleInstrumentedTest.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\AndroidManifest.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ... (Tutti i permessi rimangono invariati) ... -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".LifeLogApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LifeLog"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- MODIFICA: Registrata la nuova OnboardingActivity -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <service
+            android:name=".AudioRecorderService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location|microphone" />
+
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:enabled="true"
+            android:directBootAware="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\AndroidManifest.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ApiService.kt ---
+
+package com.example.lifelog
+
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import retrofit2.Response
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+
+interface ApiService {
+
+    @Multipart
+    @POST("/upload") // L'endpoint sul nostro server Python
+    suspend fun uploadFile(
+        @Part file: MultipartBody.Part
+    ): Response<ResponseBody> // La risposta del server (può essere semplice testo o JSON)
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ApiService.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\AudioRecorderManager.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/audio/AudioRecorderManager.kt
+
+package com.example.lifelog.audio
+
+import android.content.Context
+import android.location.Location
+import android.media.MediaRecorder
+import android.os.Build
+import android.util.Log
+import com.example.lifelog.RecordingState
+import com.example.lifelog.data.SettingsManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.concurrent.TimeUnit
+
+/**
+ * Gestisce il ciclo di vita del MediaRecorder per la registrazione audio,
+ * inclusa la segmentazione dei file e la gestione delle posizioni.
+ * Notifica un listener quando un segmento è pronto per il post-processing.
+ */
+class AudioRecorderManager(
+    private val context: Context,
+    private val scope: CoroutineScope, // Lo scope di coroutine del servizio
+    private val onSegmentReady: (File) -> Unit, // Callback quando un segmento è pronto
+    private val onRecordingStateChange: (RecordingState) -> Unit // Callback per lo stato
+) {
+    private val TAG = "AudioRecorderManager"
+
+    private var mediaRecorder: MediaRecorder? = null
+    private var recordingJob: Job? = null
+    private var currentRecordingFile: File? = null
+
+    // Le informazioni di localizzazione verranno passate esternamente da AudioRecorderService
+    var lastKnownLocation: Location? = null
+
+    // Stato di registrazione gestito internamente
+    private var _recordingState: RecordingState = RecordingState.IDLE
+        set(value) {
+            if (field != value) {
+                field = value
+                onRecordingStateChange(value) // Notifica il listener esterno
+            }
+        }
+
+    /**
+     * Avvia il ciclo di registrazione audio, creando segmenti della durata predefinita.
+     */
+    fun startRecordingCycle() {
+        if (recordingJob?.isActive == true) {
+            Log.d(TAG, "Ciclo di registrazione già attivo.")
+            return
+        }
+
+        Log.d(TAG, "Avvio ciclo di registrazione...")
+        _recordingState = RecordingState.RECORDING
+
+        // Lancia una coroutine per gestire il ciclo di registrazione segmentato.
+        recordingJob = scope.launch {
+            while (isActive) {
+                val segmentDurationMinutes = 5L // Durata fissa: 5 minuti
+                val segmentDurationMs = TimeUnit.MINUTES.toMillis(segmentDurationMinutes)
+
+                currentRecordingFile = startNewSegment()
+                if (currentRecordingFile == null) {
+                    Log.e(TAG, "Creazione segmento fallita, ciclo interrotto.")
+                    _recordingState = RecordingState.IDLE // Aggiorna stato
+                    break // Esci dal ciclo se non riusciamo a creare il file
+                }
+
+                delay(segmentDurationMs) // Attende la durata del segmento
+
+                if (isActive) { // Controlla se la coroutine è ancora attiva (non cancellata)
+                    currentRecordingFile?.let { file ->
+                        stopAndFinalizeRecording(file)?.let { finalizedFile ->
+                            onSegmentReady(finalizedFile) // Chiamata al callback!
+                        }
+                    }
+                }
+            }
+            _recordingState = RecordingState.IDLE // Reset stato al termine del ciclo
+            Log.d(TAG, "Ciclo di registrazione terminato.")
+        }
+    }
+
+    /**
+     * Ferma il ciclo di registrazione. Può essere una pausa o uno stop definitivo.
+     * @param isPaused true se il servizio è in pausa, false se è uno stop definitivo.
+     */
+    fun stopRecordingCycle(isPaused: Boolean) {
+        recordingJob?.cancel() // Cancella la coroutine del ciclo
+        recordingJob = null
+        releaseRecorder() // Rilascia il MediaRecorder
+        _recordingState = if (isPaused) RecordingState.PAUSED else RecordingState.IDLE
+        Log.d(TAG, "Ciclo di registrazione fermato. Stato: $_recordingState")
+    }
+
+    /**
+     * Avvia una nuova registrazione audio per un singolo segmento.
+     * Salva il file nella directory protetta del dispositivo (DE storage).
+     * @return Il File creato, o null se fallisce.
+     */
+    private fun startNewSegment(): File? {
+        // Usiamo il contesto DE per assicurarci che la cartella sia sempre scrivibile,
+        // anche in modalità Direct Boot (dispositivo bloccato).
+        val contextDE = context.createDeviceProtectedStorageContext()
+        val outputDir = File(contextDE.filesDir, "recordings_raw")
+        if (!outputDir.exists()) outputDir.mkdirs()
+
+        val fileName = getOutputFileName() + ".m4a"
+        val outputFile = File(outputDir, fileName)
+
+        // Inizializza il MediaRecorder.
+        mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            MediaRecorder(context) // Costruttore moderno
+        } else {
+            @Suppress("DEPRECATION") MediaRecorder() // Costruttore deprecato
+        }.apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setAudioSamplingRate(44100)
+            setAudioEncodingBitRate(128000)
+            setOutputFile(outputFile.absolutePath)
+            try {
+                prepare() // Prepara il recorder
+                start()   // Avvia la registrazione
+                Log.d(TAG, "Nuovo segmento in registrazione (storage DE): ${outputFile.absolutePath}")
+                return outputFile
+            } catch (e: Exception) {
+                Log.e(TAG, "MediaRecorder.prepare() fallito", e)
+                // Se la preparazione o l'avvio falliscono, rilascia subito il recorder.
+                releaseRecorder()
+                return null
+            }
+        }
+    }
+
+    /**
+     * Ferma la registrazione corrente e finalizza il file.
+     * @param fileToProcess Il file che è stato registrato.
+     * @return Il File finalizzato, o null se la finalizzazione fallisce o il file è invalido.
+     */
+    private fun stopAndFinalizeRecording(fileToProcess: File): File? {
+        try {
+            mediaRecorder?.stop() // Ferma la registrazione
+        } catch (e: Exception) {
+            Log.w(TAG, "MediaRecorder.stop() fallito, probabile segmento troppo breve o invalido.", e)
+            fileToProcess.delete() // Elimina il file corrotto
+            return null
+        } finally {
+            releaseRecorder() // Rilascia le risorse del recorder
+        }
+        // Piccola attesa per assicurarsi che il file sia stato completamente scritto su disco.
+        runBlocking { delay(250) }
+        // Verifica che il file esista e non sia vuoto (un file audio non può essere troppo piccolo).
+        return if (fileToProcess.exists() && fileToProcess.length() > 1024) {
+            fileToProcess // Restituisce il file se valido
+        } else {
+            Log.w(TAG, "File registrato è troppo piccolo o non esiste. Eliminato: ${fileToProcess.name}")
+            fileToProcess.delete() // Elimina il file invalido
+            null
+        }
+    }
+
+    /**
+     * Rilascia le risorse del MediaRecorder.
+     */
+    private fun releaseRecorder() {
+        mediaRecorder?.release()
+        mediaRecorder = null
+    }
+
+    /**
+     * Genera un nome file standardizzato con timestamp e coordinate GPS.
+     */
+    private fun getOutputFileName(): String {
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        // Formatta lat/lon a 4 cifre decimali, o "null" se non disponibili
+        val lat = lastKnownLocation?.latitude?.let { "%.4f".format(Locale.US, it) } ?: "null"
+        val lon = lastKnownLocation?.longitude?.let { "%.4f".format(Locale.US, it) } ?: "null"
+        return "segment_${timestamp}_lat${lat}_lon${lon}"
+    }
+
+    // Metodo pubblico per ottenere lo stato corrente (per AudioRecorderService)
+    fun getRecordingState(): RecordingState = _recordingState
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\AudioRecorderManager.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\AudioRecorderService.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/AudioRecorderService.kt
+
+package com.example.lifelog
+
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo
+import android.location.Location
+import android.media.MediaRecorder
+import android.os.Binder
+import android.os.Build
+import android.os.IBinder
+import android.os.Looper
+import android.os.UserManager
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.lifelog.audio.AudioRecorderManager
+import com.example.lifelog.audio.AudioSegmentProcessor
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileEntity
+import com.example.lifelog.data.db.AudioFileStatus
+import com.example.lifelog.notification.AppNotificationManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
+
+class AudioRecorderService : Service() {
+
+    private var isUserUnlocked = false
+
+    inner class AudioServiceBinder : Binder() {
+        fun getService(): AudioRecorderService = this@AudioRecorderService
+    }
+
+    private val binder = AudioServiceBinder()
+    private val _recordingState = MutableLiveData(RecordingState.IDLE)
+    val recordingState: LiveData<RecordingState> = _recordingState
+
+    // Componenti rifattorizzati
+    private lateinit var audioRecorderManager: AudioRecorderManager
+    private lateinit var audioSegmentProcessor: AudioSegmentProcessor
+    private lateinit var appNotificationManager: AppNotificationManager
+
+    // Componenti di sistema
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
+    private var lastKnownLocation: Location? = null
+    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var locationUpdateJob: Job? = null
+
+    // Receiver per eventi di sblocco utente
+    private val userUnlockReceiver = object : BroadcastReceiver() {
+        // CORREZIONE: onOnReceive -> onReceive
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == Intent.ACTION_USER_UNLOCKED) {
+                Log.d(TAG, "Utente ha sbloccato il dispositivo. Aggiorno stato e avvio worker.")
+                isUserUnlocked = true
+                val audioSegmentProcessorWithUnlockedContext = AudioSegmentProcessor(context, serviceScope)
+                audioSegmentProcessor = audioSegmentProcessorWithUnlockedContext
+                triggerPendingEncryptionWorker()
+            }
+        }
+    }
+
+    // Costanti del Servizio
+    companion object {
+        const val ACTION_START_RECORDING = "com.example.lifelog.action.START_RECORDING"
+        const val ACTION_PAUSE_RECORDING = "com.example.lifelog.action.PAUSE_RECORDING"
+        const val ACTION_STOP_RECORDING = "com.example.lifelog.action.STOP_RECORDING"
+        const val ACTION_STOP_SERVICE = "com.example.lifelog.action.STOP_SERVICE"
+        private const val NOTIFICATION_CHANNEL_ID = "AudioRecorderChannel"
+        private const val NOTIFICATION_ID = 1
+        private const val TAG = "AudioRecorderService"
+    }
+
+    // Ciclo di Vita del Servizio
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(TAG, "Servizio creato.")
+
+        SettingsManager.initialize(applicationContext)
+
+        val userManager = getSystemService(Context.USER_SERVICE) as UserManager
+        isUserUnlocked = userManager.isUserUnlocked
+        Log.d(TAG, "Servizio creato. Stato utente sbloccato: $isUserUnlocked")
+
+        val contextForComponents = if (isUserUnlocked) this else createDeviceProtectedStorageContext()
+
+        audioSegmentProcessor = AudioSegmentProcessor(contextForComponents, serviceScope)
+        audioRecorderManager = AudioRecorderManager(
+            contextForComponents,
+            serviceScope,
+            onSegmentReady = { rawFile ->
+                audioSegmentProcessor.processAudioSegment(rawFile)
+            },
+            onRecordingStateChange = { newState ->
+                _recordingState.postValue(newState)
+            }
+        )
+        appNotificationManager = AppNotificationManager(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        setupLocationUpdates()
+
+        registerReceiver(userUnlockReceiver, IntentFilter(Intent.ACTION_USER_UNLOCKED))
+
+        if (!SettingsManager.isOnboardingComplete) {
+            Log.d(TAG, "Onboarding non completato. Non avvio registrazione automatica.")
+            _recordingState.postValue(RecordingState.IDLE)
+            return
+        }
+
+        if (isUserUnlocked) {
+            triggerPendingEncryptionWorker()
+        }
+
+        audioRecorderManager.startRecordingCycle()
+        startForegroundServiceNotification()
+    }
+
+    override fun onBind(intent: Intent): IBinder = binder
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            ACTION_START_RECORDING -> {
+                if (!SettingsManager.isOnboardingComplete) {
+                    Log.w(TAG, "Tentato avvio registrazione con onboarding incompleto. Ignorato.")
+                    return START_STICKY
+                }
+                if (audioRecorderManager.getRecordingState() == RecordingState.IDLE ||
+                    audioRecorderManager.getRecordingState() == RecordingState.PAUSED) {
+                    audioRecorderManager.startRecordingCycle()
+                    startForegroundServiceNotification()
+                }
+            }
+            ACTION_PAUSE_RECORDING -> {
+                audioRecorderManager.stopRecordingCycle(isPaused = true)
+                stopForeground(false)
+            }
+            ACTION_STOP_SERVICE -> {
+                Log.d(TAG, "Ricevuta azione di STOP_SERVICE. Termino il servizio.")
+                audioRecorderManager.stopRecordingCycle(isPaused = false)
+                stopForeground(true)
+                stopLocationUpdates()
+                stopSelf()
+            }
+            ACTION_STOP_RECORDING -> {
+                audioRecorderManager.stopRecordingCycle(isPaused = false)
+                stopForeground(true)
+                stopLocationUpdates()
+                stopSelf()
+            }
+        }
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(userUnlockReceiver)
+        audioRecorderManager.stopRecordingCycle(isPaused = false)
+        stopLocationUpdates()
+        serviceScope.cancel()
+        Log.i(TAG, "onDestroy chiamato. Pulizia finale del servizio.")
+    }
+
+    // Funzioni di Sistema e Utilita'
+    private fun setupLocationUpdates() {
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                lastKnownLocation = locationResult.lastLocation
+                audioRecorderManager.lastKnownLocation = lastKnownLocation
+            }
+        }
+        locationUpdateJob = serviceScope.launch {
+            if (ActivityCompat.checkSelfPermission(this@AudioRecorderService, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.e(TAG, "Permesso di posizione negato, impossibile avviare gli aggiornamenti.")
+                return@launch
+            }
+            val locationRequest = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, TimeUnit.MINUTES.toMillis(1))
+                .setMinUpdateIntervalMillis(TimeUnit.SECONDS.toMillis(30))
+                .build()
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            Log.d(TAG, "Richiesta di aggiornamenti posizione avviata.")
+        }
+    }
+
+    private fun stopLocationUpdates() {
+        try {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+            locationUpdateJob?.cancel()
+            Log.d(TAG, "Aggiornamenti posizione fermati.")
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore durante la rimozione degli aggiornamenti di posizione.", e)
+        }
+    }
+
+    private fun startForegroundServiceNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(
+                appNotificationManager.getNotificationId(),
+                appNotificationManager.createForegroundNotification(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+            )
+        } else {
+            startForeground(
+                appNotificationManager.getNotificationId(),
+                appNotificationManager.createForegroundNotification()
+            )
+        }
+    }
+
+    private fun triggerPendingEncryptionWorker() {
+        val workRequest = OneTimeWorkRequestBuilder<PendingEncryptionWorker>().build()
+        WorkManager.getInstance(applicationContext).enqueue(workRequest)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\AudioRecorderService.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\BootCompletedReceiver.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/BootCompletedReceiver.kt
+package com.example.lifelog
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import androidx.core.content.ContextCompat
+import com.example.lifelog.data.SettingsManager // MODIFICA: Import di SettingsManager
+
+class BootCompletedReceiver : BroadcastReceiver() {
+
+    private val TAG = "BootCompletedReceiver"
+
+    override fun onReceive(context: Context, intent: Intent) {
+        val action = intent.action
+        if (action != Intent.ACTION_LOCKED_BOOT_COMPLETED && action != Intent.ACTION_BOOT_COMPLETED) {
+            return
+        }
+
+        // MODIFICA CHIAVE: Controlla se l'onboarding è completo
+        // Chiamiamo initialize() per essere sicuri che SettingsManager sia pronto
+        SettingsManager.initialize(context.applicationContext)
+        if (!SettingsManager.isOnboardingComplete) {
+            Log.d(TAG, "Onboarding non completato. Non avvio AudioRecorderService al boot.")
+            return // Non avviare il servizio
+        }
+
+        Log.d(TAG, "Evento di boot ricevuto: $action. Si tenta di avviare AudioRecorderService.")
+
+        val serviceIntent = Intent(context, AudioRecorderService::class.java).apply {
+            this.action = AudioRecorderService.ACTION_START_RECORDING
+        }
+        ContextCompat.startForegroundService(context, serviceIntent)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\BootCompletedReceiver.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\CryptoManager.kt ---
+
+package com.example.lifelog
+
+import android.util.Log
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.security.SecureRandom
+import javax.crypto.Cipher
+import javax.crypto.spec.GCMParameterSpec
+import javax.crypto.spec.SecretKeySpec
+// HKDF non è nativo in Java/Android standard, quindi useremo una libreria o un'implementazione semplice.
+// Per semplicità qui, useremo PBKDF2 che è molto simile e disponibile,
+// ma assicuriamoci che il server Python sia modificato per usare PBKDF2.
+// Visto che il server usa HKDF, la via più pulita è aggiungere una dipendenza.
+
+// Per ora, ti do la versione CON PBKDF2 che è la più facile da implementare su Android
+// senza nuove dipendenze, e poi ti dirò come modificare UNA RIGA in Python per allinearlo.
+
+class CryptoManager {
+
+    companion object {
+        private const val TAG = "CryptoManager"
+        // --- ALLINEATO CON AES/GCM ---
+        private const val ALGORITHM = "AES"
+        private const val TRANSFORMATION = "AES/GCM/NoPadding" // Standard per GCM
+        private const val KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256"
+
+        // GCM usa un nonce/IV di 12 bytes.
+        private const val IV_SIZE = 12
+        private const val SALT_SIZE = 16 // Un buon valore per il salt
+        private const val ITERATION_COUNT = 65536
+        private const val KEY_SIZE = 256
+        private const val AUTH_TAG_LENGTH = 128 // in bits
+    }
+
+    /**
+     * Cripta un file usando AES/GCM con una chiave derivata tramite PBKDF2.
+     * La struttura del file sarà: [SALT (16 bytes)] + [IV/NONCE (12 bytes)] + [DATI CRIPTATI]
+     */
+    fun encryptFile(password: String, fileToEncrypt: File): File? {
+        if (!fileToEncrypt.exists() || password.isBlank()) {
+            Log.e(TAG, "File non trovato o password vuota.")
+            return null
+        }
+
+        try {
+            // 1. Genera un SALT casuale.
+            val salt = ByteArray(SALT_SIZE)
+            SecureRandom().nextBytes(salt)
+
+            // 2. Deriva una chiave segreta dalla password e dal salt usando PBKDF2.
+            val factory = javax.crypto.SecretKeyFactory.getInstance(KEY_DERIVATION_ALGORITHM)
+            val spec = javax.crypto.spec.PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE)
+            val secretKey = SecretKeySpec(factory.generateSecret(spec).encoded, ALGORITHM)
+
+            // 3. Genera un IV/NONCE casuale.
+            val iv = ByteArray(IV_SIZE)
+            SecureRandom().nextBytes(iv)
+
+            // 4. Inizializza il Cipher per la criptazione in modalità GCM
+            val cipher = Cipher.getInstance(TRANSFORMATION)
+            val gcmSpec = GCMParameterSpec(AUTH_TAG_LENGTH, iv)
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec)
+
+            val encryptedFile = File(fileToEncrypt.parent, "${fileToEncrypt.name}.enc")
+
+            FileOutputStream(encryptedFile).use { fos ->
+                // 5. Scrivi il SALT e l'IV all'inizio del file di output.
+                fos.write(salt)
+                fos.write(iv)
+
+                // 6. Cripta il file originale.
+                FileInputStream(fileToEncrypt).use { fis ->
+                    val buffer = ByteArray(8192)
+                    var bytesRead: Int
+                    while (fis.read(buffer).also { bytesRead = it } != -1) {
+                        val output = cipher.update(buffer, 0, bytesRead)
+                        if (output != null) {
+                            fos.write(output)
+                        }
+                    }
+                }
+                // doFinal() in GCM mode aggiunge l'Authentication Tag alla fine
+                val output = cipher.doFinal()
+                if (output != null) {
+                    fos.write(output)
+                }
+            }
+            Log.d(TAG, "File criptato con successo (AES/GCM): ${encryptedFile.name}")
+            return encryptedFile
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore durante la criptazione (AES/GCM)", e)
+            return null
+        }
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\CryptoManager.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\FileListAdapter.kt ---
+
+package com.example.lifelog
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+
+// L'adapter ora lavora con una lista di oggetti RecordingFile, non più semplici String.
+class FileListAdapter : ListAdapter<RecordingFile, FileListAdapter.FileViewHolder>(FileDiffCallback()) {
+
+    /**
+     * ViewHolder: Mantiene i riferimenti alle View di un singolo elemento della lista.
+     * In questo modo, evitiamo di chiamare findViewById() ripetutamente.
+     */
+    class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // Riferimenti ai due TextView nel nostro layout list_item_file.xml
+        private val fileNameTextView: TextView = itemView.findViewById(R.id.textViewFileName)
+        private val fileSizeTextView: TextView = itemView.findViewById(R.id.textViewFileSize)
+
+        /**
+         * Collega i dati di un oggetto RecordingFile alle View corrispondenti.
+         */
+        fun bind(file: RecordingFile) {
+            fileNameTextView.text = file.name
+            // Formattiamo la stringa per mostrare la dimensione e l'unità di misura.
+            fileSizeTextView.text = "${file.sizeInKb} KB"
+        }
+    }
+
+    /**
+     * Chiamato dalla RecyclerView quando ha bisogno di creare un nuovo ViewHolder
+     * (cioè, una nuova riga per la lista).
+     */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item_file, parent, false)
+        return FileViewHolder(view)
+    }
+
+    /**
+     * Chiamato dalla RecyclerView per visualizzare i dati nella posizione specificata.
+     * Prende l'oggetto corretto dalla lista e lo passa al metodo bind del ViewHolder.
+     */
+    override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+}
+
+/**
+ * DiffUtil: Calcola le differenze tra la vecchia e la nuova lista per animare
+ * solo gli elementi che sono cambiati. Questo rende la RecyclerView molto efficiente.
+ */
+class FileDiffCallback : DiffUtil.ItemCallback<RecordingFile>() {
+    // Controlla se due item rappresentano lo stesso oggetto (es. hanno lo stesso ID).
+    // Il nome del file è un buon ID univoco nel nostro caso.
+    override fun areItemsTheSame(oldItem: RecordingFile, newItem: RecordingFile): Boolean {
+        return oldItem.name == newItem.name
+    }
+
+    // Controlla se i dati di un item sono cambiati.
+    // Poiché RecordingFile è una data class, il confronto `==` controlla
+    // automaticamente tutti i campi (nome e dimensione).
+    override fun areContentsTheSame(oldItem: RecordingFile, newItem: RecordingFile): Boolean {
+        return oldItem == newItem
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\FileListAdapter.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\LifeLogApplication.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/LifeLogApplication.kt
+
+package com.example.lifelog
+
+import android.app.Application
+import com.example.lifelog.data.SettingsManager
+
+/**
+ * Classe Application personalizzata per LifeLog.
+ *
+ * Il suo metodo onCreate() viene eseguito una sola volta quando il processo
+ * dell'applicazione viene creato. È il posto ideale per inizializzare
+ * componenti globali e singleton che devono essere disponibili per tutta
+ * la durata dell'app.
+ */
+class LifeLogApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        // Inizializziamo il nostro SettingsManager.
+        // Da questo momento in poi, sarà possibile accedere alle preferenze
+        // criptate da qualsiasi punto dell'applicazione.
+        SettingsManager.initialize(this)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\LifeLogApplication.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\MainActivity.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/MainActivity.kt
+
+package com.example.lifelog
+
+import android.Manifest
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.IBinder
+import android.os.PowerManager
+import android.provider.Settings
+import android.util.Log
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.ui.main.MainViewModel
+import com.google.android.material.button.MaterialButton
+import java.util.concurrent.TimeUnit
+
+
+class MainActivity : AppCompatActivity() {
+
+    private val PERMISSIONS_REQUEST_CODE = 101
+    private val TAG = "MainActivity"
+
+    private val viewModel: MainViewModel by viewModels()
+
+    private lateinit var toolbar: Toolbar
+    private lateinit var buttonToggleRec: MaterialButton
+    private lateinit var buttonForceUpload: Button
+    private lateinit var recyclerViewFiles: RecyclerView
+    private lateinit var statusText: TextView
+    private lateinit var fileListAdapter: FileListAdapter
+
+    private var audioService: AudioRecorderService? = null
+    private var isServiceBound = false
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.d(TAG, "ServiceConnection: Connesso al servizio.")
+            val binder = service as AudioRecorderService.AudioServiceBinder
+            audioService = binder.getService()
+            isServiceBound = true
+            observeServiceState()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d(TAG, "ServiceConnection: Disconnesso dal servizio.")
+            isServiceBound = false
+            audioService = null
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // --- MODIFICA CHIAVE: Logica del "Guardiano" ---
+        if (!SettingsManager.isOnboardingComplete) {
+            // Se l'onboarding non è completo, avvia l'OnboardingActivity
+            // e interrompi l'esecuzione di onCreate per MainActivity.
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish() // Chiude MainActivity per evitare che rimanga nello stack
+            return   // Esce dal metodo onCreate
+        }
+        // --- FINE MODIFICA ---
+
+        // Questo codice verrà eseguito solo se l'onboarding è già stato completato.
+        setContentView(R.layout.activity_main)
+
+        setupViews()
+        setupButtons()
+        observeViewModel()
+        schedulePeriodicUploader()
+
+        if (savedInstanceState == null) {
+            if (!isIgnoringBatteryOptimizations()) {
+                requestIgnoreBatteryOptimizations()
+            }
+        }
+    }
+
+    // ... (tutto il resto del codice rimane invariato)
+
+    override fun onStart() {
+        super.onStart()
+        // Controlliamo che l'onboarding sia completo prima di fare il bind al servizio
+        if (SettingsManager.isOnboardingComplete) {
+            Intent(this, AudioRecorderService::class.java).also { intent ->
+                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isServiceBound) {
+            unbindService(serviceConnection)
+            isServiceBound = false
+        }
+    }
+
+    private fun setupViews() {
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        statusText = findViewById(R.id.textViewStatus)
+        buttonToggleRec = findViewById(R.id.buttonToggleRec)
+        val buttonSettings: Button = findViewById(R.id.buttonSettings)
+        buttonForceUpload = findViewById(R.id.buttonForceUpload)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            toolbar.updatePadding(top = insets.top)
+            view.findViewById<RecyclerView>(R.id.recyclerViewFiles).updatePadding(bottom = insets.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+        fileListAdapter = FileListAdapter()
+        recyclerViewFiles = findViewById(R.id.recyclerViewFiles)
+        recyclerViewFiles.adapter = fileListAdapter
+    }
+
+    private fun setupButtons() {
+        buttonToggleRec.setOnClickListener {
+            val currentState = audioService?.recordingState?.value
+            when (currentState) {
+                RecordingState.IDLE, RecordingState.PAUSED, null -> checkAndRequestPermissions()
+                RecordingState.RECORDING -> {
+                    startService(Intent(this, AudioRecorderService::class.java).apply {
+                        action = AudioRecorderService.ACTION_PAUSE_RECORDING
+                    })
+                }
+            }
+        }
+        findViewById<Button>(R.id.buttonSettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+        buttonForceUpload.setOnClickListener {
+            triggerUploadWorker()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.pendingFiles.observe(this) { fileList ->
+            val displayList = fileList.map { entity ->
+                RecordingFile(name = entity.fileName, sizeInKb = entity.sizeInBytes / 1024)
+            }
+            fileListAdapter.submitList(displayList)
+            buttonForceUpload.isEnabled = fileList.isNotEmpty()
+        }
+    }
+
+    private fun observeServiceState() {
+        audioService?.recordingState?.observe(this) { state ->
+            updateRecordingUI(state)
+        }
+    }
+
+    private fun updateRecordingUI(state: RecordingState?) {
+        when (state) {
+            RecordingState.IDLE -> {
+                statusText.text = "Stato: In attesa"
+                buttonToggleRec.text = "Avvio Registrazione"
+                buttonToggleRec.setIconResource(android.R.drawable.ic_media_play)
+                buttonToggleRec.isEnabled = true
+            }
+            RecordingState.RECORDING -> {
+                statusText.text = "Stato: Registrazione in corso..."
+                buttonToggleRec.text = "Pausa Registrazione"
+                buttonToggleRec.setIconResource(android.R.drawable.ic_media_pause)
+                buttonToggleRec.isEnabled = true
+            }
+            RecordingState.PAUSED -> {
+                statusText.text = "Stato: Registrazione in pausa"
+                buttonToggleRec.text = "Riprendi Registrazione"
+                buttonToggleRec.setIconResource(android.R.drawable.ic_media_play)
+                buttonToggleRec.isEnabled = true
+            }
+            null -> {
+                statusText.text = "Stato: Inizializzazione..."
+                buttonToggleRec.isEnabled = false
+            }
+        }
+    }
+
+    private fun isIgnoringBatteryOptimizations(): Boolean {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isIgnoringBatteryOptimizations(packageName)
+    }
+
+    private fun requestIgnoreBatteryOptimizations() {
+        AlertDialog.Builder(this)
+            .setTitle("Ottimizzazione Batteria Richiesta")
+            .setMessage("Per funzionare correttamente in background senza interruzioni, LifeLog " +
+                    "ha bisogno di essere esclusa dalle ottimizzazioni della batteria.\n\n" +
+                    "Nella schermata successiva, potrebbe essere necessario cercare LifeLog " +
+                    "e selezionare l'opzione 'Non ottimizzare' o 'Nessuna restrizione'.")
+            .setPositiveButton("Vai alle Impostazioni") { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Impossibile aprire la schermata ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS.", e)
+                    try {
+                        val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                        startActivity(intent)
+                    } catch (e2: Exception) {
+                        Log.e(TAG, "Impossibile aprire anche la schermata di fallback.", e2)
+                        Toast.makeText(this, "Impossibile aprire automaticamente le impostazioni della batteria.", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+            .setNegativeButton("Annulla", null)
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun checkAndRequestPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), PERMISSIONS_REQUEST_CODE)
+        } else {
+            checkBackgroundLocationPermission()
+        }
+    }
+
+    private fun checkBackgroundLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog.Builder(this)
+                    .setTitle("Permesso Posizione in Background")
+                    .setMessage("LifeLog necessita di accedere alla posizione in background per associare i ricordi audio al luogo di registrazione. Seleziona 'Consenti sempre' nella schermata successiva.")
+                    .setPositiveButton("Vai alle Impostazioni") { _, _ ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null))
+                        startActivity(intent)
+                    }
+                    .setNegativeButton("Annulla", null).show()
+            } else {
+                startRecordingService()
+            }
+        } else {
+            startRecordingService()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                checkBackgroundLocationPermission()
+            } else {
+                Toast.makeText(this, "Permessi necessari negati.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun startRecordingService() {
+        val serviceIntent = Intent(this, AudioRecorderService::class.java).apply { action = AudioRecorderService.ACTION_START_RECORDING }
+        ContextCompat.startForegroundService(this, serviceIntent)
+    }
+
+    private fun schedulePeriodicUploader() {
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        val uploadWorkRequest = PeriodicWorkRequestBuilder<UploaderWorker>(1, TimeUnit.HOURS).setConstraints(constraints).build()
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("PeriodicLifeLogUploader", ExistingPeriodicWorkPolicy.KEEP, uploadWorkRequest)
+    }
+
+    private fun triggerUploadWorker() {
+        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploaderWorker>()
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()).build()
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueue(uploadWorkRequest)
+        Toast.makeText(this, "Avvio upload forzato...", Toast.LENGTH_SHORT).show()
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\MainActivity.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\NotificationManager.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/notification/AppNotificationManager.kt
+
+package com.example.lifelog.notification
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import com.example.lifelog.MainActivity
+import com.example.lifelog.R
+import com.example.lifelog.AudioRecorderService
+
+/**
+ * Gestisce la creazione e l'aggiornamento della notifica persistente per AudioRecorderService.
+ * Incapsula tutta la logica relativa ai canali di notifica e alle azioni dei pulsanti.
+ */
+class AppNotificationManager(private val context: Context) {
+
+    private val NOTIFICATION_CHANNEL_ID = "AudioRecorderChannel"
+    private val NOTIFICATION_CHANNEL_NAME = "Canale Servizio Registrazione"
+    private val NOTIFICATION_ID = 1
+
+    init {
+        createNotificationChannel()
+    }
+
+    /**
+     * Crea e restituisce l'oggetto Notification per il servizio in primo piano.
+     * @param isRecording true se il servizio è in registrazione attiva, false altrimenti.
+     */
+    fun createForegroundNotification(): Notification {
+        // Intent per aprire la MainActivity quando l'utente clicca sulla notifica
+        val notificationIntent = Intent(context, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0, notificationIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        // Intent per l'azione di STOP del servizio
+        val stopServiceIntent = Intent(context, AudioRecorderService::class.java).apply {
+            action = AudioRecorderService.ACTION_STOP_SERVICE
+        }
+        val stopServicePendingIntent = PendingIntent.getService(
+            context, 1, stopServiceIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        // L'icona del microfono
+        val icon = android.R.drawable.ic_btn_speak_now // O R.drawable.ic_mic se preferisci
+
+        return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+            .setContentTitle("LifeLog in esecuzione")
+            .setContentText("Registrazione e geolocalizzazione attive...")
+            .setSmallIcon(icon)
+            .setContentIntent(pendingIntent)
+            .setOngoing(true) // Rende la notifica persistente
+            .addAction(0, "Stop", stopServicePendingIntent) // Aggiunge il pulsante Stop
+            .build()
+    }
+
+    /**
+     * Crea il canale di notifica per Android 8.0 (Oreo) e superiori.
+     * È necessario per visualizzare le notifiche.
+     */
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val serviceChannel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_LOW // L'importanza bassa minimizza l'interruzione
+            ).apply {
+                description = "Notifica persistente per il servizio di registrazione LifeLog"
+            }
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(serviceChannel)
+        }
+    }
+
+    /**
+     * Restituisce l'ID della notifica.
+     */
+    fun getNotificationId(): Int = NOTIFICATION_ID
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\NotificationManager.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\OnboardingActivity.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/OnboardingActivity.kt
+
+package com.example.lifelog
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.ui.onboarding.BackendSetupFragment
+import com.example.lifelog.ui.onboarding.OnboardingFragmentCallback
+import com.example.lifelog.ui.onboarding.OnboardingCompleteFragment
+import com.example.lifelog.ui.onboarding.PermissionsFragment
+import com.example.lifelog.ui.onboarding.UserInfoFragment
+import com.example.lifelog.ui.onboarding.VoiceprintFragment
+
+/**
+ * Activity che ospita il flusso di onboarding.
+ * Agisce come un contenitore e gestore per i vari fragment che compongono
+ * i passaggi della configurazione iniziale.
+ */
+class OnboardingActivity : AppCompatActivity(), OnboardingFragmentCallback {
+
+    private lateinit var onboardingNextButton: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_onboarding)
+
+        onboardingNextButton = findViewById(R.id.onboarding_next_button)
+        onboardingNextButton.setOnClickListener {
+            // Quando il pulsante "Prosegui" è cliccato, chiediamo al fragment corrente
+            // se la sua fase è completa e se possiamo avanzare.
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.onboarding_fragment_container)
+            val canAdvance = when (currentFragment) {
+                is UserInfoFragment -> currentFragment.handleNextButtonClick()
+                is PermissionsFragment -> currentFragment.handleNextButtonClick()
+                is BackendSetupFragment -> currentFragment.handleNextButtonClick()
+                is VoiceprintFragment -> currentFragment.handleNextButtonClick()
+                is OnboardingCompleteFragment -> currentFragment.handleNextButtonClick()
+                else -> true // Caso di default o errore, permette di avanzare
+            }
+
+            if (canAdvance) {
+                navigateToNextStep()
+            }
+        }
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.onboarding_fragment_container, UserInfoFragment())
+                .commit()
+        }
+    }
+
+    /**
+     * Implementazione del callback OnboardingFragmentCallback.
+     * I fragment chiameranno questo metodo per aggiornare lo stato del pulsante "Prosegui".
+     */
+    override fun setNextButtonEnabled(isEnabled: Boolean) {
+        onboardingNextButton.isEnabled = isEnabled
+    }
+
+    /**
+     * Metodo chiamato quando il pulsante "Prosegui" globale viene cliccato.
+     * Determina il prossimo fragment da mostrare in base a quello corrente.
+     * MODIFICA: Reso pubblico per essere accessibile dai fragment.
+     */
+    fun navigateToNextStep() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.onboarding_fragment_container)
+
+        when (currentFragment) {
+            is UserInfoFragment -> {
+                replaceFragment(PermissionsFragment())
+            }
+            is PermissionsFragment -> {
+                replaceFragment(BackendSetupFragment())
+            }
+            is BackendSetupFragment -> {
+                replaceFragment(VoiceprintFragment())
+            }
+            is VoiceprintFragment -> {
+                replaceFragment(OnboardingCompleteFragment())
+            }
+            is OnboardingCompleteFragment -> {
+                finishOnboarding()
+            }
+            else -> {
+                Toast.makeText(this, "Errore di navigazione onboarding.", Toast.LENGTH_SHORT).show()
+                finishOnboarding()
+            }
+        }
+    }
+
+    /**
+     * Helper function per sostituire il fragment corrente con uno nuovo.
+     */
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                android.R.anim.slide_in_left, // Animazione per il nuovo fragment
+                android.R.anim.slide_out_right, // Animazione per il vecchio fragment
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
+            .replace(R.id.onboarding_fragment_container, fragment)
+            .addToBackStack(null) // Permette all'utente di tornare indietro col tasto back
+            .commit()
+    }
+
+    /**
+     * Metodo finale chiamato per concludere il flusso di onboarding.
+     * Imposta il flag 'onboarding complete' e avvia la MainActivity.
+     */
+    private fun finishOnboarding() {
+        SettingsManager.isOnboardingComplete = true
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Pulisce lo stack delle activity
+        startActivity(intent)
+        finish() // Chiude OnboardingActivity
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\OnboardingActivity.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\PendingEncryptionWorker.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/PendingEncryptionWorker.kt
+
+package com.example.lifelog
+
+import android.content.Context
+import android.util.Log
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileEntity
+import com.example.lifelog.data.db.AudioFileStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
+
+/**
+ * Un Worker che si occupa di processare i file audio registrati
+ * mentre il dispositivo era in modalità Direct Boot (bloccato).
+ */
+class PendingEncryptionWorker(appContext: Context, workerParams: WorkerParameters) :
+    CoroutineWorker(appContext, workerParams) {
+
+    companion object {
+        const val TAG = "PendingEncryptionWorker"
+    }
+
+    private val cryptoManager = CryptoManager()
+    private val audioFileDao = AppDatabase.getInstance(appContext).audioFileDao()
+
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Worker avviato per processare i file registrati offline.")
+
+        val contextDE = applicationContext.createDeviceProtectedStorageContext()
+        val rawRecordingsDir = File(contextDE.filesDir, "recordings_raw")
+
+        if (!rawRecordingsDir.exists() || !rawRecordingsDir.isDirectory) {
+            Log.d(TAG, "La directory dei file grezzi non esiste. Nessun lavoro da fare.")
+            return@withContext Result.success()
+        }
+
+        val pendingFiles = rawRecordingsDir.listFiles { _, name -> name.endsWith(".m4a") }
+        if (pendingFiles.isNullOrEmpty()) {
+            Log.d(TAG, "Nessun file in sospeso trovato. Lavoro terminato.")
+            // --- CORREZIONE QUI ---
+            return@withContext Result.success()
+        }
+
+        Log.d(TAG, "Trovati ${pendingFiles.size} file in sospeso da criptare.")
+
+        val password = SettingsManager.encryptionPassword
+        if (password.isBlank()) {
+            Log.e(TAG, "Password di crittografia non trovata. Impossibile processare i file. Riproverò più tardi.")
+            // --- CORREZIONE QUI ---
+            return@withContext Result.retry()
+        }
+
+        var allSucceeded = true
+        for (rawFile in pendingFiles) {
+            try {
+                val encryptedFile = cryptoManager.encryptFile(password, rawFile)
+                if (encryptedFile != null && encryptedFile.exists()) {
+                    val entity = AudioFileEntity(
+                        fileName = encryptedFile.name,
+                        filePath = encryptedFile.absolutePath,
+                        status = AudioFileStatus.PENDING_UPLOAD,
+                        sizeInBytes = encryptedFile.length()
+                    )
+                    audioFileDao.insert(entity)
+                    Log.d(TAG, "File ${rawFile.name} processato e registrato nel DB.")
+                    rawFile.delete()
+                } else {
+                    Log.e(TAG, "Criptazione fallita per il file ${rawFile.name}")
+                    allSucceeded = false
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore durante il processamento del file ${rawFile.name}", e)
+                allSucceeded = false
+            }
+        }
+
+        return@withContext if (allSucceeded) Result.success() else Result.retry()
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\PendingEncryptionWorker.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RecordingFile.kt ---
+
+package com.example.lifelog
+
+data class RecordingFile(
+    val name: String,
+    val sizeInKb: Long
+)
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RecordingFile.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RecordingState.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/RecordingState.kt
+package com.example.lifelog
+
+enum class RecordingState {
+    IDLE,
+    RECORDING,
+    PAUSED
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RecordingState.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RetrofitClient.kt ---
+
+package com.example.lifelog
+
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+
+object RetrofitClient {
+
+    // Crea un client HTTP con un logger per vedere i dettagli delle chiamate di rete in Logcat
+    private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .build()
+
+    // Costruisce l'istanza di Retrofit. L'URL di base verrà impostato dinamicamente.
+    fun getClient(baseUrl: String): ApiService {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            // Non aggiungiamo un converter (es. GsonConverterFactory) perché ci interessa
+            // solo inviare un file e ricevere una risposta di successo/errore, non un JSON complesso.
+            .build()
+            .create(ApiService::class.java)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\RetrofitClient.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\SettingsActivity.kt ---
+
+package com.example.lifelog
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class SettingsActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+
+        // Se è la prima volta che l'activity viene creata, aggiunge il fragment
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings_container, SettingsFragment())
+                .commit()
+        }
+
+        // Questa riga mostra la freccia "indietro" nella barra in alto.
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    /**
+     * *** METODO AGGIUNTO PER LA CORREZIONE ***
+     *
+     * Questo metodo viene chiamato automaticamente dal sistema quando l'utente
+     * preme il pulsante "Up" (la freccia indietro) nella ActionBar.
+     *
+     * @return true se l'evento di navigazione "up" è stato gestito.
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        // Chiude l'activity corrente. Questo fa sì che l'utente torni
+        // alla schermata precedente nello stack, che è la nostra MainActivity.
+        finish()
+        return true
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\SettingsActivity.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\SettingsFragment.kt ---
+
+package com.example.lifelog
+
+import android.os.Bundle
+import android.text.InputType
+import androidx.preference.EditTextPreference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+
+class SettingsFragment : PreferenceFragmentCompat() {
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        // Imposta i valori di default la prima volta che l'app viene avviata.
+        // Lo facciamo qui perché non possiamo più usare defaultValue nell'XML.
+        PreferenceManager.setDefaultValues(requireContext(), R.xml.root_preferences, false)
+
+        setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+        // --- CONFIGURAZIONE DINAMICA ---
+
+        // 1. Configura il campo della password
+        val passwordPreference: EditTextPreference? = findPreference("encryption_password")
+        passwordPreference?.setOnBindEditTextListener { editText ->
+            // Imposta il tipo di input per mascherare il testo (mostra i pallini)
+            editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+
+        // 2. Configura il campo della durata del segmento
+        val durationPreference: EditTextPreference? = findPreference("segment_duration")
+        durationPreference?.setOnBindEditTextListener { editText ->
+            // Imposta il tipo di input per mostrare solo la tastiera numerica
+            editText.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+
+        // Imposta un valore di default programmaticamente se non è già presente.
+        // Questo è più robusto di setDefaultValues.
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if (!sharedPreferences.contains("segment_duration")) {
+            durationPreference?.text = "15"
+        }
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\SettingsFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\UploaderWorker.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/UploaderWorker.kt
+
+package com.example.lifelog
+
+import android.content.Context
+import android.util.Log
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import com.example.lifelog.data.SettingsManager // <-- MODIFICA: Import
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileEntity
+import com.example.lifelog.data.db.AudioFileStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+
+class UploaderWorker(appContext: Context, workerParams: WorkerParameters) :
+    CoroutineWorker(appContext, workerParams) {
+
+    companion object {
+        const val TAG = "UploaderWorker"
+        const val MAX_RETRIES = 3
+    }
+
+    private val audioFileDao = AppDatabase.getInstance(appContext).audioFileDao()
+
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Worker avviato. Recupero file da caricare dal database.")
+
+        val filesToUpload = audioFileDao.getFilesWithStatus(AudioFileStatus.PENDING_UPLOAD)
+
+        if (filesToUpload.isEmpty()) {
+            Log.d(TAG, "Nessun file da caricare. Lavoro terminato con successo.")
+            return@withContext Result.success()
+        }
+
+        Log.d(TAG, "Trovati ${filesToUpload.size} file da caricare.")
+
+        // --- MODIFICA CHIAVE ---
+        // Leggiamo l'indirizzo del server dal nostro SettingsManager sicuro
+        var serverAddress = SettingsManager.serverAddress
+
+        if (serverAddress.isBlank()) {
+            Log.e(TAG, "Indirizzo server non configurato nelle Impostazioni. Riproverò più tardi.")
+            return@withContext Result.retry() // Riprova, l'utente potrebbe inserire l'indirizzo
+        }
+        // --- FINE MODIFICA ---
+
+        // Normalizzazione dell'URL
+        if (!serverAddress.startsWith("http")) serverAddress = "http://$serverAddress"
+        if (!serverAddress.endsWith("/")) serverAddress += "/"
+
+        val retrofitService = RetrofitClient.getClient(serverAddress)
+        var allUploadsSucceeded = true
+
+        for (entity in filesToUpload) {
+            val file = File(entity.filePath)
+            if (!file.exists()) {
+                Log.w(TAG, "Il file ${entity.fileName} non esiste più sul disco. Rimuovo dal DB.")
+                audioFileDao.deleteById(entity.id)
+                continue
+            }
+
+            try {
+                audioFileDao.update(entity.copy(status = AudioFileStatus.UPLOADING))
+
+                val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                val body = MultipartBody.Part.createFormData("file", entity.fileName, requestFile)
+
+                Log.d(TAG, "Tentativo di upload per: ${entity.fileName}")
+                val response = retrofitService.uploadFile(body)
+
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Upload riuscito per ${entity.fileName}. Aggiorno DB e elimino file.")
+                    audioFileDao.update(entity.copy(status = AudioFileStatus.UPLOADED))
+                    file.delete()
+                } else {
+                    Log.w(TAG, "Upload fallito per ${entity.fileName}. Codice: ${response.code()}. Tentativo #${entity.uploadAttempts + 1}")
+                    allUploadsSucceeded = false
+                    handleFailedUpload(entity)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Eccezione durante l'upload di ${entity.fileName}", e)
+                allUploadsSucceeded = false
+                handleFailedUpload(entity)
+            }
+        }
+
+        return@withContext if (allUploadsSucceeded) Result.success() else Result.retry()
+    }
+
+    private suspend fun handleFailedUpload(entity: AudioFileEntity) {
+        val nextAttempt = entity.uploadAttempts + 1
+        if (nextAttempt >= MAX_RETRIES) {
+            Log.e(TAG, "File ${entity.fileName} ha fallito troppe volte. Marco come PENDING per un tentativo futuro.")
+            audioFileDao.update(entity.copy(status = AudioFileStatus.PENDING_UPLOAD, uploadAttempts = nextAttempt))
+        } else {
+            audioFileDao.update(entity.copy(status = AudioFileStatus.PENDING_UPLOAD, uploadAttempts = nextAttempt))
+        }
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\UploaderWorker.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\audio\AudioSegmentProcessor.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/audio/AudioSegmentProcessor.kt
+
+package com.example.lifelog.audio
+
+import android.content.Context
+import android.os.UserManager
+import android.util.Log
+import com.example.lifelog.CryptoManager
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileEntity
+import com.example.lifelog.data.db.AudioFileStatus
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
+
+/**
+ * Gestisce il post-processamento dei segmenti audio registrati.
+ * Decide se criptare il file immediatamente (se l'utente è sbloccato)
+ * o lasciarlo in attesa per una criptazione successiva (se il dispositivo è bloccato).
+ * Inserisce i record nel database Room.
+ */
+class AudioSegmentProcessor(
+    private val context: Context,
+    private val scope: CoroutineScope // Lo scope di coroutine del servizio
+) {
+    private val TAG = "AudioSegmentProcessor"
+
+    private val cryptoManager = CryptoManager()
+
+    // Usiamo il lazy per inizializzare il DAO solo quando è effettivamente necessario.
+    // L'istanza del database dipende dal contesto (Direct Boot o sbloccato).
+    private val audioFileDao by lazy {
+        // La scelta del contesto è fondamentale qui:
+        // getApplicationContext() restituirebbe sempre il contesto CE, che è bloccato in Direct Boot.
+        // Dobbiamo usare il contesto passato nel costruttore che viene creato correttamente.
+        AppDatabase.getInstance(context).audioFileDao()
+    }
+
+    /**
+     * Processa un file audio grezzo.
+     * Se il dispositivo è sbloccato, cripta il file e lo aggiunge al DB per l'upload.
+     * Se il dispositivo è bloccato, il file è già nello storage DE e non viene toccato.
+     * Sarà un worker separato (PendingEncryptionWorker) a processarlo dopo lo sblocco.
+     */
+    fun processAudioSegment(rawFile: File) {
+        // Verifichiamo lo stato di sblocco al momento del processamento.
+        val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
+        val isUserUnlocked = userManager.isUserUnlocked
+
+        if (!isUserUnlocked) {
+            Log.d(TAG, "Dispositivo bloccato. File grezzo ${rawFile.name} rimane in attesa di criptazione (storage DE).")
+            // Non facciamo nulla, il file è già al sicuro nella cartella recordings_raw
+            // che è nello storage DE. PendingEncryptionWorker se ne occuperà.
+            return
+        }
+
+        // Se il dispositivo è sbloccato, procediamo con la criptazione e l'inserimento nel DB.
+        scope.launch(Dispatchers.IO) {
+            val password = SettingsManager.encryptionPassword
+
+            if (password.isBlank()) {
+                Log.e(TAG, "Password di crittografia non impostata. File eliminato: ${rawFile.name}")
+                rawFile.delete() // Elimina il file grezzo se non possiamo criptarlo.
+                return@launch
+            }
+
+            try {
+                // Cripta il file. Il CryptoManager si occuperà di salvare il file .enc.
+                val encryptedFile = cryptoManager.encryptFile(password, rawFile)
+
+                if (encryptedFile != null && encryptedFile.exists()) {
+                    // Crea l'entità per il database e la imposta come PENDING_UPLOAD.
+                    val entity = AudioFileEntity(
+                        fileName = encryptedFile.name,
+                        filePath = encryptedFile.absolutePath,
+                        status = AudioFileStatus.PENDING_UPLOAD,
+                        sizeInBytes = encryptedFile.length()
+                    )
+                    audioFileDao.insert(entity)
+                    Log.d(TAG, "Nuovo file criptato e registrato nel DB: ${entity.fileName}")
+                } else {
+                    Log.e(TAG, "Criptazione fallita per il file ${rawFile.name}. Eliminato.")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore durante la criptazione o inserimento DB per ${rawFile.name}. Eliminato.", e)
+            } finally {
+                rawFile.delete() // Assicurati che il file grezzo .m4a sia sempre eliminato.
+            }
+        }
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\audio\AudioSegmentProcessor.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\SettingsManager.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/data/SettingsManager.kt
+
+package com.example.lifelog.data
+
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+
+object SettingsManager {
+
+    private const val TAG = "SettingsManager"
+    private const val PREFERENCES_FILE_NAME = "lifelog_secret_prefs"
+
+    const val KEY_ONBOARDING_COMPLETE = "is_onboarding_complete"
+    const val KEY_SERVER_ADDRESS = "server_address"
+    const val KEY_ENCRYPTION_PASSWORD = "encryption_password"
+    const val KEY_USER_FIRST_NAME = "user_first_name"
+    const val KEY_USER_LAST_NAME = "user_last_name"
+    const val KEY_USER_ALIAS = "user_alias"
+
+    private var sharedPreferences: SharedPreferences? = null
+
+    fun initialize(context: Context) {
+        if (sharedPreferences != null) return
+        try {
+            val masterKey = MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
+            sharedPreferences = EncryptedSharedPreferences.create(context, PREFERENCES_FILE_NAME, masterKey, EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
+            Log.d(TAG, "EncryptedSharedPreferences inizializzate con successo.")
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore grave durante l'inizializzazione di EncryptedSharedPreferences.", e)
+            sharedPreferences = context.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE)
+        }
+    }
+
+    private fun getPrefs(): SharedPreferences {
+        return sharedPreferences ?: throw IllegalStateException("SettingsManager deve essere inizializzato.")
+    }
+
+    val serverAddress: String
+        get() = getPrefs().getString(KEY_SERVER_ADDRESS, "") ?: ""
+
+    val encryptionPassword: String
+        get() = getPrefs().getString(KEY_ENCRYPTION_PASSWORD, "") ?: ""
+
+    var isOnboardingComplete: Boolean
+        get() = getPrefs().getBoolean(KEY_ONBOARDING_COMPLETE, false)
+        set(value) = getPrefs().edit().putBoolean(KEY_ONBOARDING_COMPLETE, value).apply()
+
+    var userFirstName: String
+        get() = getPrefs().getString(KEY_USER_FIRST_NAME, "") ?: ""
+        set(value) = getPrefs().edit().putString(KEY_USER_FIRST_NAME, value).apply()
+
+    var userLastName: String
+        get() = getPrefs().getString(KEY_USER_LAST_NAME, "") ?: ""
+        set(value) = getPrefs().edit().putString(KEY_USER_LAST_NAME, value).apply()
+
+    var userAlias: String
+        get() = getPrefs().getString(KEY_USER_ALIAS, "") ?: ""
+        set(value) = getPrefs().edit().putString(KEY_USER_ALIAS, value).apply()
+
+    // --- MODIFICA: Aggiunti setter espliciti per aggirare il bug del compilatore ---
+    fun setServerAddress(address: String) {
+        getPrefs().edit().putString(KEY_SERVER_ADDRESS, address).apply()
+    }
+
+    fun setEncryptionPassword(password: String) {
+        getPrefs().edit().putString(KEY_ENCRYPTION_PASSWORD, password).apply()
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\SettingsManager.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AppDatabase.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/data/db/AppDatabase.kt
+
+package com.example.lifelog.data.db
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+
+/**
+ * La classe principale del database per l'applicazione, che segue il pattern Singleton.
+ *
+ * @Database: Annotazione che definisce la configurazione del database.
+ * - entities: Elenca tutte le classi Entity che appartengono a questo database.
+ * - version: La versione del database. Deve essere incrementata ogni volta che
+ *            si modifica lo schema (es. aggiungendo una colonna a una tabella).
+ * - exportSchema: Indica se esportare lo schema in un file JSON. Buona pratica.
+ */
+@Database(
+    entities = [AudioFileEntity::class],
+    version = 1,
+    exportSchema = false
+)
+abstract class AppDatabase : RoomDatabase() {
+
+    /**
+     * Metodo astratto che Room implementerà per fornirci un'istanza del nostro DAO.
+     * Attraverso questo metodo accederemo a tutte le operazioni di database.
+     */
+    abstract fun audioFileDao(): AudioFileDao
+
+    /**
+     * Companion object per implementare il pattern Singleton, assicurando che esista
+     * una sola istanza del database in tutta l'applicazione, evitando problemi di
+     * accesso concorrente e spreco di risorse.
+     */
+    companion object {
+        // La parola chiave 'volatile' garantisce che il valore di INSTANCE sia
+        // sempre aggiornato e visibile a tutti i thread.
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        /**
+         * Metodo per ottenere l'istanza Singleton del database.
+         * Se l'istanza non esiste, la crea in un blocco synchronized per
+         * garantire la thread-safety.
+         */
+        fun getInstance(context: Context): AppDatabase {
+            // Se l'istanza esiste già, la restituisce.
+            // Altrimenti, crea il database.
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "lifelog_app.db" // Nome del file del database sul dispositivo
+                )
+                    // In un'app di produzione, qui si gestirebbero le migrazioni.
+                    // .addMigrations(MIGRATION_1_2, ...)
+                    .build()
+
+                INSTANCE = instance
+                // Restituisce l'istanza appena creata
+                instance
+            }
+        }
+    }
+}
+
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AppDatabase.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileDao.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/data/db/AudioFileDao.kt
+
+package com.example.lifelog.data.db
+
+import androidx.lifecycle.LiveData
+import androidx.room.*
+
+/**
+ * DAO (Data Access Object) per l'entità AudioFileEntity.
+ *
+ * Questa interfaccia definisce tutte le operazioni di database (lettura, scrittura,
+ * aggiornamento, eliminazione) per la tabella "audio_files". Room genererà
+ * l'implementazione concreta di questa interfaccia.
+ */
+@Dao
+interface AudioFileDao {
+
+    /**
+     * Inserisce un nuovo record di file audio nel database.
+     * Se un record con lo stesso id esiste già, viene sostituito.
+     * La funzione è 'suspend' per essere eseguita in una coroutine.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(file: AudioFileEntity)
+
+    /**
+     * Aggiorna un record esistente. Room usa la chiave primaria (id)
+     * per trovare il record da aggiornare.
+     */
+    @Update
+    suspend fun update(file: AudioFileEntity)
+
+    /**
+     * Elimina un record dal database usando il suo id.
+     */
+    @Query("DELETE FROM audio_files WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
+    /**
+     * Recupera una lista di file che hanno uno stato specifico.
+     * Sarà usato dal nostro UploaderWorker per trovare i file da caricare.
+     * È una funzione 'suspend' perché non abbiamo bisogno di osservarla costantemente.
+     */
+    @Query("SELECT * FROM audio_files WHERE status = :status ORDER BY createdAt ASC")
+    suspend fun getFilesWithStatus(status: AudioFileStatus): List<AudioFileEntity>
+
+    /**
+     * Recupera un singolo file dal suo id.
+     * Utile quando il worker deve operare su un file specifico.
+     */
+    @Query("SELECT * FROM audio_files WHERE id = :id")
+    suspend fun getFileById(id: Long): AudioFileEntity?
+
+    /**
+     *  --- LA FUNZIONE PIÙ IMPORTANTE PER LA UI ---
+     * Recupera tutti i file con stato PENDING_UPLOAD come LiveData.
+     * LiveData è un contenitore di dati osservabile e lifecycle-aware.
+     * Room aggiornerà automaticamente il contenuto di questo LiveData ogni volta
+     * che i dati nella tabella 'audio_files' cambiano in un modo che influisce
+     * su questa query. Questo aggiornerà la nostra UI in modo reattivo e automatico.
+     */
+    @Query("SELECT * FROM audio_files WHERE status = 'PENDING_UPLOAD' ORDER BY createdAt DESC")
+    fun getPendingFilesForUploadLiveData(): LiveData<List<AudioFileEntity>>
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileDao.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileEntity.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/data/db/AudioFileEntity.kt
+
+package com.example.lifelog.data.db
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+/**
+ * Rappresenta una singola registrazione audio come record nel database.
+ * Ogni istanza di questa classe corrisponde a una riga nella tabella "audio_files".
+ *
+ * @param id La chiave primaria univoca, generata automaticamente da Room.
+ * @param fileName Il nome del file criptato (es. "segment_20231027_103000_lat..._lon....enc").
+ * @param filePath Il percorso assoluto del file sul dispositivo, per poterlo leggere o eliminare.
+ * @param createdAt Timestamp (in millisecondi) di quando il record è stato creato. Utile per ordinare.
+ * @param status Lo stato attuale del file nel suo ciclo di vita (es. PENDING_UPLOAD).
+ * @param sizeInBytes La dimensione del file in byte, per visualizzazione e statistiche.
+ * @param uploadAttempts Il numero di volte che si è tentato di caricare questo file.
+ */
+@Entity(tableName = "audio_files")
+data class AudioFileEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+
+    val fileName: String,
+    val filePath: String,
+    val createdAt: Long = System.currentTimeMillis(),
+    val status: AudioFileStatus,
+    val sizeInBytes: Long,
+    val uploadAttempts: Int = 0
+)
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileEntity.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileStatus.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/data/db/AudioFileStatus.kt
+
+package com.example.lifelog.data.db
+
+/**
+ * Rappresenta i possibili stati di un file audio durante il suo ciclo di vita,
+ * dalla registrazione all'upload.
+ */
+enum class AudioFileStatus {
+    /**
+     * Stato transitorio mentre un segmento audio è in fase di registrazione.
+     */
+    RECORDING_IN_PROGRESS,
+
+    /**
+     * Il segmento audio (.m4a) è stato registrato e salvato.
+     * È in attesa di essere criptato.
+     */
+    PENDING_ENCRYPTION,
+
+    /**
+     * Il file è stato criptato (.enc) ed è pronto per essere caricato sul server.
+     * Questo è lo stato principale che la UI mostrerà per i ricordi.
+     */
+    PENDING_UPLOAD,
+
+    /**
+     * Lo UploaderWorker ha preso in carico questo file e sta tentando di caricarlo.
+     */
+    UPLOADING,
+
+    /**
+     * Il file è stato caricato con successo sul server.
+     * È in attesa di essere eliminato fisicamente dal dispositivo.
+     */
+    UPLOADED,
+
+    /**
+     * L'upload è fallito, ma può essere ritentato.
+     */
+    UPLOAD_FAILED_RETRYABLE,
+
+    // --- MODIFICA: Nuovo stato per il voiceprint ---
+    /**
+     * Un file audio è un campione vocale (voiceprint) dell'utente, in attesa di
+     * essere elaborato dal backend per l'identificazione dello speaker.
+     */
+    VOICEPRINT_PENDING,
+
+    /**
+     * Il voiceprint è stato elaborato con successo dal backend.
+     */
+    VOICEPRINT_PROCESSED
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\data\db\AudioFileStatus.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\main\MainViewModel.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/main/MainViewModel.kt
+
+package com.example.lifelog.ui.main
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileDao
+import com.example.lifelog.data.db.AudioFileEntity
+
+/**
+ * ViewModel per la MainActivity.
+ *
+ * Estende AndroidViewModel invece di ViewModel perché abbiamo bisogno del contesto
+ * dell'applicazione per accedere al database.
+ *
+ * Responsabilità:
+ * - Mantenere lo stato della UI e sopravvivere ai cambi di configurazione.
+ * - Fornire alla UI i dati necessari (es. la lista dei file da caricare).
+ * - Gestire le interazioni dell'utente e comunicare con i layer di dati (DB, Service).
+ */
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    // Riferimento al nostro DAO per interagire con il database.
+    private val audioFileDao: AudioFileDao
+
+    /**
+     *  --- LiveData Pubblico per la UI ---
+     *
+     *  Questo LiveData contiene la lista dei file in attesa di upload.
+     *  La MainActivity osserverà questo LiveData. Grazie a Room, questo
+     *  si aggiornerà automaticamente ogni volta che un file viene aggiunto
+     *  o rimosso dallo stato PENDING_UPLOAD nel database.
+     *
+     *  È di tipo 'LiveData<List<AudioFileEntity>>' e non 'MutableLiveData'
+     *  perché il suo valore non viene impostato manualmente da noi, ma proviene
+     *  direttamente dal database. Questo lo rende "read-only" per la UI,
+     *  una buona pratica architetturale.
+     */
+    val pendingFiles: LiveData<List<AudioFileEntity>>
+
+    init {
+        // Otteniamo l'istanza del nostro DAO usando il Singleton del database.
+        // Lo facciamo nel blocco init, così è disponibile per tutto il ciclo di vita del ViewModel.
+        audioFileDao = AppDatabase.getInstance(application).audioFileDao()
+
+        // Inizializziamo il nostro LiveData pubblico facendolo puntare
+        // al LiveData fornito dal DAO. Da questo momento in poi,
+        // la connessione tra la UI e il database è stabilita.
+        pendingFiles = audioFileDao.getPendingFilesForUploadLiveData()
+    }
+
+    // Aggiungeremo qui altre funzioni e LiveData più avanti...
+    // Esempio:
+    // val uiState: LiveData<UiState> = ...
+    // fun onRecordButtonPressed() { ... }
+    // fun onForceUploadClicked() { ... }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\main\MainViewModel.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\BackendSetupFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/BackendSetupFragment.kt
+
+package com.example.lifelog.ui.onboarding
+
+import android.content.Context
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.lifelog.R
+import com.example.lifelog.data.SettingsManager
+import com.google.android.material.textfield.TextInputEditText
+
+/**
+ * Fragment per la configurazione dell'indirizzo del server backend e della password di crittografia.
+ */
+class BackendSetupFragment : Fragment() {
+
+    private val TAG = "BackendSetupFragment"
+
+    private lateinit var serverAddressEditText: TextInputEditText
+    private lateinit var encryptionPasswordEditText: TextInputEditText
+
+    private var callback: OnboardingFragmentCallback? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnboardingFragmentCallback) {
+            callback = context
+        } else {
+            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_backend_setup, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initializeViews(view)
+        setupTextWatchers()
+        loadSavedData()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateNextButtonState()
+    }
+
+    private fun initializeViews(view: View) {
+        serverAddressEditText = view.findViewById(R.id.serverAddressEditText)
+        encryptionPasswordEditText = view.findViewById(R.id.encryptionPasswordEditText)
+    }
+
+    private fun loadSavedData() {
+        serverAddressEditText.setText(SettingsManager.serverAddress)
+        encryptionPasswordEditText.setText(SettingsManager.encryptionPassword)
+    }
+
+    private fun setupTextWatchers() {
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                updateNextButtonState()
+            }
+        }
+        serverAddressEditText.addTextChangedListener(textWatcher)
+        encryptionPasswordEditText.addTextChangedListener(textWatcher)
+    }
+
+    /**
+     * Chiamato dall'Activity host per validare i campi del fragment prima di avanzare.
+     */
+    fun handleNextButtonClick(): Boolean {
+        val serverAddress = serverAddressEditText.text.toString().trim()
+        val encryptionPassword = encryptionPasswordEditText.text.toString().trim()
+
+        if (serverAddress.isBlank() || encryptionPassword.isBlank()) {
+            Toast.makeText(requireContext(), "Indirizzo server e password sono obbligatori.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        // --- MODIFICA CRUCIALE: Usiamo i setter espliciti ---
+        SettingsManager.setServerAddress(serverAddress)
+        SettingsManager.setEncryptionPassword(encryptionPassword)
+
+        Toast.makeText(requireContext(), "Configurazione backend salvata.", Toast.LENGTH_SHORT).show()
+        return true
+    }
+
+    /**
+     * Aggiorna lo stato di abilitazione del pulsante "Prosegui" globale dell'Activity.
+     */
+    private fun updateNextButtonState() {
+        val serverAddress = serverAddressEditText.text.toString().trim()
+        val encryptionPassword = encryptionPasswordEditText.text.toString().trim()
+
+        val isFormValid = !serverAddress.isBlank() && !encryptionPassword.isBlank()
+
+        Log.d(TAG, "updateNextButtonState called. Form is valid: $isFormValid")
+
+        callback?.setNextButtonEnabled(isFormValid)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\BackendSetupFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\OnboardingCompleteFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/OnboardingCompleteFragment.kt
+
+package com.example.lifelog.ui.onboarding
+
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.lifelog.R
+
+/**
+ * L'ultimo frammento nel flusso di onboarding, che indica il completamento della configurazione.
+ * Abilita il pulsante "Prosegui" per permettere all'utente di passare all'app principale.
+ */
+class OnboardingCompleteFragment : Fragment() {
+
+    // Riferimento al callback per comunicare con l'Activity host
+    private var callback: OnboardingFragmentCallback? = null
+
+    /**
+     * Chiamato quando il fragment viene attaccato per la prima volta a un'Activity.
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnboardingFragmentCallback) {
+            callback = context
+        } else {
+            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_onboarding_complete, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Abilita il pulsante "Prosegui" dell'Activity.
+        // Questo fragment è sempre "completato" non appena viene mostrato.
+        callback?.setNextButtonEnabled(true)
+    }
+
+    /**
+     * Chiamato quando il fragment viene staccato dall'Activity.
+     */
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
+    // Questo metodo sarà chiamato dall'Activity quando il pulsante "Prosegui" globale è cliccato.
+    fun handleNextButtonClick(): Boolean {
+        // Non ci sono validazioni in questo fragment, si può sempre avanzare.
+        return true
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\OnboardingCompleteFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\OnboardingFragmentCallback.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/OnboardingFragmentCallback.kt
+
+package com.example.lifelog.ui.onboarding
+
+/**
+ * Interfaccia di callback che i fragment di onboarding possono usare per comunicare
+ * con l'Activity che li ospita (OnboardingActivity).
+ *
+ * Ad esempio, un fragment può usare questo callback per dire all'Activity
+ * di abilitare/disabilitare il pulsante "Prosegui" globale.
+ */
+interface OnboardingFragmentCallback {
+    /**
+     * Chiamato da un fragment per impostare lo stato di abilitazione
+     * del pulsante "Prosegui" globale dell'Activity.
+     */
+    fun setNextButtonEnabled(isEnabled: Boolean)
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\OnboardingFragmentCallback.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\PermissionsFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/PermissionsFragment.kt
+
+package com.example.lifelog.ui.onboarding
+
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.example.lifelog.OnboardingActivity
+import com.example.lifelog.R
+
+class PermissionsFragment : Fragment() {
+
+    // MODIFICA: Riferimento al nuovo pulsante nel fragment
+    private lateinit var grantPermissionsButton: Button
+
+    private val TAG = "PermissionsFragment"
+
+    private var callback: OnboardingFragmentCallback? = null
+
+    private val requiredPermissions = mutableListOf(
+        Manifest.permission.RECORD_AUDIO,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ).apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }.toTypedArray()
+
+    private val requestMultiplePermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            checkAllPermissions()
+        }
+
+    private val requestBackgroundLocationLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            checkAllPermissions()
+        }
+
+    private val requestIgnoreBatteryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            checkAllPermissions()
+        }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnboardingFragmentCallback) {
+            callback = context
+        } else {
+            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_permissions, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // MODIFICA: Inizializza il nuovo pulsante e imposta il listener
+        grantPermissionsButton = view.findViewById(R.id.grantPermissionsButton)
+        grantPermissionsButton.setOnClickListener {
+            // Quando l'utente clicca "Concedi Permessi", avvia il flusso di richiesta
+            startPermissionRequestFlow()
+        }
+
+        // Al momento della creazione della vista, controlla subito i permessi
+        // per aggiornare lo stato del pulsante "Concedi Permessi"
+        checkAllPermissions()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
+    // MODIFICA: Questo metodo sarà chiamato dall'Activity quando il pulsante "Prosegui" globale è cliccato.
+    // L'Activity può avanzare SOLO se tutti i permessi sono già stati concessi.
+    fun handleNextButtonClick(): Boolean {
+        if (!allPermissionsAlreadyGranted()) {
+            Toast.makeText(requireContext(), "Concedi prima tutti i permessi necessari per proseguire.", Toast.LENGTH_LONG).show()
+            // Se i permessi non sono tutti concessi, non far avanzare l'Activity.
+            return false
+        }
+        // Se tutti i permessi sono già concessi, l'Activity può avanzare.
+        return true
+    }
+
+    private fun allPermissionsAlreadyGranted(): Boolean {
+        val runtimePermissionsGranted = requiredPermissions.all {
+            ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        val backgroundLocationGranted = isBackgroundLocationPermissionGranted()
+        val ignoringBatteryOptimizations = isIgnoringBatteryOptimizations()
+
+        return runtimePermissionsGranted && backgroundLocationGranted && ignoringBatteryOptimizations
+    }
+
+    private fun startPermissionRequestFlow() {
+        // Disabilita il pulsante "Concedi Permessi" mentre la richiesta è in corso
+        grantPermissionsButton.isEnabled = false
+
+        val permissionsToRequest = requiredPermissions.filter {
+            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
+        }
+        if (permissionsToRequest.isNotEmpty()) {
+            requestMultiplePermissionsLauncher.launch(permissionsToRequest.toTypedArray())
+            return
+        }
+
+        if (!isBackgroundLocationPermissionGranted()) {
+            requestBackgroundLocationPermission()
+            return
+        }
+
+        if (!isIgnoringBatteryOptimizations()) {
+            requestIgnoreBatteryOptimizations()
+            return
+        }
+
+        // Se arriviamo qui, significa che tutti i permessi sono stati concessi.
+        // Aggiorniamo lo stato e abilitiamo il pulsante "Prosegui" globale.
+        checkAllPermissions()
+    }
+
+    // MODIFICA: Aggiornato per abilitare/disabilitare il pulsante "Concedi Permessi" e "Prosegui" globale
+    private fun checkAllPermissions() {
+        val allGranted = allPermissionsAlreadyGranted()
+
+        if (allGranted) {
+            grantPermissionsButton.visibility = View.GONE // Nascondi il pulsante "Concedi Permessi"
+            callback?.setNextButtonEnabled(true) // Abilita il pulsante "Prosegui" globale
+            Toast.makeText(requireContext(), "Tutti i permessi sono stati concessi!", Toast.LENGTH_SHORT).show()
+        } else {
+            grantPermissionsButton.visibility = View.VISIBLE // Mostra il pulsante "Concedi Permessi"
+            grantPermissionsButton.isEnabled = true // Abilita il pulsante "Concedi Permessi" (dopo una richiesta fallita)
+            callback?.setNextButtonEnabled(false) // Disabilita il pulsante "Prosegui" globale
+        }
+    }
+
+
+    private fun isBackgroundLocationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun requestBackgroundLocationPermission() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Permesso Posizione in Background")
+            .setMessage("LifeLog ha bisogno di accedere alla posizione in background per funzionare sempre. Nella prossima schermata, seleziona 'Consenti sempre'.")
+            .setPositiveButton("Vai alle Impostazioni") { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", requireActivity().packageName, null))
+                startActivity(intent) // Nota: non c'è un launcher specifico per verificare il ritorno da questo intent
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun isIgnoringBatteryOptimizations(): Boolean {
+        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isIgnoringBatteryOptimizations(requireContext().packageName)
+    }
+
+    private fun requestIgnoreBatteryOptimizations() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Ottimizzazione Batteria")
+            .setMessage("Infine, escludi LifeLog dalle ottimizzazioni della batteria per garantire che non venga interrotto dal sistema.")
+            .setPositiveButton("Vai alle Impostazioni") { _, _ ->
+                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                intent.data = Uri.parse("package:${requireContext().packageName}")
+                requestIgnoreBatteryLauncher.launch(intent)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Quando il fragment torna in primo piano (es. dopo che l'utente torna dalle impostazioni)
+        // controlliamo di nuovo lo stato dei permessi per aggiornare il pulsante.
+        checkAllPermissions()
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\PermissionsFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\UserInfoFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/UserInfoFragment.kt
+
+package com.example.lifelog.ui.onboarding
+
+import android.content.Context
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.lifelog.OnboardingActivity
+import com.example.lifelog.R
+import com.example.lifelog.data.SettingsManager
+import com.google.android.material.textfield.TextInputEditText
+
+/**
+ * Il primo frammento nel flusso di onboarding.
+ * Raccoglie le informazioni base dell'utente (nome, cognome, alias).
+ */
+class UserInfoFragment : Fragment() {
+
+    private lateinit var firstNameEditText: TextInputEditText
+    private lateinit var lastNameEditText: TextInputEditText
+    private lateinit var aliasEditText: TextInputEditText
+
+    // MODIFICA: Rimosso il riferimento a nextButton qui, sarà gestito dall'Activity
+
+    // Riferimento al callback per comunicare con l'Activity host
+    private var callback: OnboardingFragmentCallback? = null
+
+    /**
+     * Chiamato quando il fragment viene attaccato per la prima volta a un'Activity.
+     * Qui stabiliamo il riferimento al callback.
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnboardingFragmentCallback) {
+            callback = context
+        } else {
+            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_user_info, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initializeViews(view)
+        setupTextWatchers() // MODIFICA: Nuovo metodo per i TextWatcher
+
+        // Carica i dati salvati se l'utente torna indietro
+        loadSavedData()
+    }
+
+    /**
+     * Chiamato quando il fragment viene staccato dall'Activity.
+     * Rimuoviamo il riferimento al callback per evitare memory leaks.
+     */
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
+    private fun initializeViews(view: View) {
+        firstNameEditText = view.findViewById(R.id.firstNameEditText)
+        lastNameEditText = view.findViewById(R.id.lastNameEditText)
+        aliasEditText = view.findViewById(R.id.aliasEditText)
+        // MODIFICA: nextButton non è più qui, è gestito dall'Activity
+    }
+
+    // MODIFICA: Metodo per caricare i dati salvati
+    private fun loadSavedData() {
+        firstNameEditText.setText(SettingsManager.userFirstName)
+        lastNameEditText.setText(SettingsManager.userLastName)
+        aliasEditText.setText(SettingsManager.userAlias)
+        // Aggiorna lo stato del pulsante al caricamento dei dati
+        updateNextButtonState()
+    }
+
+    // MODIFICA: Nuovo metodo per i TextWatcher
+    private fun setupTextWatchers() {
+        // Aggiungiamo un TextWatcher a ogni campo per abilitare/disabilitare il pulsante "Prosegui"
+        // in tempo reale.
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                updateNextButtonState()
+            }
+        }
+        firstNameEditText.addTextChangedListener(textWatcher)
+        lastNameEditText.addTextChangedListener(textWatcher)
+        aliasEditText.addTextChangedListener(textWatcher)
+    }
+
+    // MODIFICA: La logica di click è ora sull'Activity, questo metodo verifica solo la validazione.
+    // Viene chiamato dall'Activity quando il pulsante "Prosegui" globale viene cliccato.
+    // Non è più privato per essere accessibile dall'Activity.
+    fun handleNextButtonClick(): Boolean {
+        val firstName = firstNameEditText.text.toString().trim()
+        val lastName = lastNameEditText.text.toString().trim()
+        val alias = aliasEditText.text.toString().trim()
+
+        if (firstName.isBlank() || lastName.isBlank() || alias.isBlank()) {
+            Toast.makeText(requireContext(), "Per favore, compila tutti i campi.", Toast.LENGTH_SHORT).show()
+            // Se la validazione fallisce, l'Activity non deve avanzare.
+            return false
+        }
+
+        SettingsManager.userFirstName = firstName
+        SettingsManager.userLastName = lastName
+        SettingsManager.userAlias = alias
+
+        // Non mostriamo più il Toast qui, lo farà la Activity quando la navigazione avrà successo.
+        // Non navighiamo più direttamente.
+
+        return true // Indica che il fragment è valido e l'Activity può avanzare
+    }
+
+    // MODIFICA: Nuovo metodo per aggiornare lo stato del pulsante dell'Activity
+    private fun updateNextButtonState() {
+        // Il pulsante è abilitato solo se tutti i campi sono non vuoti.
+        val isFormValid = !firstNameEditText.text.isNullOrBlank() &&
+                !lastNameEditText.text.isNullOrBlank() &&
+                !aliasEditText.text.isNullOrBlank()
+        callback?.setNextButtonEnabled(isFormValid)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\UserInfoFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\VoiceprintFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/VoiceprintFragment.kt
+
+package com.example.lifelog.ui.onboarding
+
+import android.content.Context
+import android.media.MediaRecorder
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.lifelog.CryptoManager
+import com.example.lifelog.OnboardingActivity
+import com.example.lifelog.R
+import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.db.AppDatabase
+import com.example.lifelog.data.db.AudioFileEntity
+import com.example.lifelog.data.db.AudioFileStatus
+import com.example.lifelog.UploaderWorker
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.Date
+import java.util.concurrent.TimeUnit
+
+/**
+ * Il frammento per la registrazione del voiceprint dell'utente durante l'onboarding.
+ * Guida l'utente a leggere un testo per creare un campione audio per il riconoscimento vocale.
+ */
+class VoiceprintFragment : Fragment() {
+
+    private val TAG = "VoiceprintFragment"
+
+    private lateinit var recordButton: MaterialButton
+    // MODIFICA: Rimosso il riferimento a nextButton locale
+
+    private var mediaRecorder: MediaRecorder? = null
+    private var recordingFilePath: String? = null
+    private var isRecording = false
+    private var isVoiceprintRecordedSuccessfully = false // MODIFICA: Nuovo stato per il voiceprint
+
+    private val cryptoManager = CryptoManager()
+    private val audioFileDao by lazy {
+        AppDatabase.getInstance(requireContext()).audioFileDao()
+    }
+
+    // Riferimento al callback per comunicare con l'Activity host
+    private var callback: OnboardingFragmentCallback? = null
+
+    /**
+     * Chiamato quando il fragment viene attaccato per la prima volta a un'Activity.
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnboardingFragmentCallback) {
+            callback = context
+        } else {
+            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_voiceprint, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recordButton = view.findViewById(R.id.recordButton)
+        // MODIFICA: nextButton non è più qui
+
+        setupClickListeners()
+        updateUI() // Aggiorna lo stato iniziale della UI
+    }
+
+    /**
+     * Chiamato quando il fragment viene staccato dall'Activity.
+     */
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
+
+    private fun setupClickListeners() {
+        recordButton.setOnClickListener {
+            if (isRecording) {
+                stopRecording()
+            } else {
+                startRecording()
+            }
+        }
+        // MODIFICA: Il click del nextButton è ora gestito dall'Activity
+    }
+
+    private fun updateUI() {
+        if (isRecording) {
+            recordButton.text = "Ferma Registrazione"
+            recordButton.setIconResource(android.R.drawable.ic_media_pause)
+            callback?.setNextButtonEnabled(false) // Disabilita Prosegui durante la registrazione
+        } else {
+            recordButton.text = "Inizia Registrazione"
+            recordButton.setIconResource(R.drawable.ic_mic)
+            // Abilita Prosegui solo se la registrazione è stata completata con successo
+            callback?.setNextButtonEnabled(isVoiceprintRecordedSuccessfully)
+        }
+    }
+
+    private fun startRecording() {
+        val outputDir = File(requireContext().filesDir, "voiceprints_raw")
+        if (!outputDir.exists()) outputDir.mkdirs()
+
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val fileName = "enrollment_voiceprint_${timestamp}.m4a"
+        recordingFilePath = File(outputDir, fileName).absolutePath
+
+        mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            MediaRecorder(requireContext())
+        } else {
+            @Suppress("DEPRECATION") MediaRecorder()
+        }.apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setAudioSamplingRate(44100)
+            setAudioEncodingBitRate(128000)
+            setOutputFile(recordingFilePath)
+            try {
+                prepare()
+                start()
+                isRecording = true
+                updateUI()
+                Toast.makeText(requireContext(), "Registrazione avviata...", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "Registrazione voiceprint avviata: $recordingFilePath")
+                isVoiceprintRecordedSuccessfully = false // Resetta lo stato di successo
+                callback?.setNextButtonEnabled(false) // Disabilita il pulsante "Prosegui"
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore avvio registrazione voiceprint", e)
+                Toast.makeText(requireContext(), "Errore registrazione: ${e.message}", Toast.LENGTH_LONG).show()
+                isRecording = false
+                updateUI()
+                releaseRecorder()
+            }
+        }
+    }
+
+    private fun stopRecording() {
+        mediaRecorder?.apply {
+            try {
+                stop()
+                release()
+                isRecording = false
+                updateUI()
+                Log.d(TAG, "Registrazione voiceprint fermata.")
+                processRecordedVoiceprintFile()
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore stop registrazione voiceprint: ${e.message}", e)
+                Toast.makeText(requireContext(), "Errore stop registrazione.", Toast.LENGTH_SHORT).show()
+                recordingFilePath?.let { File(it).delete() }
+                recordingFilePath = null
+                isRecording = false
+                updateUI()
+            } finally {
+                releaseRecorder()
+            }
+        }
+    }
+
+    private fun releaseRecorder() {
+        mediaRecorder?.release()
+        mediaRecorder = null
+    }
+
+    private fun processRecordedVoiceprintFile() {
+        val path = recordingFilePath ?: return
+        val rawFile = File(path)
+
+        if (!rawFile.exists() || rawFile.length() < 1024) {
+            Log.e(TAG, "File voiceprint troppo piccolo o non esistente. Eliminato.")
+            rawFile.delete()
+            recordingFilePath = null
+            isVoiceprintRecordedSuccessfully = false // Fallimento
+            updateUI() // Aggiorna stato del pulsante
+            Toast.makeText(requireContext(), "Registrazione non valida. Riprova.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val password = SettingsManager.encryptionPassword
+            if (password.isBlank()) {
+                Log.e(TAG, "Password di crittografia non impostata. Voiceprint non processato.")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Imposta la password nelle impostazioni prima di registrare il voiceprint.", Toast.LENGTH_LONG).show()
+                }
+                rawFile.delete()
+                isVoiceprintRecordedSuccessfully = false // Fallimento
+                withContext(Dispatchers.Main) { updateUI() } // Aggiorna stato del pulsante
+                return@launch
+            }
+
+            try {
+                val encryptedFile = cryptoManager.encryptFile(password, rawFile)
+
+                if (encryptedFile != null && encryptedFile.exists()) {
+                    val voiceprintEntity = AudioFileEntity(
+                        fileName = encryptedFile.name,
+                        filePath = encryptedFile.absolutePath,
+                        status = AudioFileStatus.VOICEPRINT_PENDING,
+                        sizeInBytes = encryptedFile.length(),
+                        uploadAttempts = 0
+                    )
+                    audioFileDao.insert(voiceprintEntity)
+                    Log.d(TAG, "Voiceprint criptato e aggiunto al DB per l'elaborazione.")
+                    isVoiceprintRecordedSuccessfully = true // Successo!
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Voiceprint registrato con successo!", Toast.LENGTH_SHORT).show()
+                        updateUI() // Rende visibile il pulsante "Prosegui"
+                    }
+                } else {
+                    Log.e(TAG, "Criptazione voiceprint fallita.")
+                    isVoiceprintRecordedSuccessfully = false // Fallimento
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Errore durante la criptazione del voiceprint. Riprova.", Toast.LENGTH_LONG).show()
+                        updateUI()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore in processRecordedVoiceprintFile", e)
+                isVoiceprintRecordedSuccessfully = false // Fallimento
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Errore imprevisto durante il processamento del voiceprint.", Toast.LENGTH_LONG).show()
+                    updateUI()
+                }
+            } finally {
+                rawFile.delete()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        releaseRecorder()
+    }
+
+    // MODIFICA: Questo metodo sarà chiamato dall'Activity quando il pulsante "Prosegui" globale è cliccato.
+    fun handleNextButtonClick(): Boolean {
+        // L'Activity chiede al fragment se può avanzare.
+        // Può avanzare solo se il voiceprint è stato registrato con successo.
+        if (!isVoiceprintRecordedSuccessfully) {
+            Toast.makeText(requireContext(), "Registra prima il tuo voiceprint per proseguire.", Toast.LENGTH_SHORT).show()
+            return false // L'Activity NON deve avanzare
+        }
+        return true // L'Activity può avanzare
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\onboarding\VoiceprintFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\settings\SettingsFragment.kt ---
+
+// Percorso: app/src/main/java/com/example/lifelog/ui/settings/SettingsFragment.kt
+
+package com.example.lifelog.ui.settings
+
+import android.os.Bundle
+import androidx.preference.PreferenceFragmentCompat
+import com.example.lifelog.R
+
+/**
+ * Un Fragment che mostra la schermata delle impostazioni dell'applicazione.
+ *
+ * Estende PreferenceFragmentCompat, che è il componente standard di AndroidX
+ * per creare schermate di preferenze basate su un file XML.
+ */
+class SettingsFragment : PreferenceFragmentCompat() {
+
+    /**
+     * Questo metodo viene chiamato quando il Fragment deve creare la sua gerarchia di preferenze.
+     *
+     * @param savedInstanceState Se il fragment viene ricreato da uno stato precedente,
+     * questo è lo stato.
+     * @param rootKey Se non è nullo, questo fragment è radicato su una PreferenceScreen
+     * con questa chiave.
+     */
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        // Imposta la gerarchia di preferenze dal file XML che abbiamo creato.
+        // R.xml.root_preferences fa riferimento al file res/xml/root_preferences.xml
+        setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+        // Qui potremmo aggiungere logica aggiuntiva, come listener per
+        // validare l'input o eseguire azioni quando una preferenza cambia.
+        // Per ora, ci basta mostrare le preferenze.
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\java\com\example\lifelog\ui\settings\SettingsFragment.kt ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_check_circle.xml ---
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="#000000" android:viewportHeight="960" android:viewportWidth="960" android:width="24dp">
+      
+    <path android:fillColor="@android:color/white" android:pathData="M424,664L706,382L650,326L424,552L310,438L254,494L424,664ZM480,880Q397,880 324,848.5Q251,817 197,763Q143,709 111.5,636Q80,563 80,480Q80,397 111.5,324Q143,251 197,197Q251,143 324,111.5Q397,80 480,80Q563,80 636,111.5Q709,143 763,197Q817,251 848.5,324Q880,397 880,480Q880,563 848.5,636Q817,709 763,763Q709,817 636,848.5Q563,880 480,880ZM480,800Q614,800 707,707Q800,614 800,480Q800,346 707,253Q614,160 480,160Q346,160 253,253Q160,346 160,480Q160,614 253,707Q346,800 480,800ZM480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Z"/>
+    
+</vector>
+
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_check_circle.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_launcher_background.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#3DDC84"
+        android:pathData="M0,0h108v108h-108z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M9,0L9,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,0L19,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,0L29,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,0L39,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,0L49,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,0L59,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,0L69,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,0L79,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M89,0L89,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M99,0L99,108"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,9L108,9"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,19L108,19"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,29L108,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,39L108,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,49L108,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,59L108,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,69L108,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,79L108,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,89L108,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,99L108,99"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,29L89,29"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,39L89,39"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,49L89,49"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,59L89,59"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,69L89,69"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,79L89,79"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M29,19L29,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M39,19L39,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M49,19L49,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M59,19L59,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M69,19L69,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M79,19L79,89"
+        android:strokeWidth="0.8"
+        android:strokeColor="#33FFFFFF" />
+</vector>
+
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_launcher_background.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_launcher_foreground.xml ---
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="85.84757"
+                android:endY="92.4963"
+                android:startX="42.9492"
+                android:startY="49.59793"
+                android:type="linear">
+                <item
+                    android:color="#44000000"
+                    android:offset="0.0" />
+                <item
+                    android:color="#00000000"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="nonZero"
+        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000" />
+</vector>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_launcher_foreground.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_mic.xml ---
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:tint="#000000" android:viewportHeight="24" android:viewportWidth="24" android:width="24dp">
+      
+    <path android:fillColor="@android:color/white" android:pathData="M12,14c1.66,0 2.99,-1.34 2.99,-3L15,5c0,-1.66 -1.34,-3 -3,-3S9,3.34 9,5v6c0,1.66 1.34,3 3,3zM17.3,11c0,3 -2.54,5.1 -5.3,5.1S6.7,14 6.7,11L5,11c0,3.41 2.72,6.23 6,6.72L11,21h2v-3.28c3.28,-0.48 6,-3.3 6,-6.72h-1.7z"/>
+    
+</vector>
+
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\drawable\ic_mic.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_main.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Toolbar per il titolo dell'app -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="LifeLog"
+        app:titleTextColor="?attr/colorOnPrimary" />
+
+    <!-- Barra di Stato Testuale -->
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#11000000"
+        android:padding="12dp"
+        android:text="Stato: Inizializzazione..."
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <!-- *** NUOVO PULSANTE UNICO PER REGISTRAZIONE/PAUSA *** -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonToggleRec"
+        style="@style/Widget.Material3.Button.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        app:icon="@android:drawable/ic_media_play"
+        android:text="Avvio Registrazione"
+        app:iconGravity="textStart"
+        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
+        app:layout_constraintStart_toStartOf="@id/textViewStatus"
+        app:layout_constraintEnd_toEndOf="@id/textViewStatus" />
+
+    <!-- Pulsanti Secondari: Upload e Impostazioni -->
+    <LinearLayout
+        android:id="@+id/linearLayoutSecondaryControls"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/buttonToggleRec"
+        app:layout_constraintEnd_toEndOf="@id/buttonToggleRec"
+        app:layout_constraintTop_toBottomOf="@id/buttonToggleRec">
+
+        <Button
+            android:id="@+id/buttonForceUpload"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Forza Upload" />
+
+        <Button
+            android:id="@+id/buttonSettings"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Impostazioni"
+            app:icon="@android:drawable/ic_menu_manage" />
+
+    </LinearLayout>
+
+    <!-- Etichetta per la lista dei file -->
+    <TextView
+        android:id="@+id/textViewFilesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="File in attesa di upload:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/linearLayoutSecondaryControls"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutSecondaryControls" />
+
+    <!-- RecyclerView per la lista dei file -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFiles"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/linearLayoutSecondaryControls"
+        app:layout_constraintStart_toStartOf="@id/linearLayoutSecondaryControls"
+        app:layout_constraintTop_toBottomOf="@id/textViewFilesTitle"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_file" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_main.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_onboarding.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OnboardingActivity">
+
+    <!-- Contenitore per i Fragment delle varie fasi dell'onboarding -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/onboarding_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/onboarding_next_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Pulsante "Prosegui" globale per l'onboarding -->
+    <Button
+        android:id="@+id/onboarding_next_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:padding="16dp"
+        android:text="Prosegui"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_onboarding.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_settings.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_settings"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\activity_settings.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_backend_setup.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.BackendSetupFragment">
+
+    <!-- Titolo della schermata -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Configurazione Server"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <!-- Descrizione -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:text="Inserisci l'indirizzo del tuo server e una password per proteggere i tuoi dati."
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <!-- Campo per l'Indirizzo del Server -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/serverAddressLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Indirizzo del Server"
+        app:helperText="Es: 192.168.1.100:8000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/serverAddressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo per la Password di Crittografia -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/encryptionPasswordLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Password per la Crittografia"
+        app:helperText="Usata solo per criptare i tuoi dati."
+        app:passwordToggleEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/serverAddressLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/encryptionPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_backend_setup.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_onboarding_complete.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.OnboardingCompleteFragment">
+
+    <!-- Icona di successo -->
+    <ImageView
+        android:id="@+id/successIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_check_circle"
+        app:layout_constraintBottom_toTopOf="@+id/titleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:tint="?attr/colorSecondary" />
+
+    <!-- Titolo di successo -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Configurazione Completata!"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/successIcon" />
+
+    <!-- Descrizione -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:text="Sei pronto a iniziare il tuo viaggio con LifeLog. L'app inizierà ora a registrare in background."
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintVertical_bias="0.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_onboarding_complete.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_permissions.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.PermissionsFragment">
+
+    <!-- Titolo della schermata -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Permessi Necessari"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <!-- Descrizione -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:text="Per funzionare correttamente, LifeLog ha bisogno di alcuni permessi.\n\n• Accesso al Microfono per registrare i tuoi ricordi.\n• Accesso alla Posizione per contestualizzarli.\n• Permesso di Notifica per rimanere attivo in background."
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <!-- MODIFICA: Aggiunto il pulsante per avviare la richiesta dei permessi -->
+    <Button
+        android:id="@+id/grantPermissionsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Concedi Permessi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_permissions.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_user_info.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.UserInfoFragment">
+
+    <!-- Titolo della schermata -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Benvenuto in LifeLog"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:layout_constraintBottom_toTopOf="@id/firstNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <!-- Descrizione -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Iniziamo la configurazione. Per prima cosa, dicci chi sei."
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+
+    <!-- Campo per il Nome -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstNameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Nome"
+        app:layout_constraintBottom_toTopOf="@+id/lastNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firstNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|textCapWords" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo per il Cognome -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastNameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Cognome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lastNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|textCapWords" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo per il Soprannome (Alias) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/aliasLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Soprannome / Alias"
+        app:helperText="Come ti chiamerà il sistema (es. 'Roberto')"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/aliasEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Rimosso il pulsante "Prosegui", ora è gestito dall'Activity host -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_user_info.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_voiceprint.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.VoiceprintFragment">
+
+    <!-- Titolo della schermata -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Registra la tua Voce"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <!-- Descrizione -->
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Per riconoscerti in futuro, premi il pulsante e leggi il testo seguente ad alta voce."
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <!-- Card contenente il testo da leggere -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/textToReadCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:cardBackgroundColor="?attr/colorSurfaceContainer"
+        app:contentPadding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/recordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textToRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.3"
+                android:text="@string/voiceprint_enrollment_text"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="?attr/colorOnSurface" />
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Pulsante di registrazione -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recordButton"
+        style="@style/Widget.Material3.Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:text="Inizia Registrazione"
+        app:icon="@drawable/ic_mic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Rimosso il pulsante "Prosegui", ora è gestito dall'Activity host -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\fragment_voiceprint.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\list_item_file.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp"
+    android:gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_lock_lock"
+        android:contentDescription="File criptato"
+        android:layout_marginEnd="16dp"
+        android:alpha="0.7"/>
+
+    <TextView
+        android:id="@+id/textViewFileName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="?attr/textAppearanceListItem"
+        tools:text="segment_20250704_103000.m4a.enc" />
+
+    <!-- NUOVO: TextView per la dimensione del file -->
+    <TextView
+        android:id="@+id/textViewFileSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        tools:text="1234 KB" />
+
+</LinearLayout>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\layout\list_item_file.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\mipmap-anydpi\ic_launcher.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\mipmap-anydpi\ic_launcher.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\mipmap-anydpi\ic_launcher_round.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\mipmap-anydpi\ic_launcher_round.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\colors.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\colors.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\strings.xml ---
+
+<resources>
+    <string name="app_name">Lifelog</string>
+
+    <!-- MODIFICA: Inserisci il testo completo per l'enrollment del voiceprint -->
+    <string name="voiceprint_enrollment_text">Ciao, sto eseguendo la calibrazione iniziale per il mio assistente personale LifeLog. Per permettergli di riconoscere la mia voce in futuro, leggerò questo breve testo con un tono di voce normale. La rapida volpe bruna salta sopra il pigro cane, un classico esempio che garantisce l\'acquisizione di un\'ampia gamma di fonemi. Spero che questa registrazione del mio timbro vocale vada a buon fine.</string>
+
+</resources>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\strings.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\themes.xml ---
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LifeLog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!--
+            Questo è il tema base per l'applicazione.
+            Usiamo NoActionBar perché gestiremo la barra manualmente
+            con una Toolbar dove necessario (es. nelle impostazioni).
+        -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">true</item>
+    </style>
+
+    <!-- Questo è il tema finale che l'app userà. -->
+    <!-- Il suo nome è "Theme.LifeLog" -->
+    <style name="Theme.LifeLog" parent="Base.Theme.LifeLog" />
+
+</resources>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values\themes.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values-night\themes.xml ---
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Lifelog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+</resources>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\values-night\themes.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\backup_rules.xml ---
+
+<?xml version="1.0" encoding="utf-8"?><!--
+   Sample backup rules file; uncomment and customize as necessary.
+   See https://developer.android.com/guide/topics/data/autobackup
+   for details.
+   Note: This file is ignored for devices older than API 31
+   See https://developer.android.com/about/versions/12/backup-restore
+-->
+<full-backup-content>
+    <!--
+   <include domain="sharedpref" path="."/>
+   <exclude domain="sharedpref" path="device.xml"/>
+-->
+</full-backup-content>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\backup_rules.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\data_extraction_rules.xml ---
+
+<?xml version="1.0" encoding="utf-8"?><!--
+   Sample data extraction rules file; uncomment and customize as necessary.
+   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   for details.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- TODO: Use <include> and <exclude> to control what is backed up.
+        <include .../>
+        <exclude .../>
+        -->
+    </cloud-backup>
+    <!--
+    <device-transfer>
+        <include .../>
+        <exclude .../>
+    </device-transfer>
+    -->
+</data-extraction-rules>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\data_extraction_rules.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\root_preferences.xml ---
+
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Backend Server">
+
+        <EditTextPreference
+            app:key="server_address"
+            app:title="Indirizzo del Server"
+            app:summary="Es: 192.168.1.100:8000"
+            app:useSimpleSummaryProvider="true"
+            app:dialogTitle="Inserisci l'indirizzo del server" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Sicurezza">
+
+        <EditTextPreference
+            app:key="encryption_password"
+            app:title="Password per la Crittografia"
+            app:summary="La master password per criptare e decriptare i file"
+            app:useSimpleSummaryProvider="true"
+            android:password="true"
+            app:dialogTitle="Inserisci la password" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\main\res\xml\root_preferences.xml ---
+
+
+--- INIZIO FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\test\java\com\example\lifelog\ExampleUnitTest.kt ---
+
+package com.example.lifelog
+
+import org.junit.Test
+
+import org.junit.Assert.*
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
+}
+
+--- FINE FILE: C:\Users\Roberto\AndroidStudioProjects\Lifelog\LifeLog\app\src\test\java\com\example\lifelog\ExampleUnitTest.kt ---
+
+
