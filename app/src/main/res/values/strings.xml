@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lifelog</string>
+
+    <!-- MODIFICA: Inserisci il testo completo per l'enrollment del voiceprint -->
+    <string name="voiceprint_enrollment_text">Ciao, sto eseguendo la calibrazione iniziale per il mio assistente personale LifeLog. Per permettergli di riconoscere la mia voce in futuro, leggerò questo breve testo con un tono di voce normale. La rapida volpe bruna salta sopra il pigro cane, un classico esempio che garantisce l\'acquisizione di un\'ampia gamma di fonemi. Spero che questa registrazione del mio timbro vocale vada a buon fine.</string>
+
+</resources>

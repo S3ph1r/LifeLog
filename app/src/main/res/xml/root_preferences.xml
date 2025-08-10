@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Backend Server">
+
+        <EditTextPreference
+            app:key="server_address"
+            app:title="Indirizzo del Server"
+            app:summary="Es: 192.168.1.100:8000"
+            app:useSimpleSummaryProvider="true"
+            app:dialogTitle="Inserisci l'indirizzo del server" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Sicurezza">
+
+        <EditTextPreference
+            app:key="encryption_password"
+            app:title="Password per la Crittografia"
+            app:summary="La master password per criptare e decriptare i file"
+            app:useSimpleSummaryProvider="true"
+            android:password="true"
+            app:dialogTitle="Inserisci la password" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

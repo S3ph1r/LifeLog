@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LifeLog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!--
+            Questo è il tema base per l'applicazione.
+            Usiamo NoActionBar perché gestiremo la barra manualmente
+            con una Toolbar dove necessario (es. nelle impostazioni).
+        -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">true</item>
+    </style>
+
+    <!-- Questo è il tema finale che l'app userà. -->
+    <!-- Il suo nome è "Theme.LifeLog" -->
+    <style name="Theme.LifeLog" parent="Base.Theme.LifeLog" />
+
+</resources>
