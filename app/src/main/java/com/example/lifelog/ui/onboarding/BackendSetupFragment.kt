@@ -1,5 +1,3 @@
-// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/BackendSetupFragment.kt
-
 package com.example.lifelog.ui.onboarding
 
 import android.content.Context
@@ -13,12 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.lifelog.R
-import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.ConfigManager // <-- NUOVO IMPORT
 import com.google.android.material.textfield.TextInputEditText
 
-/**
- * Fragment per la configurazione dell'indirizzo del server backend e della password di crittografia.
- */
 class BackendSetupFragment : Fragment() {
 
     private val TAG = "BackendSetupFragment"
@@ -33,7 +28,7 @@ class BackendSetupFragment : Fragment() {
         if (context is OnboardingFragmentCallback) {
             callback = context
         } else {
-            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+            throw RuntimeException("$context must implement OnboardingFragmentCallback")
         }
     }
 
@@ -46,10 +41,9 @@ class BackendSetupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initializeViews(view)
         setupTextWatchers()
-        loadSavedData()
+        loadDataFromConfig()
     }
 
     override fun onDetach() {
@@ -59,7 +53,7 @@ class BackendSetupFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateNextButtonState()
+        updateNextButtonState() // Aggiorna lo stato del bottone quando il fragment torna visibile
     }
 
     private fun initializeViews(view: View) {
@@ -67,9 +61,10 @@ class BackendSetupFragment : Fragment() {
         encryptionPasswordEditText = view.findViewById(R.id.encryptionPasswordEditText)
     }
 
-    private fun loadSavedData() {
-        serverAddressEditText.setText(SettingsManager.serverAddress)
-        encryptionPasswordEditText.setText(SettingsManager.encryptionPassword)
+    private fun loadDataFromConfig() {
+        val config = ConfigManager.getConfig()
+        serverAddressEditText.setText(config.serverAddress)
+        encryptionPasswordEditText.setText(config.encryptionPassword)
     }
 
     private fun setupTextWatchers() {
@@ -84,9 +79,6 @@ class BackendSetupFragment : Fragment() {
         encryptionPasswordEditText.addTextChangedListener(textWatcher)
     }
 
-    /**
-     * Chiamato dall'Activity host per validare i campi del fragment prima di avanzare.
-     */
     fun handleNextButtonClick(): Boolean {
         val serverAddress = serverAddressEditText.text.toString().trim()
         val encryptionPassword = encryptionPasswordEditText.text.toString().trim()
@@ -96,17 +88,14 @@ class BackendSetupFragment : Fragment() {
             return false
         }
 
-        // --- MODIFICA CRUCIALE: Usiamo i setter espliciti ---
-        SettingsManager.setServerAddress(serverAddress)
-        SettingsManager.setEncryptionPassword(encryptionPassword)
+        // --- SALVATAGGIO IMMEDIATO TRAMITE CONFIGMANAGER ---
+        ConfigManager.updateServerAddress(serverAddress)
+        ConfigManager.updateEncryptionPassword(encryptionPassword)
 
-        Toast.makeText(requireContext(), "Configurazione backend salvata.", Toast.LENGTH_SHORT).show()
+        // Rimosso il Toast perché il salvataggio è implicito
         return true
     }
 
-    /**
-     * Aggiorna lo stato di abilitazione del pulsante "Prosegui" globale dell'Activity.
-     */
     private fun updateNextButtonState() {
         val serverAddress = serverAddressEditText.text.toString().trim()
         val encryptionPassword = encryptionPasswordEditText.text.toString().trim()

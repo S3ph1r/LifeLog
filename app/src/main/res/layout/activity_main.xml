@@ -1,112 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Toolbar per il titolo dell'app -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="LifeLog"
-        app:titleTextColor="?attr/colorOnPrimary" />
-
-    <!-- Barra di Stato Testuale -->
     <TextView
-        android:id="@+id/textViewStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#11000000"
-        android:padding="12dp"
-        android:text="Stato: Inizializzazione..."
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-    <!-- *** NUOVO PULSANTE UNICO PER REGISTRAZIONE/PAUSA *** -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonToggleRec"
-        style="@style/Widget.Material3.Button.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        app:icon="@android:drawable/ic_media_play"
-        android:text="Avvio Registrazione"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toBottomOf="@id/textViewStatus"
-        app:layout_constraintStart_toStartOf="@id/textViewStatus"
-        app:layout_constraintEnd_toEndOf="@id/textViewStatus" />
-
-    <!-- Pulsanti Secondari: Upload e Impostazioni -->
-    <LinearLayout
-        android:id="@+id/linearLayoutSecondaryControls"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@id/buttonToggleRec"
-        app:layout_constraintEnd_toEndOf="@id/buttonToggleRec"
-        app:layout_constraintTop_toBottomOf="@id/buttonToggleRec">
-
-        <Button
-            android:id="@+id/buttonForceUpload"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Forza Upload" />
-
-        <Button
-            android:id="@+id/buttonSettings"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Impostazioni"
-            app:icon="@android:drawable/ic_menu_manage" />
-
-    </LinearLayout>
-
-    <!-- Etichetta per la lista dei file -->
-    <TextView
-        android:id="@+id/textViewFilesTitle"
+        android:id="@+id/tvRecordingStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="File in attesa di upload:"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/linearLayoutSecondaryControls"
-        app:layout_constraintTop_toBottomOf="@id/linearLayoutSecondaryControls" />
+        android:text="Stato Registrazione: IDLE"
+        android:textSize="18sp"
+        android:layout_marginBottom="24dp"/>
 
-    <!-- RecyclerView per la lista dei file -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFiles"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/linearLayoutSecondaryControls"
-        app:layout_constraintStart_toStartOf="@id/linearLayoutSecondaryControls"
-        app:layout_constraintTop_toBottomOf="@id/textViewFilesTitle"
-        tools:itemCount="3"
-        tools:listitem="@layout/list_item_file" />
+    <Button
+        android:id="@+id/btnStartRecording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Avvia Registrazione"
+        android:layout_marginBottom="16dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnStopRecording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ferma Registrazione"/>
+
+</LinearLayout>

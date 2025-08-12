@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ... (Tutti i permessi rimangono invariati) ... -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -13,6 +12,18 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+
+    <!-- Se salvi su external storage (getExternalFilesDir è ok senza per API >=19,
+         ma se usi altre locazioni o target < 19, potrebbe servire) -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="28" /> -->
+
+    <!-- Per la localizzazione nel nome del file (richiederemo il permesso a runtime) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".LifeLogApplication"
@@ -26,6 +37,8 @@
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="31">
 
+        <!-- ... il resto del file rimane invariato ... -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -35,7 +48,6 @@
             </intent-filter>
         </activity>
 
-        <!-- MODIFICA: Registrata la nuova OnboardingActivity -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
@@ -48,6 +60,8 @@
             android:name=".AudioRecorderService"
             android:enabled="true"
             android:exported="false"
+            android:directBootAware="true"
+            tools:ignore="ForegroundServiceType"
             android:foregroundServiceType="location|microphone" />
 
         <receiver
@@ -60,6 +74,10 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".service.AudioRecordingService"
+            android:foregroundServiceType="microphone" />
 
     </application>
 

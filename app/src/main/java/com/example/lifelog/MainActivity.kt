@@ -1,304 +1,230 @@
-// Percorso: app/src/main/java/com/example/lifelog/MainActivity.kt
-
 package com.example.lifelog
 
 import android.Manifest
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
-import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
-import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.lifelog.data.SettingsManager
-import com.example.lifelog.ui.main.MainViewModel
-import com.google.android.material.button.MaterialButton
-import java.util.concurrent.TimeUnit
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.lifelog.audio.RecordingState
+import com.example.lifelog.service.AudioRecordingService
+// Importa il tuo tema se ne hai uno definito
+// import com.example.lifelog.ui.theme.LifeLogTheme  // Esempio di import del tema
 
+class MainActivity : ComponentActivity() {
 
-class MainActivity : AppCompatActivity() {
-
-    private val PERMISSIONS_REQUEST_CODE = 101
     private val TAG = "MainActivity"
 
-    private val viewModel: MainViewModel by viewModels()
+    // Launcher per la richiesta dei permessi
+    private val requestMultiplePermissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var allGranted = true
+            permissions.entries.forEach { entry ->
+                Log.d(TAG, "Permission ${entry.key} granted: ${entry.value}")
+                if (!entry.value) {
+                    allGranted = false
+                }
+            }
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var buttonToggleRec: MaterialButton
-    private lateinit var buttonForceUpload: Button
-    private lateinit var recyclerViewFiles: RecyclerView
-    private lateinit var statusText: TextView
-    private lateinit var fileListAdapter: FileListAdapter
-
-    private var audioService: AudioRecorderService? = null
-    private var isServiceBound = false
-
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            Log.d(TAG, "ServiceConnection: Connesso al servizio.")
-            val binder = service as AudioRecorderService.AudioServiceBinder
-            audioService = binder.getService()
-            isServiceBound = true
-            observeServiceState()
+            if (allGranted) {
+                Log.d(TAG, "All necessary permissions granted by user.")
+                startRecording()
+            } else {
+                Log.w(TAG, "Not all permissions were granted by user.")
+                // Qui potresti mostrare una UI per spiegare perché i permessi sono necessari
+                // e magari un pulsante per riprovare o andare alle impostazioni.
+                // Esempio: showPermissionsRationaleSnackbar()
+            }
         }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d(TAG, "ServiceConnection: Disconnesso dal servizio.")
-            isServiceBound = false
-            audioService = null
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // --- MODIFICA CHIAVE: Logica del "Guardiano" ---
-        if (!SettingsManager.isOnboardingComplete) {
-            // Se l'onboarding non è completo, avvia l'OnboardingActivity
-            // e interrompi l'esecuzione di onCreate per MainActivity.
-            startActivity(Intent(this, OnboardingActivity::class.java))
-            finish() // Chiude MainActivity per evitare che rimanga nello stack
-            return   // Esce dal metodo onCreate
+        setContent {
+            // LifeLogTheme { // Applica il tuo tema personalizzato se disponibile
+            MainScreen()
+            // }
         }
-        // --- FINE MODIFICA ---
-
-        // Questo codice verrà eseguito solo se l'onboarding è già stato completato.
-        setContentView(R.layout.activity_main)
-
-        setupViews()
-        setupButtons()
-        observeViewModel()
-        schedulePeriodicUploader()
-
-        if (savedInstanceState == null) {
-            if (!isIgnoringBatteryOptimizations()) {
-                requestIgnoreBatteryOptimizations()
-            }
-        }
+        Log.d(TAG, "onCreate completed")
     }
 
-    // ... (tutto il resto del codice rimane invariato)
-
-    override fun onStart() {
-        super.onStart()
-        // Controlliamo che l'onboarding sia completo prima di fare il bind al servizio
-        if (SettingsManager.isOnboardingComplete) {
-            Intent(this, AudioRecorderService::class.java).also { intent ->
-                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-            }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (isServiceBound) {
-            unbindService(serviceConnection)
-            isServiceBound = false
-        }
-    }
-
-    private fun setupViews() {
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        statusText = findViewById(R.id.textViewStatus)
-        buttonToggleRec = findViewById(R.id.buttonToggleRec)
-        val buttonSettings: Button = findViewById(R.id.buttonSettings)
-        buttonForceUpload = findViewById(R.id.buttonForceUpload)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            toolbar.updatePadding(top = insets.top)
-            view.findViewById<RecyclerView>(R.id.recyclerViewFiles).updatePadding(bottom = insets.bottom)
-            WindowInsetsCompat.CONSUMED
-        }
-        fileListAdapter = FileListAdapter()
-        recyclerViewFiles = findViewById(R.id.recyclerViewFiles)
-        recyclerViewFiles.adapter = fileListAdapter
-    }
-
-    private fun setupButtons() {
-        buttonToggleRec.setOnClickListener {
-            val currentState = audioService?.recordingState?.value
-            when (currentState) {
-                RecordingState.IDLE, RecordingState.PAUSED, null -> checkAndRequestPermissions()
-                RecordingState.RECORDING -> {
-                    startService(Intent(this, AudioRecorderService::class.java).apply {
-                        action = AudioRecorderService.ACTION_PAUSE_RECORDING
-                    })
-                }
-            }
-        }
-        findViewById<Button>(R.id.buttonSettings).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-        buttonForceUpload.setOnClickListener {
-            triggerUploadWorker()
-        }
-    }
-
-    private fun observeViewModel() {
-        viewModel.pendingFiles.observe(this) { fileList ->
-            val displayList = fileList.map { entity ->
-                RecordingFile(name = entity.fileName, sizeInKb = entity.sizeInBytes / 1024)
-            }
-            fileListAdapter.submitList(displayList)
-            buttonForceUpload.isEnabled = fileList.isNotEmpty()
-        }
-    }
-
-    private fun observeServiceState() {
-        audioService?.recordingState?.observe(this) { state ->
-            updateRecordingUI(state)
-        }
-    }
-
-    private fun updateRecordingUI(state: RecordingState?) {
-        when (state) {
-            RecordingState.IDLE -> {
-                statusText.text = "Stato: In attesa"
-                buttonToggleRec.text = "Avvio Registrazione"
-                buttonToggleRec.setIconResource(android.R.drawable.ic_media_play)
-                buttonToggleRec.isEnabled = true
-            }
-            RecordingState.RECORDING -> {
-                statusText.text = "Stato: Registrazione in corso..."
-                buttonToggleRec.text = "Pausa Registrazione"
-                buttonToggleRec.setIconResource(android.R.drawable.ic_media_pause)
-                buttonToggleRec.isEnabled = true
-            }
-            RecordingState.PAUSED -> {
-                statusText.text = "Stato: Registrazione in pausa"
-                buttonToggleRec.text = "Riprendi Registrazione"
-                buttonToggleRec.setIconResource(android.R.drawable.ic_media_play)
-                buttonToggleRec.isEnabled = true
-            }
-            null -> {
-                statusText.text = "Stato: Inizializzazione..."
-                buttonToggleRec.isEnabled = false
-            }
-        }
-    }
-
-    private fun isIgnoringBatteryOptimizations(): Boolean {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        return powerManager.isIgnoringBatteryOptimizations(packageName)
-    }
-
-    private fun requestIgnoreBatteryOptimizations() {
-        AlertDialog.Builder(this)
-            .setTitle("Ottimizzazione Batteria Richiesta")
-            .setMessage("Per funzionare correttamente in background senza interruzioni, LifeLog " +
-                    "ha bisogno di essere esclusa dalle ottimizzazioni della batteria.\n\n" +
-                    "Nella schermata successiva, potrebbe essere necessario cercare LifeLog " +
-                    "e selezionare l'opzione 'Non ottimizzare' o 'Nessuna restrizione'.")
-            .setPositiveButton("Vai alle Impostazioni") { _, _ ->
-                try {
-                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                    intent.data = Uri.parse("package:$packageName")
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Impossibile aprire la schermata ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS.", e)
-                    try {
-                        val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                        startActivity(intent)
-                    } catch (e2: Exception) {
-                        Log.e(TAG, "Impossibile aprire anche la schermata di fallback.", e2)
-                        Toast.makeText(this, "Impossibile aprire automaticamente le impostazioni della batteria.", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-            .setNegativeButton("Annulla", null)
-            .setCancelable(false)
-            .show()
+    override fun onResume() {
+        super.onResume()
+        // Lo stato del servizio e della registrazione viene già osservato
+        // in modo reattivo dal Composable MainScreen usando collectAsStateWithLifecycle.
+        // Puoi aggiungere qui log specifici per onResume se necessario.
+        Log.d(TAG, "onResume - Current service state (from static flow immediately): ${AudioRecordingService.currentRecordingState.value}")
     }
 
     private fun checkAndRequestPermissions() {
+        Log.d(TAG, "Checking permissions...")
         val permissionsToRequest = mutableListOf<String>()
+
+        // 1. Permesso RECORD_AUDIO (sempre necessario)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             permissionsToRequest.add(Manifest.permission.RECORD_AUDIO)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+
+        // 2. Permesso POST_NOTIFICATIONS (per Android 13/API 33+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        // 3. Permesso FOREGROUND_SERVICE_MICROPHONE (per Android 14/API 34+)
+        // Questo è necessario se il tuo servizio foreground usa il microfono.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE_MICROPHONE) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.FOREGROUND_SERVICE_MICROPHONE)
+            }
         }
+        // Aggiungi qui altri permessi se necessario (es. LOCATION)
+
         if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), PERMISSIONS_REQUEST_CODE)
+            Log.d(TAG, "Requesting permissions: ${permissionsToRequest.joinToString()}")
+            requestMultiplePermissionsLauncher.launch(permissionsToRequest.toTypedArray())
         } else {
-            checkBackgroundLocationPermission()
+            Log.d(TAG, "All necessary permissions already granted.")
+            startRecording() // Tutti i permessi sono già concessi
         }
     }
 
-    private fun checkBackgroundLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                AlertDialog.Builder(this)
-                    .setTitle("Permesso Posizione in Background")
-                    .setMessage("LifeLog necessita di accedere alla posizione in background per associare i ricordi audio al luogo di registrazione. Seleziona 'Consenti sempre' nella schermata successiva.")
-                    .setPositiveButton("Vai alle Impostazioni") { _, _ ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null))
-                        startActivity(intent)
+    private fun startRecording() {
+        Log.i(TAG, "Permissions check passed or all granted. Attempting to start service for recording.")
+        val serviceIntent = Intent(this, AudioRecordingService::class.java).apply {
+            action = AudioRecordingService.ACTION_START_RECORDING
+        }
+        try {
+            ContextCompat.startForegroundService(this, serviceIntent)
+            Log.i(TAG, "Sent ACTION_START_RECORDING to AudioRecordingService.")
+        } catch (e: SecurityException) {
+            Log.e(TAG, "SecurityException starting foreground service. Missing FOREGROUND_SERVICE permission in Manifest or other restriction.", e)
+            // Mostra un messaggio all'utente o gestisci l'errore
+        }
+        catch (e: Exception) {
+            Log.e(TAG, "Error starting foreground service from MainActivity", e)
+            // Gestisci altri errori, es. se il sistema operativo impedisce l'avvio del foreground service
+        }
+    }
+
+    private fun stopRecording() {
+        Log.i(TAG, "Attempting to stop service for recording.")
+        val serviceIntent = Intent(this, AudioRecordingService::class.java).apply {
+            action = AudioRecordingService.ACTION_STOP_RECORDING
+        }
+        // startService è sufficiente per inviare un comando a un servizio già in esecuzione.
+        startService(serviceIntent)
+        Log.i(TAG, "Sent ACTION_STOP_RECORDING to AudioRecordingService.")
+    }
+
+    // --- Composable UI ---
+    @androidx.compose.runtime.Composable
+    fun MainScreen() {
+        val context = LocalContext.current // Ottieni il contesto per Intent, ecc.
+
+        // Osserva gli StateFlow dal servizio in modo lifecycle-aware
+        val serviceIsRunning by AudioRecordingService.serviceIsRunning.collectAsStateWithLifecycle()
+        val currentRecordingState by AudioRecordingService.currentRecordingState.collectAsStateWithLifecycle()
+
+        // LaunchedEffect per loggare i cambiamenti di stato (opzionale, per debug)
+        androidx.compose.runtime.LaunchedEffect(serviceIsRunning) {
+            Log.d(TAG, "UI Observed service running state: $serviceIsRunning")
+        }
+        androidx.compose.runtime.LaunchedEffect(currentRecordingState) {
+            Log.d(TAG, "UI Observed recording state: $currentRecordingState")
+        }
+
+        androidx.compose.material3.Scaffold(
+            topBar = {
+                androidx.compose.material3.TopAppBar(
+                    title = { androidx.compose.material3.Text("LifeLog Audio Recorder") },
+                    colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                        containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = androidx.compose.material3.MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                )
+            }
+        ) { innerPadding ->
+            androidx.compose.foundation.layout.Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding) // Applica il padding della Scaffold
+                    .padding(16.dp), // Aggiungi ulteriore padding interno
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+            ) {
+                androidx.compose.material3.Text(
+                    text = "Stato Servizio: ${if (serviceIsRunning) "Attivo" else "Non Attivo"}",
+                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                androidx.compose.material3.Text(
+                    text = "Stato Registrazione: ${currentRecordingState.name}",
+                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 32.dp)
+                )
+
+                val buttonEnabled = true // Puoi usare questo per disabilitare i bottoni durante transizioni di stato se necessario
+
+                if (currentRecordingState == RecordingState.IDLE || currentRecordingState == RecordingState.ERROR) {
+                    androidx.compose.material3.Button(
+                        onClick = {
+                            Log.d(TAG, "Start Recording button clicked.")
+                            checkAndRequestPermissions()
+                        },
+                        enabled = buttonEnabled,
+                        modifier = Modifier.fillMaxWidth(0.8f)
+                    ) {
+                        androidx.compose.material3.Text("Start Recording")
                     }
-                    .setNegativeButton("Annulla", null).show()
-            } else {
-                startRecordingService()
+                } else { // RECORDING o INITIALIZING
+                    androidx.compose.material3.Button(
+                        onClick = {
+                            Log.d(TAG, "Stop Recording button clicked.")
+                            stopRecording()
+                        },
+                        enabled = buttonEnabled,
+                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = androidx.compose.material3.MaterialTheme.colorScheme.error),
+                        modifier = Modifier.fillMaxWidth(0.8f)
+                    ) {
+                        androidx.compose.material3.Text("Stop Recording")
+                    }
+                }
+
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(24.dp))
+
+                // Pulsante per aprire le impostazioni dell'app (utile se i permessi sono negati permanentemente)
+                androidx.compose.material3.Button(
+                    onClick = {
+                        Log.d(TAG, "Open App Settings button clicked.")
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", context.packageName, null)
+                            context.startActivity(this)
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(0.8f)
+                ) {
+                    androidx.compose.material3.Text("Apri Impostazioni App")
+                }
             }
-        } else {
-            startRecordingService()
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                checkBackgroundLocationPermission()
-            } else {
-                Toast.makeText(this, "Permessi necessari negati.", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun startRecordingService() {
-        val serviceIntent = Intent(this, AudioRecorderService::class.java).apply { action = AudioRecorderService.ACTION_START_RECORDING }
-        ContextCompat.startForegroundService(this, serviceIntent)
-    }
-
-    private fun schedulePeriodicUploader() {
-        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val uploadWorkRequest = PeriodicWorkRequestBuilder<UploaderWorker>(1, TimeUnit.HOURS).setConstraints(constraints).build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("PeriodicLifeLogUploader", ExistingPeriodicWorkPolicy.KEEP, uploadWorkRequest)
-    }
-
-    private fun triggerUploadWorker() {
-        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploaderWorker>()
-            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()).build()
-        val workManager = WorkManager.getInstance(this)
-        workManager.enqueue(uploadWorkRequest)
-        Toast.makeText(this, "Avvio upload forzato...", Toast.LENGTH_SHORT).show()
     }
 }

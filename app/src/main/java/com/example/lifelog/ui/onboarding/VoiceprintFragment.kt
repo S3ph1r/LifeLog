@@ -1,5 +1,3 @@
-// Percorso: app/src/main/java/com/example/lifelog/ui/onboarding/VoiceprintFragment.kt
-
 package com.example.lifelog.ui.onboarding
 
 import android.content.Context
@@ -10,14 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.lifelog.CryptoManager
-import com.example.lifelog.OnboardingActivity
 import com.example.lifelog.R
-import com.example.lifelog.data.SettingsManager
+import com.example.lifelog.data.ConfigManager
 import com.example.lifelog.data.db.AppDatabase
 import com.example.lifelog.data.db.AudioFileEntity
 import com.example.lifelog.data.db.AudioFileStatus
@@ -26,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,7 +34,9 @@ class VoiceprintFragment : Fragment() {
     private lateinit var recordButton: MaterialButton
     private var isRecording = false
     private var isVoiceprintRecordedSuccessfully = false
-    private var recordingFilePath: String? = null
+
+    private var mediaRecorder: MediaRecorder? = null
+    private var outputFile: File? = null
 
     private val cryptoManager = CryptoManager()
     private val audioFileDao by lazy { AppDatabase.getInstance(requireContext()).audioFileDao() }
@@ -48,69 +47,62 @@ class VoiceprintFragment : Fragment() {
         if (context is OnboardingFragmentCallback) {
             callback = context
         } else {
-            throw RuntimeException("$context deve implementare OnboardingFragmentCallback")
+            throw RuntimeException("$context must implement OnboardingFragmentCallback")
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_voiceprint, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recordButton = view.findViewById(R.id.recordButton)
-        setupClickListeners()
-        updateUI()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback = null
-    }
-
-    private fun setupClickListeners() {
         recordButton.setOnClickListener {
             if (isRecording) {
-                stopRecording()
+                // Modifica chiave: ora la chiamata a stop è dentro una coroutine
+                handleStopRecording()
             } else {
                 startRecording()
             }
         }
+        updateUI()
     }
 
     private fun updateUI() {
-        if (isRecording) {
-            recordButton.text = "Ferma Registrazione"
-            recordButton.setIconResource(android.R.drawable.ic_media_pause)
-            callback?.setNextButtonEnabled(false)
-        } else {
-            recordButton.text = "Inizia Registrazione"
-            recordButton.setIconResource(R.drawable.ic_mic)
-            callback?.setNextButtonEnabled(isVoiceprintRecordedSuccessfully)
-        }
+        recordButton.text = if (isRecording) "Ferma Registrazione" else "Inizia Registrazione"
+        recordButton.setIconResource(if (isRecording) android.R.drawable.ic_media_pause else R.drawable.ic_mic)
+        recordButton.isEnabled = true // Il pulsante è sempre abilitato
+        callback?.setNextButtonEnabled(isVoiceprintRecordedSuccessfully)
     }
 
     private fun startRecording() {
-        val outputDir = File(requireContext().filesDir, "voiceprints_raw")
-        if (!outputDir.exists()) outputDir.mkdirs()
-        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val fileName = "enrollment_voiceprint_${timestamp}.m4a"
-        recordingFilePath = File(outputDir, fileName).absolutePath
+        // ... (il codice per startRecording rimane invariato)
+        val config = ConfigManager.getConfig()
+        if (config.userFirstName.isBlank() || config.userAlias.isBlank()) {
+            Toast.makeText(requireContext(), "Errore: dati utente non trovati.", Toast.LENGTH_LONG).show()
+            return
+        }
 
-        mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            MediaRecorder(requireContext())
-        } else {
-            @Suppress("DEPRECATION") MediaRecorder()
-        }).apply {
+        val sanitizedFirstName = config.userFirstName.replace(" ", "_")
+        val sanitizedLastName = config.userLastName.replace(" ", "_")
+        val sanitizedAlias = config.userAlias.replace(" ", "_")
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val identityPart = "${sanitizedFirstName}_${sanitizedLastName}-${sanitizedAlias}"
+        val fileName = "enrollment_${identityPart}_${timestamp}.m4a"
+
+        val outputDir = File(requireContext().cacheDir, "voiceprints")
+        if (!outputDir.exists()) outputDir.mkdirs()
+        outputFile = File(outputDir, fileName)
+
+        mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(requireContext()) else @Suppress("DEPRECATION") MediaRecorder()).apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
             setAudioSamplingRate(44100)
             setAudioEncodingBitRate(128000)
-            setOutputFile(recordingFilePath)
+            setOutputFile(outputFile!!.absolutePath)
+
             try {
                 prepare()
                 start()
@@ -118,104 +110,118 @@ class VoiceprintFragment : Fragment() {
                 isVoiceprintRecordedSuccessfully = false
                 updateUI()
                 Toast.makeText(requireContext(), "Registrazione avviata...", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "Registrazione voiceprint avviata: $recordingFilePath")
-            } catch (e: Exception) {
-                Log.e(TAG, "Errore avvio registrazione voiceprint", e)
-                isRecording = false
-                updateUI()
+            } catch (e: IOException) {
+                Log.e(TAG, "prepare() failed", e)
+                Toast.makeText(requireContext(), "Errore nell'avviare la registrazione.", Toast.LENGTH_SHORT).show()
                 releaseRecorder()
             }
         }
     }
 
-    private fun stopRecording() {
-        mediaRecorder?.apply {
+    // --- NUOVO METODO PER GESTIRE LO STOP IN MODO ASINCRONO ---
+    private fun handleStopRecording() {
+        if (!isRecording) return
+
+        recordButton.isEnabled = false // Disabilita il pulsante per evitare doppi click
+        isRecording = false
+        updateUI()
+        Toast.makeText(requireContext(), "Finalizzazione registrazione...", Toast.LENGTH_SHORT).show()
+
+        // Lanciamo una coroutine per fare tutto il lavoro pesante in background
+        lifecycleScope.launch(Dispatchers.IO) {
+            val recorder = mediaRecorder
+            val fileToProcess = outputFile
+
+            mediaRecorder = null
+            outputFile = null
+
+            // 1. Ferma e rilascia il recorder (operazione bloccante)
             try {
-                stop()
-                release()
-                isRecording = false
-                Log.d(TAG, "Registrazione voiceprint fermata.")
-                processRecordedVoiceprintFile()
+                recorder?.stop()
+                recorder?.release()
             } catch (e: Exception) {
-                Log.e(TAG, "Errore stop registrazione voiceprint", e)
-                recordingFilePath?.let { File(it).delete() }
-                recordingFilePath = null
-                isRecording = false
-            } finally {
-                releaseRecorder()
-                updateUI()
+                Log.w(TAG, "stop() o release() fallito.", e)
+                fileToProcess?.delete()
+                // Usciamo dalla coroutine se lo stop fallisce
+                return@launch
             }
+
+            // 2. Verifica e processa il file
+            if (fileToProcess != null && fileToProcess.exists() && fileToProcess.length() > 4096) {
+                processFile(fileToProcess)
+            } else {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Registrazione non valida. Riprova.", Toast.LENGTH_LONG).show()
+                }
+                fileToProcess?.delete()
+            }
+        }
+    }
+
+    // processFile ora è privato e chiamato solo dalla coroutine
+    private suspend fun processFile(fileToProcess: File) {
+        val password = ConfigManager.getConfig().encryptionPassword
+        if (password.isBlank()) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "Errore: password non trovata.", Toast.LENGTH_LONG).show()
+            }
+            fileToProcess.delete()
+            return
+        }
+
+        try {
+            val encryptedFile = cryptoManager.encryptFile(password, fileToProcess)
+            if (encryptedFile != null && encryptedFile.exists()) {
+                val finalDestination = File(requireContext().filesDir, encryptedFile.name)
+                encryptedFile.renameTo(finalDestination)
+
+                val entity = AudioFileEntity(
+                    fileName = finalDestination.name,
+                    filePath = finalDestination.absolutePath,
+                    status = AudioFileStatus.PENDING_UPLOAD,
+                    sizeInBytes = finalDestination.length()
+                )
+                audioFileDao.insert(entity)
+
+                withContext(Dispatchers.Main) {
+                    isVoiceprintRecordedSuccessfully = true
+                    updateUI()
+                    Toast.makeText(requireContext(), "Impronta vocale salvata!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                throw IOException("Criptazione fallita, file non creato.")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore durante il processamento del file", e)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "Errore durante il salvataggio.", Toast.LENGTH_SHORT).show()
+            }
+        } finally {
+            fileToProcess.delete()
         }
     }
 
     private fun releaseRecorder() {
-        mediaRecorder?.release()
+        try {
+            mediaRecorder?.reset()
+            mediaRecorder?.release()
+        } catch (e: Exception) {
+            Log.e(TAG, "Eccezione durante il rilascio del recorder", e)
+        }
         mediaRecorder = null
+        isRecording = false
     }
 
-    private fun processRecordedVoiceprintFile() {
-        val path = recordingFilePath ?: return
-        val rawFile = File(path)
-        if (!rawFile.exists() || rawFile.length() < 1024) {
-            Log.e(TAG, "File voiceprint non valido. Eliminato.")
-            rawFile.delete()
-            recordingFilePath = null
-            isVoiceprintRecordedSuccessfully = false
-            Toast.makeText(requireContext(), "Registrazione non valida. Riprova.", Toast.LENGTH_LONG).show()
-            updateUI()
-            return
+    override fun onPause() {
+        super.onPause()
+        if (isRecording) {
+            handleStopRecording()
         }
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            val password = SettingsManager.encryptionPassword
-            if (password.isBlank()) {
-                Log.e(TAG, "Password non trovata. Impossibile processare voiceprint.")
-                rawFile.delete()
-                isVoiceprintRecordedSuccessfully = false
-                withContext(Dispatchers.Main) { updateUI() }
-                return@launch
-            }
-
-            try {
-                val encryptedFile = cryptoManager.encryptFile(password, rawFile)
-                if (encryptedFile != null && encryptedFile.exists()) {
-                    val voiceprintEntity = AudioFileEntity(
-                        fileName = encryptedFile.name,
-                        filePath = encryptedFile.absolutePath,
-                        // --- MODIFICA CHIAVE ---
-                        status = AudioFileStatus.PENDING_UPLOAD,
-                        sizeInBytes = encryptedFile.length()
-                    )
-                    audioFileDao.insert(voiceprintEntity)
-                    Log.d(TAG, "Voiceprint criptato e aggiunto al DB per l'upload.")
-                    isVoiceprintRecordedSuccessfully = true
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Voiceprint registrato!", Toast.LENGTH_SHORT).show()
-                        updateUI()
-                    }
-                } else {
-                    Log.e(TAG, "Criptazione voiceprint fallita.")
-                    isVoiceprintRecordedSuccessfully = false
-                    withContext(Dispatchers.Main) { updateUI() }
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Errore in processRecordedVoiceprintFile", e)
-                isVoiceprintRecordedSuccessfully = false
-                withContext(Dispatchers.Main) { updateUI() }
-            } finally {
-                rawFile.delete()
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        releaseRecorder()
     }
 
     fun handleNextButtonClick(): Boolean {
         if (!isVoiceprintRecordedSuccessfully) {
-            Toast.makeText(requireContext(), "Registra prima il tuo voiceprint.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Registra prima la tua impronta vocale.", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
