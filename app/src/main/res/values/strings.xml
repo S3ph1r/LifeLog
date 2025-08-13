@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lifelog</string>
+    <string name="voiceprint_phrase">"La volpe veloce e marrone salta sopra il cane pigro. Questo test mi permette di calibrare l'accuratezza del riconoscimento vocale. La mia voce è la mia password, e non devo dimenticarla."</string>
+</resources>

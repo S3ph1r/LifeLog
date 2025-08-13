@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_view_voiceprint_instructions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Per completare la configurazione, registra la tua impronta vocale leggendo il testo sottostante in modo chiaro e naturale."
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_text_to_read"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_recording_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_voiceprint_instructions">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view_phrase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/voiceprint_phrase"
+                android:textSize="18sp"
+                android:lineSpacingExtra="4dp"/>
+
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_view_recording_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Pronto per registrare"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/button_record_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_record_start"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_record_button_bg"
+        android:contentDescription="Avvia registrazione"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_record_stop"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/ic_record_button_bg"
+        android:contentDescription="Ferma registrazione"
+        android:src="@android:drawable/ic_media_pause"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/button_record_start"
+        app:layout_constraintEnd_toEndOf="@+id/button_record_start"
+        app:layout_constraintStart_toStartOf="@+id/button_record_start"
+        app:layout_constraintTop_toTopOf="@+id/button_record_start"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
