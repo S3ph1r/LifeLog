@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "608305382909",
+    "project_id": "lifelog-c808c",
+    "storage_bucket": "lifelog-c808c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608305382909:android:d4133dc02e65abd2c68594",
+        "android_client_info": {
+          "package_name": "com.example.lifelog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB56WagQNBo3suASpyWCYaAFlDUBQQJCF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

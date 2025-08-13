@@ -22,7 +22,6 @@ class VoiceprintFragment : Fragment() {
     private var mediaRecorder: MediaRecorder? = null
     private var voiceprintFile: File? = null
 
-    // Stato per sapere se la registrazione è stata completata con successo
     var isRecordingComplete: Boolean = false
         private set
 
@@ -46,7 +45,7 @@ class VoiceprintFragment : Fragment() {
     }
 
     private fun startVoiceprintRecording() {
-        // Creiamo un file temporaneo per il voiceprint
+        // Creiamo un file temporaneo per il voiceprint nella cache
         voiceprintFile = File(requireContext().cacheDir, "voiceprint_temp.m4a")
 
         mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -63,9 +62,8 @@ class VoiceprintFragment : Fragment() {
                 prepare()
                 start()
 
-                // Aggiorniamo la UI
                 updateUI(isRecording = true)
-                isRecordingComplete = false // Resettiamo lo stato
+                isRecordingComplete = false
             } catch (e: IOException) {
                 Log.e("VoiceprintFragment", "prepare() failed", e)
                 Toast.makeText(requireContext(), "Errore nell'avviare la registrazione", Toast.LENGTH_SHORT).show()
@@ -77,13 +75,14 @@ class VoiceprintFragment : Fragment() {
     private fun stopVoiceprintRecording() {
         try {
             mediaRecorder?.stop()
-            updateUI(isRecording = false)
             isRecordingComplete = true
-            Log.d("VoiceprintFragment", "Registrazione voiceprint completata e salvata in: ${voiceprintFile?.absolutePath}")
+            updateUI(isRecording = false)
+            Log.d("VoiceprintFragment", "Registrazione completata in: ${voiceprintFile?.absolutePath}")
         } catch (e: Exception) {
             Log.e("VoiceprintFragment", "stop() failed", e)
             Toast.makeText(requireContext(), "Errore nell'arrestare la registrazione", Toast.LENGTH_SHORT).show()
             isRecordingComplete = false
+            voiceprintFile?.delete() // Se lo stop fallisce, il file è corrotto
         } finally {
             releaseMediaRecorder()
         }
@@ -100,10 +99,6 @@ class VoiceprintFragment : Fragment() {
         }
     }
 
-    /**
-     * Metodo pubblico per recuperare il file del voiceprint.
-     * Verrà chiamato dall'activity di onboarding.
-     */
     fun getVoiceprintFile(): File? {
         return if (isRecordingComplete) voiceprintFile else null
     }

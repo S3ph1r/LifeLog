@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- PERMESSI RICHIESTI -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -9,6 +10,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -20,34 +22,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="34">
-        // <activity
-        // android:name=".OnboardingActivity"
-        //    android:exported="false" />
-        <!-- Activity di avvio -->
+
+        <!-- Activity di avvio (invisibile) -->
         <activity
             android:name=".LauncherActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Activity per la richiesta dei permessi -->
+        </activity>
+
+        <!-- Activity per l'onboarding -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+
+        <!-- Activity per la richiesta dei permessi -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" /> <!-- Activity per la dashboard principale -->
+            android:exported="false" />
+
+        <!-- Activity per la dashboard principale -->
         <activity
             android:name=".DashboardActivity"
-            android:exported="false" /> <!-- Activity per le impostazioni -->
+            android:exported="false" />
+
+        <!-- Activity per le impostazioni -->
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" /> <!-- Servizio di registrazione -->
+            android:exported="false" />
+
+        <!-- Servizio di registrazione -->
         <service
             android:name=".AudioRecordingService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="microphone" /> <!-- Receiver per l'avvio del telefono -->
+            android:foregroundServiceType="microphone" />
+
+        <!-- Receiver per l'avvio del telefono -->
         <receiver
             android:name=".BootCompletedReceiver"
             android:enabled="true"
@@ -56,6 +70,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
