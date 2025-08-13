@@ -12,8 +12,11 @@ data class AudioSegment(
     val timestamp: Long,
     var isUploaded: Boolean = false,
 
-    // --- NUOVI CAMPI ---
-    // Li rendiamo nullable perché la posizione potrebbe non essere sempre disponibile.
     val latitude: Double? = null,
-    val longitude: Double? = null
+    val longitude: Double? = null,
+
+    // --- NUOVO CAMPO ---
+    // Questo flag ci dirà se la registrazione è un segmento normale
+    // o il file speciale per il voiceprint.
+    val isVoiceprint: Boolean = false
 )

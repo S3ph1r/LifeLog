@@ -5,35 +5,43 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.lifelog.databinding.ActivityOnboardingBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import androidx.core.content.ContextCompat
 
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
     private lateinit var onboardingAdapter: OnboardingAdapter
+    private val audioSegmentDao: AudioSegmentDao by lazy {
+        AppDatabase.getDatabase(application).audioSegmentDao()
+    }
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+    ) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             Log.d("OnboardingActivity", "Permessi concessi. Procedo alla configurazione.")
-            // L'utente ha concesso i permessi, quindi possiamo andare avanti
             binding.viewPagerOnboarding.setCurrentItem(1, true)
         } else {
             Log.w("OnboardingActivity", "Permessi critici negati.")
             Toast.makeText(this, "I permessi sono necessari per usare l'app.", Toast.LENGTH_LONG).show()
-            // Qui potremmo anche chiudere l'app, ma per ora non facciamo nulla
         }
     }
 
@@ -57,12 +65,12 @@ class OnboardingActivity : AppCompatActivity() {
             val lastItem = onboardingAdapter.itemCount - 1
 
             when (currentItem) {
-                0 -> { // Pagina 0 (Benvenuto) -> Chiediamo i permessi
+                0 -> {
                     Log.d("OnboardingActivity", "Lancio MainActivity per richiesta permessi...")
                     val intent = Intent(this, MainActivity::class.java)
                     permissionLauncher.launch(intent)
                 }
-                1 -> { // Pagina 1 (Configurazione) -> vai a Voiceprint
+                1 -> {
                     val configFragment = onboardingAdapter.fragments[currentItem] as ConfigurationFragment
                     if (configFragment.saveSettings()) {
                         binding.viewPagerOnboarding.setCurrentItem(currentItem + 1, true)
@@ -70,7 +78,7 @@ class OnboardingActivity : AppCompatActivity() {
                         Toast.makeText(this, "Compila i campi obbligatori", Toast.LENGTH_SHORT).show()
                     }
                 }
-                lastItem -> { // Ultima pagina (Voiceprint) -> fine
+                lastItem -> {
                     handleFinishOnboarding()
                 }
             }
@@ -99,50 +107,52 @@ class OnboardingActivity : AppCompatActivity() {
 
         binding.buttonNext.isEnabled = false
         binding.buttonBack.isEnabled = false
-        Toast.makeText(this, "Finalizzazione...", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Finalizzazione...", Toast.LENGTH_SHORT).show()
 
-        lifecycleScope.launch {
-            val success = uploadVoiceprint(voiceprintFile)
-            if (success) {
-                Log.d("OnboardingActivity", "Upload voiceprint riuscito.")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val timestamp = System.currentTimeMillis()
+            val segment = AudioSegment(
+                filePath = voiceprintFile.absolutePath,
+                timestamp = timestamp,
+                isVoiceprint = true
+            )
+            val segmentId = audioSegmentDao.insertAndGetId(segment)
+            Log.d("OnboardingActivity", "Voiceprint salvato nel DB con ID: $segmentId")
 
-                // --- IMPORTANTE: Ora che TUTTO è finito, salviamo lo stato di onboarding completato ---
-                val prefs = AppPreferences.getInstance(this@OnboardingActivity)
-                prefs.isOnboardingCompleted = true
-                prefs.isServiceActive = true // Il servizio deve partire attivo
+            scheduleVoiceprintUpload(segmentId, voiceprintFile.absolutePath, timestamp)
 
-                // E avviamo il servizio per la prima volta!
-                val serviceIntent = Intent(this@OnboardingActivity, AudioRecordingService::class.java)
-                ContextCompat.startForegroundService(this@OnboardingActivity, serviceIntent)
+            val prefs = AppPreferences.getInstance(this@OnboardingActivity)
+            prefs.isOnboardingCompleted = true
+            prefs.isServiceActive = true
 
-                // Infine, andiamo alla Dashboard
-                val dashboardIntent = Intent(this@OnboardingActivity, DashboardActivity::class.java)
-                startActivity(dashboardIntent)
-                finish() // Chiudiamo l'onboarding per sempre
-            } else {
-                Log.e("OnboardingActivity", "Upload voiceprint fallito.")
-                Toast.makeText(this@OnboardingActivity, "Upload fallito. Riprova.", Toast.LENGTH_LONG).show()
-                binding.buttonNext.isEnabled = true
-                binding.buttonBack.isEnabled = true
-            }
+            val serviceIntent = Intent(this@OnboardingActivity, AudioRecordingService::class.java)
+            ContextCompat.startForegroundService(this@OnboardingActivity, serviceIntent)
+
+            val dashboardIntent = Intent(this@OnboardingActivity, DashboardActivity::class.java)
+            startActivity(dashboardIntent)
+            finish()
         }
     }
 
-    private suspend fun uploadVoiceprint(file: File): Boolean {
-        // ... (questa funzione rimane identica)
-        val settings = SettingsManager.getInstance(this)
-        val firstNameBody = settings.userFirstName.toRequestBody("text/plain".toMediaTypeOrNull())
-        val lastNameBody = settings.userLastName.toRequestBody("text/plain".toMediaTypeOrNull())
-        val aliasBody = settings.userAlias.toRequestBody("text/plain".toMediaTypeOrNull())
-        val requestFileBody = file.asRequestBody("audio/m4a".toMediaTypeOrNull())
-        val filePart = MultipartBody.Part.createFormData("voiceprintFile", file.name, requestFileBody)
-        return try {
-            val response = RetrofitInstance.getInstance(this).api.uploadVoiceprint(firstNameBody, lastNameBody, aliasBody, filePart)
-            response.isSuccessful
-        } catch (e: Exception) {
-            Log.e("OnboardingActivity", "Eccezione durante l'upload del voiceprint", e)
-            false
-        }
+    private fun scheduleVoiceprintUpload(segmentId: Long, filePath: String, timestamp: Long) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val inputData = Data.Builder()
+            .putString(UploadWorker.KEY_FILE_PATH, filePath)
+            .putLong(UploadWorker.KEY_SEGMENT_ID, segmentId)
+            .putLong(UploadWorker.KEY_TIMESTAMP, timestamp)
+            .putBoolean(UploadWorker.KEY_IS_VOICEPRINT, true)
+            .build()
+
+        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(inputData)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(applicationContext).enqueue(uploadWorkRequest)
+        Log.d("OnboardingActivity", "UploadWorker schedulato per il voiceprint (ID: $segmentId)")
     }
 
     private fun setupPageChangeCallback() {
@@ -155,6 +165,22 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun updateUIForPage(position: Int) {
-        // ... (identico a prima)
+        when (position) {
+            0 -> {
+                binding.buttonBack.visibility = View.INVISIBLE
+                binding.buttonNext.text = getString(R.string.next)
+                binding.textViewOnboardingTitle.text = "Benvenuto"
+            }
+            1 -> {
+                binding.buttonBack.visibility = View.VISIBLE
+                binding.buttonNext.text = getString(R.string.next)
+                binding.textViewOnboardingTitle.text = "Configurazione"
+            }
+            2 -> {
+                binding.buttonBack.visibility = View.VISIBLE
+                binding.buttonNext.text = getString(R.string.finish)
+                binding.textViewOnboardingTitle.text = "Impronta Vocale"
+            }
+        }
     }
 }

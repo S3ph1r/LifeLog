@@ -34,7 +34,7 @@ class AudioRecordingService : LifecycleService() {
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var mediaRecorder: MediaRecorder? = null
-    private val recordingIntervalMs = 20 * 1000L
+    private val recordingIntervalMs = 5 * 60 * 1000L
 
     private val audioSegmentDao: AudioSegmentDao by lazy { AppDatabase.getDatabase(application).audioSegmentDao() }
     private val settingsManager: SettingsManager by lazy { SettingsManager.getInstance(applicationContext) }
