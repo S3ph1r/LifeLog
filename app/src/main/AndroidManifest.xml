@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- PERMESSI RICHIESTI -->
+
+    <!-- Permesso chiave per richiedere di ignorare l'ottimizzazione della batteria -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- Permessi per il servizio in foreground e notifiche -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+    <!-- Permesso per la registrazione audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Permesso per avviare il servizio al boot del dispositivo -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Permessi per la localizzazione -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Buona pratica aggiungerlo con FINE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 
@@ -40,6 +52,8 @@
             android:exported="false" />
 
         <!-- Activity per la richiesta dei permessi -->
+        <!-- NOTA: Questa MainActivity sembra ridondante se il flusso è gestito da LauncherActivity -->
+        <!-- Potrebbe essere un residuo di codice precedente. Per ora la lasciamo. -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />

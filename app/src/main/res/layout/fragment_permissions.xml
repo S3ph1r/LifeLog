@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".PermissionsFragment">
+
+    <ImageView
+        android:id="@+id/icon_permissions"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_shield_check"
+        app:tint="?attr/colorPrimary"
+        android:contentDescription="Icona permessi" />
+
+    <TextView
+        android:id="@+id/text_permissions_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Permessi Necessari"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_permissions" />
+
+    <TextView
+        android:id="@+id/text_permissions_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:text="Per funzionare correttamente, LifeLog ha bisogno di accedere ad alcune funzionalità del tuo dispositivo:\n\n•   **Microfono:** per registrare i segmenti audio.\n•   **Posizione:** per associare le coordinate geografiche alle registrazioni (opzionale ma consigliato).\n•   **Notifiche:** per mantenere il servizio attivo in background.\n•   **Uso della Batteria:** per evitare che il sistema operativo interrompa il servizio."
+        android:lineSpacingExtra="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_permissions_title" />
+
+
+    <Button
+        android:id="@+id/button_grant_permissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Concedi Permessi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

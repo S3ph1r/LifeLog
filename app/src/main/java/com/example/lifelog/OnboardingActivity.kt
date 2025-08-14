@@ -26,23 +26,26 @@ class OnboardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         settingsManager = SettingsManager.getInstance(this)
-
         onboardingAdapter = OnboardingAdapter(this)
-        // Usa l'ID corretto dal tuo XML
-        binding.viewPagerOnboarding.adapter = onboardingAdapter
 
-        // Usa l'ID corretto dal tuo XML
+        binding.viewPagerOnboarding.adapter = onboardingAdapter
         binding.viewPagerOnboarding.isUserInputEnabled = false
 
         registerListeners()
     }
 
     private fun registerListeners() {
-        // Usa l'ID corretto dal tuo XML
         binding.buttonNext.setOnClickListener {
             val currentItem = binding.viewPagerOnboarding.currentItem
+            // Non permettiamo di andare avanti dalla schermata dei permessi
+            // se non sono stati concessi. Sarà il fragment a farci avanzare.
+            if (currentItem == 1) {
+                Toast.makeText(this, "Per favore, concedi i permessi richiesti per continuare.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (currentItem < onboardingAdapter.itemCount - 1) {
-                if (currentItem == 1) {
+                if (currentItem == 2) { // Ora l'indice del ConfigurationFragment è 2
                     val fragment = supportFragmentManager.findFragmentByTag("f$currentItem") as? ConfigurationFragment
                     if (fragment?.areInputsValid() == true) {
                         binding.viewPagerOnboarding.currentItem = currentItem + 1
@@ -57,7 +60,6 @@ class OnboardingActivity : AppCompatActivity() {
             }
         }
 
-        // Usa l'ID corretto dal tuo XML
         binding.buttonBack.setOnClickListener {
             val currentItem = binding.viewPagerOnboarding.currentItem
             if (currentItem > 0) {
@@ -65,11 +67,13 @@ class OnboardingActivity : AppCompatActivity() {
             }
         }
 
-        // Usa l'ID corretto dal tuo XML
         binding.viewPagerOnboarding.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.buttonBack.visibility = if (position > 0) View.VISIBLE else View.INVISIBLE
+
+                // Nascondiamo il pulsante "Avanti" nella schermata dei permessi per evitare confusione
+                binding.buttonNext.visibility = if (position == 1) View.INVISIBLE else View.VISIBLE
 
                 if (position == onboardingAdapter.itemCount - 1) {
                     binding.buttonNext.text = getString(R.string.finish)
@@ -84,12 +88,23 @@ class OnboardingActivity : AppCompatActivity() {
         this.voiceprintFilePath = filePath
     }
 
+    /**
+     * Chiamata dal PermissionsFragment quando tutti i permessi sono stati concessi.
+     * Fa avanzare il ViewPager alla pagina successiva.
+     */
+    fun onPermissionsGranted() {
+        if (binding.viewPagerOnboarding.currentItem == 1) { // L'indice del PermissionsFragment è 1
+            Log.d("OnboardingActivity", "Permessi concessi, avanzo alla schermata di configurazione.")
+            binding.viewPagerOnboarding.currentItem = 2 // Vai al ConfigurationFragment
+        }
+    }
+
     private fun completeOnboarding() {
-        val configFragment = supportFragmentManager.findFragmentByTag("f1") as? ConfigurationFragment
+        val configFragment = supportFragmentManager.findFragmentByTag("f2") as? ConfigurationFragment
 
         if (configFragment == null || !configFragment.areInputsValid()) {
             Toast.makeText(this, "Dati di configurazione mancanti o non validi.", Toast.LENGTH_LONG).show()
-            binding.viewPagerOnboarding.currentItem = 1
+            binding.viewPagerOnboarding.currentItem = 2
             return
         }
 
@@ -104,13 +119,12 @@ class OnboardingActivity : AppCompatActivity() {
             settingsManager.saveGeneralSettings(firstName, lastName, alias, url)
             settingsManager.savePassword(password)
 
-            val file = File(voiceprintFilePath!!)
             val audioSegment = AudioSegment(
                 filePath = voiceprintFilePath!!,
                 timestamp = System.currentTimeMillis(),
+                isUploaded = false,
                 latitude = null,
-                longitude = null,
-                isUploaded = false
+                longitude = null
             )
             val db = AppDatabase.getDatabase(this@OnboardingActivity)
             val segmentId = db.audioSegmentDao().insert(audioSegment)
