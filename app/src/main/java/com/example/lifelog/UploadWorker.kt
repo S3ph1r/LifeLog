@@ -77,9 +77,6 @@ class UploadWorker(
                 Log.e(TAG, "Upload fallito con codice: ${response.code()}. Riprovo tra 15 minuti.")
                 Result.retry()
             }
-        } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "URL del server non valido. Riprovo tra 15 minuti.", e)
-            Result.retry() // L'utente potrebbe correggere l'URL nel frattempo
         } catch (e: Exception) {
             Log.e(TAG, "Eccezione di rete. Riprovo tra 15 minuti.", e)
             Result.retry()
