@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.lifelog.databinding.ActivityOnboardingBinding
 import kotlinx.coroutines.launch
 import java.io.File
@@ -37,15 +40,13 @@ class OnboardingActivity : AppCompatActivity() {
     private fun registerListeners() {
         binding.buttonNext.setOnClickListener {
             val currentItem = binding.viewPagerOnboarding.currentItem
-            // Non permettiamo di andare avanti dalla schermata dei permessi
-            // se non sono stati concessi. Sarà il fragment a farci avanzare.
-            if (currentItem == 1) {
+            if (currentItem == 1) { // Indice PermissionsFragment
                 Toast.makeText(this, "Per favore, concedi i permessi richiesti per continuare.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (currentItem < onboardingAdapter.itemCount - 1) {
-                if (currentItem == 2) { // Ora l'indice del ConfigurationFragment è 2
+                if (currentItem == 2) { // Indice ConfigurationFragment
                     val fragment = supportFragmentManager.findFragmentByTag("f$currentItem") as? ConfigurationFragment
                     if (fragment?.areInputsValid() == true) {
                         binding.viewPagerOnboarding.currentItem = currentItem + 1
@@ -71,8 +72,6 @@ class OnboardingActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.buttonBack.visibility = if (position > 0) View.VISIBLE else View.INVISIBLE
-
-                // Nascondiamo il pulsante "Avanti" nella schermata dei permessi per evitare confusione
                 binding.buttonNext.visibility = if (position == 1) View.INVISIBLE else View.VISIBLE
 
                 if (position == onboardingAdapter.itemCount - 1) {
@@ -88,14 +87,10 @@ class OnboardingActivity : AppCompatActivity() {
         this.voiceprintFilePath = filePath
     }
 
-    /**
-     * Chiamata dal PermissionsFragment quando tutti i permessi sono stati concessi.
-     * Fa avanzare il ViewPager alla pagina successiva.
-     */
     fun onPermissionsGranted() {
-        if (binding.viewPagerOnboarding.currentItem == 1) { // L'indice del PermissionsFragment è 1
+        if (binding.viewPagerOnboarding.currentItem == 1) {
             Log.d("OnboardingActivity", "Permessi concessi, avanzo alla schermata di configurazione.")
-            binding.viewPagerOnboarding.currentItem = 2 // Vai al ConfigurationFragment
+            binding.viewPagerOnboarding.currentItem = 2
         }
     }
 
@@ -135,6 +130,14 @@ class OnboardingActivity : AppCompatActivity() {
             val sharedPrefs = getSharedPreferences("app_status", Context.MODE_PRIVATE)
             sharedPrefs.edit().putBoolean("onboarding_completed", true).apply()
 
+            // Avviamo il servizio di registrazione per la prima volta
+            Log.d("OnboardingActivity", "Onboarding completato. Avvio del servizio di registrazione.")
+            val serviceIntent = Intent(this@OnboardingActivity, AudioRecordingService::class.java).apply {
+                action = AudioRecordingService.ACTION_START
+            }
+            startService(serviceIntent)
+
+            // Avviamo la DashboardActivity
             val intent = Intent(this@OnboardingActivity, DashboardActivity::class.java)
             startActivity(intent)
             finish()
@@ -142,6 +145,17 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun scheduleVoiceprintUpload(segmentId: Long, filePath: String) {
-        // La tua logica esistente per schedulare il worker
+        Log.d("OnboardingActivity", "Schedulazione dell'UploadWorker per il voiceprint (ID: $segmentId)")
+        val inputData = Data.Builder()
+            .putString(UploadWorker.KEY_FILE_PATH, filePath)
+            .putLong(UploadWorker.KEY_SEGMENT_ID, segmentId)
+            .putLong(UploadWorker.KEY_TIMESTAMP, System.currentTimeMillis())
+            .putBoolean(UploadWorker.KEY_IS_VOICEPRINT, true)
+            .build()
+        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
+            .setInputData(inputData)
+            .build()
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest)
+        Log.d("OnboardingActivity", "Lavoro di upload per il voiceprint accodato.")
     }
 }

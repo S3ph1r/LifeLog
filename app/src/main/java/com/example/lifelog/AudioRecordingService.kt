@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay // <-- IMPORT NECESSARIO AGGIUNTO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.io.File
@@ -50,19 +50,21 @@ class AudioRecordingService : Service() {
         createNotificationChannel()
         Log.d(TAG, "Servizio creato.")
     }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand ricevuto con azione: ${intent?.action}")
-        when (intent?.action) {
-            ACTION_START -> {
-                if (!isRecording) {
-                    startMainLoop()
-                }
+
+        // --- INIZIO MODIFICA ---
+        // Se l'intent è null, significa che il servizio è stato riavviato dal sistema
+        // dopo essere stato terminato. Vogliamo che riparta.
+        if (intent == null || intent.action == ACTION_START) {
+            if (!isRecording) {
+                startMainLoop()
             }
-            ACTION_STOP -> {
-                stopMainLoop()
-            }
+        } else if (intent.action == ACTION_STOP) {
+            stopMainLoop()
         }
+        // --- FINE MODIFICA ---
+
         return START_STICKY
     }
 
@@ -73,14 +75,18 @@ class AudioRecordingService : Service() {
         }
         Log.d(TAG, "Avvio del ciclo di registrazione principale.")
         isRecording = true
+
         startForeground(NOTIFICATION_ID, createNotification("Servizio di registrazione attivo..."))
+
         recordingJob = scope.launch {
             while (isActive) {
                 val tempFile = createTempFile()
                 Log.d(TAG, "Inizio nuovo segmento, file temporaneo: ${tempFile.name}")
+
                 try {
                     recordSegment(tempFile)
                     stopAndProcessSegment(tempFile)
+
                 } catch (e: Exception) {
                     Log.e(TAG, "Errore grave nel ciclo di registrazione, interruzione.", e)
                     stopMainLoop()
@@ -95,7 +101,9 @@ class AudioRecordingService : Service() {
         isRecording = false
         recordingJob?.cancel()
         recordingJob = null
+
         stopMediaRecorder()
+
         stopForeground(true)
         stopSelf()
     }
@@ -113,9 +121,11 @@ class AudioRecordingService : Service() {
             prepare()
             start()
         }
+
         Log.d(TAG, "Registrazione avviata...")
         delay(300_000L) // Pausa di 5 minuti
         Log.d(TAG, "5 minuti passati, fermo la registrazione.")
+
         stopMediaRecorder()
     }
 
@@ -134,19 +144,20 @@ class AudioRecordingService : Service() {
             Log.w(TAG, "File temporaneo vuoto o non esistente. Salto il segmento.")
             return
         }
+
         val password = settingsManager.getPassword()
         if (password.isBlank()) {
             Log.e(TAG, "Password non trovata! Impossibile criptare il file. Salto il segmento.")
             tempFile.delete()
             return
         }
+
         val encryptedFile = getEncryptedFilePath()
+
         try {
-            // Apriamo gli stream dai file per passarli al CryptoManager
             val inputStream = tempFile.inputStream()
             val outputStream = encryptedFile.outputStream()
 
-            // Usiamo gli stream per la crittografia, chiudendoli automaticamente dopo l'uso
             inputStream.use { inStream ->
                 outputStream.use { outStream ->
                     cryptoManager.encrypt(password, inStream, outStream)
@@ -154,6 +165,7 @@ class AudioRecordingService : Service() {
             }
 
             Log.d(TAG, "File criptato con successo in: ${encryptedFile.name}")
+
             val segment = AudioSegment(
                 filePath = encryptedFile.absolutePath,
                 timestamp = System.currentTimeMillis(),
@@ -163,6 +175,7 @@ class AudioRecordingService : Service() {
             )
             audioSegmentDao.insert(segment)
             Log.d(TAG, "Record del segmento salvato nel DB.")
+
         } catch (e: Exception) {
             Log.e(TAG, "Errore durante la crittografia o il salvataggio nel DB", e)
             encryptedFile.delete()
@@ -170,7 +183,6 @@ class AudioRecordingService : Service() {
             tempFile.delete()
         }
     }
-
     private fun createTempFile(): File {
         return File.createTempFile("segment_", ".tmp", cacheDir)
     }
@@ -208,7 +220,7 @@ class AudioRecordingService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("LifeLog in esecuzione")
             .setContentText(text)
-            .setSmallIcon(R.drawable.ic_mic) // Assicurati che questa icona esista
+            .setSmallIcon(R.drawable.ic_mic)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .build()
