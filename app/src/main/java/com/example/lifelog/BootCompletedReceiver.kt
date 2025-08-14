@@ -4,41 +4,32 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class BootCompletedReceiver : BroadcastReceiver() {
 
-    private val scope = CoroutineScope(Dispatchers.IO)
-
     override fun onReceive(context: Context, intent: Intent) {
+        // Controlliamo che l'azione sia effettivamente quella di avvio completato
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            Log.d(TAG, "Il telefono ha completato l'avvio.")
+            Log.d("BootReceiver", "Dispositivo avviato.")
 
-            // Usiamo una coroutine per poter inserire un ritardo
-            scope.launch {
-                Log.d(TAG, "In attesa di 15 secondi prima di avviare il servizio...")
-                delay(15_000L) // 15 secondi di ritardo
+            // Controlliamo una preferenza per vedere se l'utente ha completato l'onboarding.
+            // Se non l'ha completato, non dobbiamo avviare il servizio.
+            val sharedPrefs = context.getSharedPreferences("app_status", Context.MODE_PRIVATE)
+            val onboardingCompleted = sharedPrefs.getBoolean("onboarding_completed", false)
 
-                val prefs = AppPreferences.getInstance(context)
-                val settings = SettingsManager.getInstance(context)
+            if (onboardingCompleted) {
+                Log.d("BootReceiver", "Onboarding completato, avvio il servizio di registrazione.")
 
-                // Controlliamo TUTTE le condizioni necessarie
-                if (prefs.isOnboardingCompleted && prefs.isServiceActive && settings.encryptionKey.isNotEmpty()) {
-                    Log.d(TAG, "Condizioni soddisfatte. Avvio AudioRecordingService.")
-                    val serviceIntent = Intent(context, AudioRecordingService::class.java)
-                    ContextCompat.startForegroundService(context, serviceIntent)
-                } else {
-                    Log.d(TAG, "Il servizio non verrà avviato (Onboarding: ${prefs.isOnboardingCompleted}, ServiceActive: ${prefs.isServiceActive}, PwdSet: ${settings.encryptionKey.isNotEmpty()})")
+                // Creiamo l'intent per avviare il servizio con l'azione START
+                val serviceIntent = Intent(context, AudioRecordingService::class.java).apply {
+                    action = AudioRecordingService.ACTION_START
                 }
+
+                // Avviamo il servizio in foreground
+                context.startForegroundService(serviceIntent)
+            } else {
+                Log.d("BootReceiver", "Onboarding non completato, il servizio non verrà avviato.")
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "BootReceiver"
     }
 }

@@ -10,66 +10,51 @@ import com.example.lifelog.databinding.FragmentConfigurationBinding
 class ConfigurationFragment : Fragment() {
 
     private var _binding: FragmentConfigurationBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var settingsManager: SettingsManager
+    // Usiamo una data class per restituire i dati in modo pulito all'Activity
+    data class SettingsData(
+        val firstName: String,
+        val lastName: String,
+        val alias: String,
+        val url: String,
+        val password: String
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentConfigurationBinding.inflate(inflater, container, false)
-        settingsManager = SettingsManager.getInstance(requireContext())
-        loadSettings()
         return binding.root
     }
 
-    private fun loadSettings() {
-        binding.editTextFirstName.setText(settingsManager.userFirstName)
-        binding.editTextLastName.setText(settingsManager.userLastName)
-        binding.editTextAlias.setText(settingsManager.userAlias)
-        binding.editTextServerUrl.setText(settingsManager.serverUrl)
-        // Carica la password/chiave nel campo corretto
-        binding.textInputLayoutPassword.editText?.setText(settingsManager.encryptionKey)
+    /**
+     * Metodo pubblico per verificare se i campi obbligatori sono stati compilati.
+     * Chiamato dall'OnboardingActivity prima di cambiare pagina.
+     * I nomi dei binding qui sotto devono corrispondere agli ID del tuo file XML.
+     */
+    fun areInputsValid(): Boolean {
+        val alias = binding.editTextAlias.text.toString().trim()
+        val url = binding.editTextServerUrl.text.toString().trim()
+        val password = binding.editTextPassword.text.toString().trim()
+        return alias.isNotBlank() && url.isNotBlank() && password.isNotBlank()
     }
 
-    fun saveSettings(): Boolean {
-        val url = binding.editTextServerUrl.text.toString().trim()
-        val alias = binding.editTextAlias.text.toString().trim()
-        // Recuperiamo la password (non va trimmata)
-        val password = binding.textInputLayoutPassword.editText?.text.toString()
-
-        // Resettiamo gli errori precedenti
-        binding.editTextServerUrl.error = null
-        binding.editTextAlias.error = null
-        binding.textInputLayoutPassword.error = null
-
-        // Validazione dei campi obbligatori
-        var isValid = true
-        if (url.isEmpty()) {
-            binding.editTextServerUrl.error = "Questo campo è obbligatorio"
-            isValid = false
-        }
-        if (alias.isEmpty()) {
-            binding.editTextAlias.error = "Questo campo è obbligatorio"
-            isValid = false
-        }
-        if (password.isEmpty()) {
-            // L'errore va impostato sul TextInputLayout, non sull'EditText interno
-            binding.textInputLayoutPassword.error = "Questo campo è obbligatorio"
-            isValid = false
-        }
-
-        if (!isValid) return false
-
-        // Se tutti i dati sono validi, salviamo
-        settingsManager.userFirstName = binding.editTextFirstName.text.toString().trim()
-        settingsManager.userLastName = binding.editTextLastName.text.toString().trim()
-        settingsManager.userAlias = alias
-        settingsManager.serverUrl = url
-        settingsManager.encryptionKey = password // Salviamo la password
-
-        return true
+    /**
+     * Metodo pubblico per recuperare tutti i dati inseriti.
+     * Chiamato dall'OnboardingActivity al momento del completamento finale.
+     * I nomi dei binding qui sotto devono corrispondere agli ID del tuo file XML.
+     */
+    fun getSettingsData(): SettingsData {
+        return SettingsData(
+            firstName = binding.editTextFirstName.text.toString().trim(),
+            lastName = binding.editTextLastName.text.toString().trim(),
+            alias = binding.editTextAlias.text.toString().trim(),
+            url = binding.editTextServerUrl.text.toString().trim(),
+            password = binding.editTextPassword.text.toString().trim()
+        )
     }
 
     override fun onDestroyView() {

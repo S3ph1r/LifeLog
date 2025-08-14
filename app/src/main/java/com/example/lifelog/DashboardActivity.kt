@@ -3,138 +3,104 @@ package com.example.lifelog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.work.Constraints
-import androidx.work.Data
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.lifelog.databinding.ActivityDashboardBinding
-import kotlinx.coroutines.Dispatchers
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DashboardActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDashboardBinding
-    private lateinit var prefs: AppPreferences
-    private val audioSegmentAdapter = AudioSegmentAdapter()
+    private lateinit var recyclerViewSegments: RecyclerView
+    private lateinit var textViewNoFiles: TextView
+    private lateinit var textViewQueueTitle: TextView
+    private lateinit var buttonStartService: Button
+    private lateinit var buttonStopService: Button
+    private lateinit var buttonSettings: Button
 
-    private val audioSegmentDao: AudioSegmentDao by lazy {
-        AppDatabase.getDatabase(application).audioSegmentDao()
-    }
+    private lateinit var audioSegmentAdapter: AudioSegmentAdapter
+    private val audioSegmentDao by lazy { AppDatabase.getDatabase(this).audioSegmentDao() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        prefs = AppPreferences.getInstance(this)
+        setContentView(R.layout.activity_dashboard)
 
-        setupUI()
-        observeUnsyncedSegments()
+        // --- INIZIO CORREZIONE ---
+        // Ho corretto la sintassi per usare R.id.nome_id
+        recyclerViewSegments = findViewById(R.id.recycler_view_segments)
+        textViewNoFiles = findViewById(R.id.text_view_no_files)
+        textViewQueueTitle = findViewById(R.id.text_view_queue_title)
+        buttonStartService = findViewById(R.id.button_start_service)
+        buttonStopService = findViewById(R.id.button_stop_service)
+        buttonSettings = findViewById(R.id.button_settings)
+        // --- FINE CORREZIONE ---
+
+        setupRecyclerView()
+        setupClickListeners()
+        observeUnuploadedSegments()
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateServiceStatusUI()
+    private fun setupRecyclerView() {
+        audioSegmentAdapter = AudioSegmentAdapter()
+        recyclerViewSegments.apply {
+            adapter = audioSegmentAdapter
+            layoutManager = LinearLayoutManager(this@DashboardActivity)
+        }
     }
 
-    private fun setupUI() {
-        binding.recyclerViewSegments.adapter = audioSegmentAdapter
-
-        binding.buttonToggleService.setOnClickListener {
-            toggleServiceState()
+    private fun setupClickListeners() {
+        buttonStartService.setOnClickListener {
+            startRecordingService()
+            Toast.makeText(this, "Servizio di registrazione avviato", Toast.LENGTH_SHORT).show()
         }
 
-        // --- MODIFICA CHIAVE: Apriamo la SettingsActivity ---
-        binding.buttonSettings.setOnClickListener {
+        buttonStopService.setOnClickListener {
+            stopRecordingService()
+            Toast.makeText(this, "Servizio di registrazione fermato", Toast.LENGTH_SHORT).show()
+        }
+
+        buttonSettings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
-
-        binding.buttonSync.setOnClickListener {
-            scheduleUploads()
-        }
     }
 
-    private fun observeUnsyncedSegments() {
+    private fun observeUnuploadedSegments() {
         lifecycleScope.launch {
-            audioSegmentDao.getUnsyncedSegments().collectLatest { segments ->
-                Log.d("DashboardActivity", "UI aggiornata con ${segments.size} segmenti da caricare.")
-                withContext(Dispatchers.Main) {
-                    audioSegmentAdapter.submitList(segments)
+            audioSegmentDao.getUnuploadedSegmentsFlow().collectLatest { segments ->
+                Log.d("DashboardActivity", "Ricevuti ${segments.size} segmenti non caricati dal DB.")
+
+                if (segments.isEmpty()) {
+                    textViewNoFiles.visibility = View.VISIBLE
+                    recyclerViewSegments.visibility = View.GONE
+                    textViewQueueTitle.text = "Coda di upload (0 file)"
+                } else {
+                    textViewNoFiles.visibility = View.GONE
+                    recyclerViewSegments.visibility = View.VISIBLE
+                    textViewQueueTitle.text = "Coda di upload (${segments.size} file)"
                 }
+
+                audioSegmentAdapter.submitList(segments)
             }
         }
     }
 
-    private fun scheduleUploads() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val unsyncedSegments = audioSegmentDao.getUnsyncedSegments().first()
-            if (unsyncedSegments.isEmpty()) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(applicationContext, "Nessun file da sincronizzare.", Toast.LENGTH_SHORT).show()
-                }
-                return@launch
-            }
-
-            Log.d("DashboardActivity", "Trovati ${unsyncedSegments.size} file. Avvio schedulazione lavori...")
-
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-            for (segment in unsyncedSegments) {
-                val inputData = Data.Builder()
-                    .putString(UploadWorker.KEY_FILE_PATH, segment.filePath)
-                    .putLong(UploadWorker.KEY_SEGMENT_ID, segment.id)
-                    .putLong(UploadWorker.KEY_TIMESTAMP, segment.timestamp)
-                    .build()
-
-                val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
-                    .setInputData(inputData)
-                    .setConstraints(constraints)
-                    .build()
-
-                WorkManager.getInstance(applicationContext).enqueue(uploadWorkRequest)
-            }
-
-            withContext(Dispatchers.Main) {
-                Toast.makeText(applicationContext, "Sincronizzazione avviata per ${unsyncedSegments.size} file.", Toast.LENGTH_SHORT).show()
-            }
+    private fun startRecordingService() {
+        val serviceIntent = Intent(this, AudioRecordingService::class.java).apply {
+            action = AudioRecordingService.ACTION_START
         }
+        startService(serviceIntent)
     }
 
-    private fun updateServiceStatusUI() {
-        if (prefs.isServiceActive) {
-            binding.buttonToggleService.text = "Pausa"
-            binding.textViewServiceStatus.text = "Servizio Attivo"
-        } else {
-            binding.buttonToggleService.text = "Riprendi"
-            binding.textViewServiceStatus.text = "Servizio in Pausa"
+    private fun stopRecordingService() {
+        val serviceIntent = Intent(this, AudioRecordingService::class.java).apply {
+            action = AudioRecordingService.ACTION_STOP
         }
-        Log.d("DashboardActivity", "UI stato servizio aggiornata: ${if(prefs.isServiceActive) "Attivo" else "In Pausa"}")
-    }
-
-    private fun toggleServiceState() {
-        val shouldBeActive = !prefs.isServiceActive
-        prefs.isServiceActive = shouldBeActive
-
-        if (shouldBeActive) {
-            Log.d("DashboardActivity", "Avvio del servizio.")
-            val serviceIntent = Intent(this, AudioRecordingService::class.java)
-            ContextCompat.startForegroundService(this, serviceIntent)
-        } else {
-            Log.d("DashboardActivity", "Arresto del servizio.")
-            val serviceIntent = Intent(this, AudioRecordingService::class.java)
-            stopService(serviceIntent)
-        }
-
-        updateServiceStatusUI()
+        startService(serviceIntent)
     }
 }

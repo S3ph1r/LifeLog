@@ -4,38 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 
-// MODIFICA: La versione del database è ora 3
-@Database(entities = [AudioSegment::class], version = 3, exportSchema = true)
+// 1. Aggiungi la classe "Settings" alla lista delle entità del database.
+// 2. Aumenta la versione del database a "2". Questo è OBBLIGATORIO quando cambi la struttura.
+@Database(entities = [AudioSegment::class, Settings::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun audioSegmentDao(): AudioSegmentDao
+    // 3. Dichiara la funzione astratta per ottenere il nuovo DAO.
+    abstract fun settingsDao(): SettingsDao
+    abstract fun audioSegmentDao(): AudioSegmentDao // La tua funzione esistente
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-
-        // Migrazione dalla versione 1 alla 2 (già presente)
-        private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL("ALTER TABLE audio_segments ADD COLUMN latitude REAL")
-                db.execSQL("ALTER TABLE audio_segments ADD COLUMN longitude REAL")
-            }
-        }
-
-        // --- NUOVA MIGRAZIONE ---
-        /**
-         * Migrazione dalla versione 2 alla 3.
-         * Aggiunge la colonna 'isVoiceprint' di tipo INTEGER (booleano in SQLite),
-         * non può essere nulla (NOT NULL) e ha un valore di default di 0 (false).
-         */
-        private val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL("ALTER TABLE audio_segments ADD COLUMN isVoiceprint INTEGER NOT NULL DEFAULT 0")
-            }
-        }
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -44,11 +25,12 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "lifelog_database"
                 )
-                    // MODIFICA: Aggiungiamo la nuova migrazione alla catena.
-                    // Room le eseguirà in ordine se necessario.
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    // Poiché abbiamo aumentato la versione, dobbiamo dire a Room come gestire
+                    // l'aggiornamento. "fallbackToDestructiveMigration" è la via più semplice:
+                    // se trova un database vecchio, lo cancella e lo ricrea. Va bene per lo sviluppo
+                    // e per la nostra situazione attuale.
+                    .fallbackToDestructiveMigration()
                     .build()
-
                 INSTANCE = instance
                 instance
             }

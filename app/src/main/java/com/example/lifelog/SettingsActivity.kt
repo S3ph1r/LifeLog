@@ -3,7 +3,9 @@ package com.example.lifelog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.lifelog.databinding.ActivitySettingsBinding
+import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -17,57 +19,44 @@ class SettingsActivity : AppCompatActivity() {
 
         settingsManager = SettingsManager.getInstance(this)
 
-        loadSettings()
+        loadCurrentSettings()
 
+        // --- INIZIO MODIFICA ---
+        // Ho cambiato il riferimento per usare l'ID corretto dal tuo XML
         binding.buttonSaveSettings.setOnClickListener {
             saveSettings()
         }
+        // --- FINE MODIFICA ---
     }
 
-    private fun loadSettings() {
-        binding.editTextFirstName.setText(settingsManager.userFirstName)
-        binding.editTextLastName.setText(settingsManager.userLastName)
-        binding.editTextAlias.setText(settingsManager.userAlias)
-        binding.editTextServerUrl.setText(settingsManager.serverUrl)
-        // Carica la password
-        binding.textInputLayoutPassword.editText?.setText(settingsManager.encryptionKey)
+    private fun loadCurrentSettings() {
+        // I nomi qui devono corrispondere agli ID del tuo XML
+        binding.editTextFirstName.setText(settingsManager.userFirstName.value)
+        binding.editTextLastName.setText(settingsManager.userLastName.value)
+        binding.editTextAlias.setText(settingsManager.userAlias.value)
+        binding.editTextServerUrl.setText(settingsManager.serverUrl.value)
+        binding.editTextPassword.setText(settingsManager.getPassword())
     }
 
     private fun saveSettings() {
-        val url = binding.editTextServerUrl.text.toString().trim()
+        // I nomi qui devono corrispondere agli ID del tuo XML
+        val firstName = binding.editTextFirstName.text.toString().trim()
+        val lastName = binding.editTextLastName.text.toString().trim()
         val alias = binding.editTextAlias.text.toString().trim()
-        val password = binding.textInputLayoutPassword.editText?.text.toString()
+        val url = binding.editTextServerUrl.text.toString().trim()
+        val password = binding.editTextPassword.text.toString().trim()
 
-        // Resetta errori precedenti
-        binding.editTextServerUrl.error = null
-        binding.editTextAlias.error = null
-        binding.textInputLayoutPassword.error = null
-
-        // Validazione
-        var isValid = true
-        if (url.isEmpty()) {
-            binding.editTextServerUrl.error = "Questo campo è obbligatorio"
-            isValid = false
-        }
-        if (alias.isEmpty()) {
-            binding.editTextAlias.error = "Questo campo è obbligatorio"
-            isValid = false
-        }
-        if (password.isEmpty()) {
-            binding.textInputLayoutPassword.error = "Questo campo è obbligatorio"
-            isValid = false
+        if (alias.isBlank() || url.isBlank() || password.isBlank()) {
+            Toast.makeText(this, "Alias, URL e Password sono obbligatori.", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        if (!isValid) return
+        lifecycleScope.launch {
+            settingsManager.saveGeneralSettings(firstName, lastName, alias, url)
+            settingsManager.savePassword(password)
 
-        // Salvataggio
-        settingsManager.userFirstName = binding.editTextFirstName.text.toString().trim()
-        settingsManager.userLastName = binding.editTextLastName.text.toString().trim()
-        settingsManager.userAlias = alias
-        settingsManager.serverUrl = url
-        settingsManager.encryptionKey = password // Salva la password
-
-        Toast.makeText(this, "Impostazioni salvate", Toast.LENGTH_SHORT).show()
-        finish()
+            Toast.makeText(this@SettingsActivity, "Impostazioni salvate", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 }
