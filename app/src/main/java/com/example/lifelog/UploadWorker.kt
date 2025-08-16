@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -16,12 +17,13 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class UploadWorker(
-    private val appContext: Context,
+    appContext: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {
 
-    private val audioSegmentDao: AudioSegmentDao by lazy { AppDatabase.getDatabase(appContext).audioSegmentDao() }
-    private val settingsManager: SettingsManager by lazy { SettingsManager.getInstance(appContext) }
+    // --- MODIFICHE CHIAVE ---
+    private val audioSegmentDao = AppDatabase.getDatabase(appContext).audioSegmentDao()
+    private val userRepository = UserRepository(AppDatabase.getDatabase(appContext).userDao())
 
     companion object {
         const val KEY_FILE_PATH = "key_file_path"
@@ -34,40 +36,36 @@ class UploadWorker(
     data class UploadDescription(val timestamp: Long)
 
     override suspend fun doWork(): Result {
-        if (runAttemptCount > 10) {
-            return Result.failure()
-        }
-
-        // Leggi l'URL aggiornato dal SettingsManager
-        val serverUrl = settingsManager.serverUrl.value
-        if (serverUrl.isBlank()) {
-            Log.e(TAG, "URL del server non configurato. Riprovo più tardi.")
+        // Leggi i dati utente (che contengono l'URL) da Room
+        val user = userRepository.user.first()
+        if (user == null || user.serverUrl.isBlank()) {
+            Log.e(TAG, "Dati utente o URL del server non configurati. Riprovo più tardi.")
             return Result.retry()
         }
+        val serverUrl = user.serverUrl
 
-        // Crea un'istanza di ApiService al momento, con l'URL corretto
         val apiService = createApiService(serverUrl)
 
-        val filePath = inputData.getString(KEY_FILE_PATH)
+        val filePath = inputData.getString(KEY_FILE_PATH) ?: return Result.failure()
         val segmentId = inputData.getLong(KEY_SEGMENT_ID, -1L)
         val timestamp = inputData.getLong(KEY_TIMESTAMP, 0L)
         val isVoiceprint = inputData.getBoolean(KEY_IS_VOICEPRINT, false)
 
-        if (filePath.isNullOrEmpty() || segmentId == -1L) {
-            return Result.failure()
-        }
+        if (segmentId == -1L) return Result.failure()
+
         val file = File(filePath)
         if (!file.exists()) {
             audioSegmentDao.updateUploadStatus(segmentId, true)
-            Log.w(TAG, "File non trovato, record rimosso dalla coda: $filePath")
+            Log.w(TAG, "File non trovato, rimosso dalla coda: $filePath")
             return Result.failure()
         }
 
-        Log.d(TAG, "Tentativo di upload per il file: ${file.name} (Voiceprint: $isVoiceprint)")
+        Log.d(TAG, "Tentativo di upload per: ${file.name} (Voiceprint: $isVoiceprint)")
 
         return try {
             val response = if (isVoiceprint) {
-                uploadVoiceprintRequest(apiService, file)
+                // Passiamo l'oggetto user per l'upload del voiceprint
+                uploadVoiceprintRequest(apiService, file, user)
             } else {
                 uploadAudioSegmentRequest(apiService, file, timestamp)
             }
@@ -76,7 +74,6 @@ class UploadWorker(
                 Log.d(TAG, "Upload completato per: ${file.name}")
                 audioSegmentDao.updateUploadStatus(segmentId, true)
                 file.delete()
-                Log.d(TAG, "File ${file.name} marcato come caricato e cancellato.")
                 Result.success()
             } else {
                 Log.e(TAG, "Upload fallito con codice: ${response.code()}. Riprovo.")
@@ -90,7 +87,7 @@ class UploadWorker(
 
     private fun createApiService(baseUrl: String): ApiService {
         val finalBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
-
+        // ... (resto della funzione invariato)
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -106,21 +103,24 @@ class UploadWorker(
         return retrofit.create(ApiService::class.java)
     }
 
-    private suspend fun uploadVoiceprintRequest(api: ApiService, file: File): retrofit2.Response<Void> {
-        // --- INIZIO MODIFICA ---
-        // Leggiamo il valore corrente (.value) dagli StateFlow
-        val firstNameBody = settingsManager.userFirstName.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val lastNameBody = settingsManager.userLastName.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        val aliasBody = settingsManager.userAlias.value.toRequestBody("text/plain".toMediaTypeOrNull())
-        // --- FINE MODIFICA ---
+    private suspend fun uploadVoiceprintRequest(api: ApiService, file: File, user: User): retrofit2.Response<Void> {
+        // --- MODIFICA CHIAVE ---
+        // I dati ora provengono dall'oggetto User passato come parametro
+        val firstNameBody = user.firstName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val lastNameBody = user.lastName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val aliasBody = user.alias.toRequestBody("text/plain".toMediaTypeOrNull())
 
         val requestFileBody = file.asRequestBody("audio/m4a".toMediaTypeOrNull())
-        val filePart = MultipartBody.Part.createFormData("voiceprintFile", file.name, requestFileBody)
+        val filePart = MultipartBody.Part.createFormData("voiceprint", file.name, requestFileBody)
 
+        Log.d(TAG, "Dati per l'upload: nome=${user.firstName}, cognome=${user.lastName}, alias=${user.alias}")
+
+        // Assicurati che il tuo ApiService sia stato aggiornato per questo
         return api.uploadVoiceprint(firstNameBody, lastNameBody, aliasBody, filePart)
     }
 
     private suspend fun uploadAudioSegmentRequest(api: ApiService, file: File, timestamp: Long): retrofit2.Response<Void> {
+        // ... (questa funzione rimane invariata)
         val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
 

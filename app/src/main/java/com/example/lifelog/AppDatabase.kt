@@ -5,14 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// 1. Aggiungi la classe "Settings" alla lista delle entità del database.
-// 2. Aumenta la versione del database a "2". Questo è OBBLIGATORIO quando cambi la struttura.
-@Database(entities = [AudioSegment::class, Settings::class], version = 2, exportSchema = false)
+// 1. Rimuovi "Settings::class", aggiungi "User::class"
+// 2. La versione rimane 2 (o incrementala a 3 se preferisci)
+@Database(entities = [AudioSegment::class, User::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    // 3. Dichiara la funzione astratta per ottenere il nuovo DAO.
-    abstract fun settingsDao(): SettingsDao
-    abstract fun audioSegmentDao(): AudioSegmentDao // La tua funzione esistente
+    abstract fun audioSegmentDao(): AudioSegmentDao
+    abstract fun userDao(): UserDao // 3. Aggiungi il nuovo UserDao
 
     companion object {
         @Volatile
@@ -25,10 +24,6 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "lifelog_database"
                 )
-                    // Poiché abbiamo aumentato la versione, dobbiamo dire a Room come gestire
-                    // l'aggiornamento. "fallbackToDestructiveMigration" è la via più semplice:
-                    // se trova un database vecchio, lo cancella e lo ricrea. Va bene per lo sviluppo
-                    // e per la nostra situazione attuale.
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

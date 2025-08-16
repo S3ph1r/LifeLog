@@ -4,23 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.lifelog.databinding.FragmentConfigurationBinding
 
 class ConfigurationFragment : Fragment() {
 
     private var _binding: FragmentConfigurationBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    // Usiamo una data class per restituire i dati in modo pulito all'Activity
-    data class SettingsData(
-        val firstName: String,
-        val lastName: String,
-        val alias: String,
-        val url: String,
-        val password: String
-    )
+    // Accede al ViewModel condiviso dell'activity.
+    private val viewModel: OnboardingViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,31 +25,43 @@ class ConfigurationFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * Metodo pubblico per verificare se i campi obbligatori sono stati compilati.
-     * Chiamato dall'OnboardingActivity prima di cambiare pagina.
-     * I nomi dei binding qui sotto devono corrispondere agli ID del tuo file XML.
-     */
-    fun areInputsValid(): Boolean {
-        val alias = binding.editTextAlias.text.toString().trim()
-        val url = binding.editTextServerUrl.text.toString().trim()
-        val password = binding.editTextPassword.text.toString().trim()
-        return alias.isNotBlank() && url.isNotBlank() && password.isNotBlank()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Popola i campi con i dati già presenti nel ViewModel.
+        loadDataFromViewModel()
+
+        // Imposta i listener per aggiornare il ViewModel in tempo reale.
+        setupTextChangeListeners()
     }
 
-    /**
-     * Metodo pubblico per recuperare tutti i dati inseriti.
-     * Chiamato dall'OnboardingActivity al momento del completamento finale.
-     * I nomi dei binding qui sotto devono corrispondere agli ID del tuo file XML.
-     */
-    fun getSettingsData(): SettingsData {
-        return SettingsData(
-            firstName = binding.editTextFirstName.text.toString().trim(),
-            lastName = binding.editTextLastName.text.toString().trim(),
-            alias = binding.editTextAlias.text.toString().trim(),
-            url = binding.editTextServerUrl.text.toString().trim(),
-            password = binding.editTextPassword.text.toString().trim()
-        )
+    private fun loadDataFromViewModel() {
+        binding.editTextFirstName.setText(viewModel.firstName)
+        binding.editTextLastName.setText(viewModel.lastName)
+        binding.editTextAlias.setText(viewModel.alias)
+        binding.editTextServerUrl.setText(viewModel.serverUrl)
+        binding.editTextPassword.setText(viewModel.password)
+    }
+
+    private fun setupTextChangeListeners() {
+        val parentActivity = activity as? OnboardingActivity
+
+        binding.editTextFirstName.doOnTextChanged { text, _, _, _ -> viewModel.firstName = text.toString() }
+        binding.editTextLastName.doOnTextChanged { text, _, _, _ -> viewModel.lastName = text.toString() }
+
+        // Per i campi obbligatori, notifica l'activity di aggiornare i pulsanti.
+        binding.editTextAlias.doOnTextChanged { text, _, _, _ ->
+            viewModel.alias = text.toString()
+            parentActivity?.onConfigurationInputChanged()
+        }
+        binding.editTextServerUrl.doOnTextChanged { text, _, _, _ ->
+            viewModel.serverUrl = text.toString()
+            parentActivity?.onConfigurationInputChanged()
+        }
+        binding.editTextPassword.doOnTextChanged { text, _, _, _ ->
+            viewModel.password = text.toString()
+            parentActivity?.onConfigurationInputChanged()
+        }
     }
 
     override fun onDestroyView() {

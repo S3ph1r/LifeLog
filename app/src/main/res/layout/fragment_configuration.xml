@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Il tag radice diventa ScrollView -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,13 +6,11 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <!-- Il tuo ConstraintLayout ora è qui dentro -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Sezione Dati Utente -->
         <TextView
             android:id="@+id/label_user_data"
             android:layout_width="0dp"
@@ -61,7 +58,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_text_last_name" />
 
-        <!-- Sezione Configurazione Server -->
         <TextView
             android:id="@+id/label_server_config"
             android:layout_width="0dp"
@@ -86,7 +82,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_server_config" />
 
-        <!-- Campo Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_password"
             android:layout_width="0dp"
@@ -104,9 +99,6 @@
                 android:autofillHints="password"
                 android:hint="Password / Chiave (obbligatoria)"
                 android:inputType="textPassword" />
-
         </com.google.android.material.textfield.TextInputLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

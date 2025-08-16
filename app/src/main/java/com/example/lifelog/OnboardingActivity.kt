@@ -1,161 +1,148 @@
 package com.example.lifelog
 
-import android.content.Context
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels // Importa la dipendenza corretta
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.lifelog.databinding.ActivityOnboardingBinding
 import kotlinx.coroutines.launch
-import java.io.File
 
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
-    private lateinit var onboardingAdapter: OnboardingAdapter
-    private lateinit var settingsManager: SettingsManager
-    private var voiceprintFilePath: String? = null
+    lateinit var pagerAdapter: OnboardingAdapter
+
+    // --- 1. CREAZIONE DELL'ISTANZA DEL VIEWMODEL ---
+    // "by viewModels()" è il modo moderno e corretto in Kotlin per creare
+    // e legare un ViewModel a un'Activity. L'activity si occuperà di
+    // mantenerlo in vita (anche durante la rotazione dello schermo).
+    val viewModel: OnboardingViewModel by viewModels()
+
+    var lastRecordedVoiceprintPath: String? = null
+    private var arePermissionsGranted = false
+
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            updateButtonState(position)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        settingsManager = SettingsManager.getInstance(this)
-        onboardingAdapter = OnboardingAdapter(this)
-
-        binding.viewPagerOnboarding.adapter = onboardingAdapter
+        pagerAdapter = OnboardingAdapter(this)
+        binding.viewPagerOnboarding.adapter = pagerAdapter
         binding.viewPagerOnboarding.isUserInputEnabled = false
+        binding.viewPagerOnboarding.registerOnPageChangeCallback(pageChangeCallback)
 
-        registerListeners()
-    }
-
-    private fun registerListeners() {
+        // La logica di questo listener è ora molto più semplice.
         binding.buttonNext.setOnClickListener {
-            val currentItem = binding.viewPagerOnboarding.currentItem
-            if (currentItem == 1) { // Indice PermissionsFragment
-                Toast.makeText(this, "Per favore, concedi i permessi richiesti per continuare.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (currentItem < onboardingAdapter.itemCount - 1) {
-                if (currentItem == 2) { // Indice ConfigurationFragment
-                    val fragment = supportFragmentManager.findFragmentByTag("f$currentItem") as? ConfigurationFragment
-                    if (fragment?.areInputsValid() == true) {
-                        binding.viewPagerOnboarding.currentItem = currentItem + 1
-                    } else {
-                        Toast.makeText(this, "Alias, URL e Password sono obbligatori.", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    binding.viewPagerOnboarding.currentItem = currentItem + 1
-                }
-            } else {
-                completeOnboarding()
+            val currentStep = binding.viewPagerOnboarding.currentItem
+            if (currentStep < pagerAdapter.itemCount - 1) {
+                binding.viewPagerOnboarding.currentItem = currentStep + 1
             }
         }
 
         binding.buttonBack.setOnClickListener {
-            val currentItem = binding.viewPagerOnboarding.currentItem
-            if (currentItem > 0) {
-                binding.viewPagerOnboarding.currentItem = currentItem - 1
+            val currentStep = binding.viewPagerOnboarding.currentItem
+            if (currentStep > 0) {
+                binding.viewPagerOnboarding.currentItem = currentStep - 1
             }
         }
 
-        binding.viewPagerOnboarding.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.buttonBack.visibility = if (position > 0) View.VISIBLE else View.INVISIBLE
-                binding.buttonNext.visibility = if (position == 1) View.INVISIBLE else View.VISIBLE
-
-                if (position == onboardingAdapter.itemCount - 1) {
-                    binding.buttonNext.text = getString(R.string.finish)
-                } else {
-                    binding.buttonNext.text = getString(R.string.next)
-                }
-            }
-        })
+        checkInitialPermissions()
+        updateButtonState(0)
     }
 
-    fun onVoiceprintRecorded(filePath: String) {
-        this.voiceprintFilePath = filePath
+    // --- 2. LOGICA SEMPLIFICATA: NESSUNA COMUNICAZIONE DIRETTA CON I FRAGMENT ---
+    // Tutta la vecchia logica per trovare i fragment è stata rimossa.
+    // Ora l'activity si basa solo sullo stato del ViewModel.
+    private fun updateButtonState(position: Int) {
+        val totalSteps = pagerAdapter.itemCount
+        binding.buttonBack.visibility = if (position > 0) View.VISIBLE else View.INVISIBLE
+
+        val permissionsStepPosition = 1
+        val configStepPosition = 2
+        val voiceprintStepPosition = 3
+        binding.buttonNext.text = if (position == voiceprintStepPosition) "Fine" else "Avanti"
+
+        // La logica di abilitazione del pulsante ora è più pulita:
+        binding.buttonNext.isEnabled = when (position) {
+            permissionsStepPosition -> arePermissionsGranted
+            configStepPosition -> viewModel.areInputsValid() // Chiede al ViewModel se i dati sono validi
+            voiceprintStepPosition -> lastRecordedVoiceprintPath != null
+            else -> true
+        }
+
+        val finalStepPosition = totalSteps - 1
+        if (position == finalStepPosition) {
+            binding.buttonNext.visibility = View.GONE
+            binding.buttonBack.visibility = View.GONE
+        } else {
+            binding.buttonNext.visibility = View.VISIBLE
+        }
+    }
+
+    /**
+     * Questa funzione viene chiamata da ConfigurationFragment ogni volta che il testo cambia.
+     * Ora il suo unico scopo è dire all'activity di rivalutare lo stato del pulsante.
+     */
+    fun onConfigurationInputChanged() {
+        if (binding.viewPagerOnboarding.currentItem == 2) {
+            updateButtonState(2)
+        }
     }
 
     fun onPermissionsGranted() {
-        if (binding.viewPagerOnboarding.currentItem == 1) {
-            Log.d("OnboardingActivity", "Permessi concessi, avanzo alla schermata di configurazione.")
-            binding.viewPagerOnboarding.currentItem = 2
+        arePermissionsGranted = true
+        updateButtonState(binding.viewPagerOnboarding.currentItem)
+    }
+
+    private fun checkInitialPermissions() {
+        val requiredPermissions = listOf(
+            android.Manifest.permission.RECORD_AUDIO,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        val allGranted = requiredPermissions.all {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
+        if (allGranted) {
+            arePermissionsGranted = true
         }
     }
 
-    private fun completeOnboarding() {
-        val configFragment = supportFragmentManager.findFragmentByTag("f2") as? ConfigurationFragment
+    fun onVoiceprintRecorded(filePath: String) {
+        lastRecordedVoiceprintPath = filePath
+        updateButtonState(binding.viewPagerOnboarding.currentItem)
+    }
 
-        if (configFragment == null || !configFragment.areInputsValid()) {
-            Toast.makeText(this, "Dati di configurazione mancanti o non validi.", Toast.LENGTH_LONG).show()
-            binding.viewPagerOnboarding.currentItem = 2
-            return
-        }
-
-        if (voiceprintFilePath.isNullOrEmpty()) {
-            Toast.makeText(this, "Per favore, registra la tua impronta vocale.", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val (firstName, lastName, alias, url, password) = configFragment.getSettingsData()
+    fun scheduleVoiceprintUpload(filePath: String) {
+        val audioSegment = AudioSegment(
+            filePath = filePath,
+            timestamp = System.currentTimeMillis(),
+            isUploaded = false,
+            isVoiceprint = true
+        )
 
         lifecycleScope.launch {
-            settingsManager.saveGeneralSettings(firstName, lastName, alias, url)
-            settingsManager.savePassword(password)
-
-            val audioSegment = AudioSegment(
-                filePath = voiceprintFilePath!!,
-                timestamp = System.currentTimeMillis(),
-                isUploaded = false,
-                latitude = null,
-                longitude = null
-            )
-            val db = AppDatabase.getDatabase(this@OnboardingActivity)
+            val db = AppDatabase.getDatabase(applicationContext)
             val segmentId = db.audioSegmentDao().insert(audioSegment)
-            Log.d("OnboardingActivity", "Voiceprint salvato nel DB con ID: $segmentId")
-
-            scheduleVoiceprintUpload(segmentId, voiceprintFilePath!!)
-
-            val sharedPrefs = getSharedPreferences("app_status", Context.MODE_PRIVATE)
-            sharedPrefs.edit().putBoolean("onboarding_completed", true).apply()
-
-            // Avviamo il servizio di registrazione per la prima volta
-            Log.d("OnboardingActivity", "Onboarding completato. Avvio del servizio di registrazione.")
-            val serviceIntent = Intent(this@OnboardingActivity, AudioRecordingService::class.java).apply {
-                action = AudioRecordingService.ACTION_START
-            }
-            startService(serviceIntent)
-
-            // Avviamo la DashboardActivity
-            val intent = Intent(this@OnboardingActivity, DashboardActivity::class.java)
-            startActivity(intent)
-            finish()
+            Log.d("OnboardingActivity", "Schedulazione dell'UploadWorker per il voiceprint (ID: $segmentId)")
+            UploadUtils.scheduleUpload(applicationContext, filePath, segmentId, audioSegment.timestamp, true)
         }
     }
 
-    private fun scheduleVoiceprintUpload(segmentId: Long, filePath: String) {
-        Log.d("OnboardingActivity", "Schedulazione dell'UploadWorker per il voiceprint (ID: $segmentId)")
-        val inputData = Data.Builder()
-            .putString(UploadWorker.KEY_FILE_PATH, filePath)
-            .putLong(UploadWorker.KEY_SEGMENT_ID, segmentId)
-            .putLong(UploadWorker.KEY_TIMESTAMP, System.currentTimeMillis())
-            .putBoolean(UploadWorker.KEY_IS_VOICEPRINT, true)
-            .build()
-        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
-            .setInputData(inputData)
-            .build()
-        WorkManager.getInstance(this).enqueue(uploadWorkRequest)
-        Log.d("OnboardingActivity", "Lavoro di upload per il voiceprint accodato.")
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.viewPagerOnboarding.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 }

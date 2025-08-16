@@ -2,37 +2,69 @@ package com.example.lifelog
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 
+/**
+ * Gestisce le preferenze e gli stati dell'applicazione usando SharedPreferences.
+ * È un Singleton per garantire una sola istanza in tutta l'app.
+ *
+ * RESPONSABILITÀ:
+ * 1. Gestire la PASSWORD in modo sicuro (con EncryptedSharedPreferences).
+ * 2. Gestire gli STATI dell'app (flag booleani) in modo veloce (con SharedPreferences standard).
+ */
 class AppPreferences private constructor(context: Context) {
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, Context.MODE_PRIVATE)
+    // --- 1. GESTIONE STATI (SharedPreferences standard) ---
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("app_states", Context.MODE_PRIVATE)
 
-    // Flag per sapere se l'utente ha completato la configurazione iniziale.
+    companion object {
+        private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
+        private const val KEY_SERVICE_ACTIVE = "service_active"
+        private const val KEY_ENCRYPTION_PASSWORD = "encryption_password"
+
+        @Volatile
+        private var INSTANCE: AppPreferences? = null
+
+        fun getInstance(context: Context): AppPreferences {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: AppPreferences(context.applicationContext).also { INSTANCE = it }
+            }
+        }
+    }
+
     var isOnboardingCompleted: Boolean
         get() = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
         set(value) = prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETED, value).apply()
 
-    // --- NUOVA VARIABILE ---
-    // Flag per sapere se il servizio deve essere attivo.
-    // Di default, dopo l'onboarding, è attivo.
     var isServiceActive: Boolean
-        get() = prefs.getBoolean(KEY_SERVICE_ACTIVE, false) // Default a false
+        get() = prefs.getBoolean(KEY_SERVICE_ACTIVE, false)
         set(value) = prefs.edit().putBoolean(KEY_SERVICE_ACTIVE, value).apply()
 
 
-    companion object {
-        private const val PREFS_FILENAME = "lifelog_prefs"
-        private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
-        // --- NUOVA CHIAVE ---
-        private const val KEY_SERVICE_ACTIVE = "service_active"
+    // --- 2. GESTIONE PASSWORD (EncryptedSharedPreferences) ---
+    private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+    private val encryptedPrefs = EncryptedSharedPreferences.create(
+        "secure_user_prefs",
+        masterKeyAlias,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
-        @Volatile
-        private var instance: AppPreferences? = null
+    var password: String
+        get() = encryptedPrefs.getString(KEY_ENCRYPTION_PASSWORD, "") ?: ""
+        set(value) = encryptedPrefs.edit().putString(KEY_ENCRYPTION_PASSWORD, value).apply()
 
-        fun getInstance(context: Context): AppPreferences {
-            return instance ?: synchronized(this) {
-                instance ?: AppPreferences(context.applicationContext).also { instance = it }
-            }
-        }
+
+    // --- 3. METODO DI SALVATAGGIO BLOCCANTE PER L'ONBOARDING ---
+    /**
+     * Esegue il salvataggio DEGLI STATI in modo sincrono e bloccante.
+     * Perfetto per la transizione critica alla fine dell'onboarding.
+     * Restituisce 'true' se il salvataggio ha avuto successo.
+     */
+    fun saveOnboardingCompletionStateBlocking(): Boolean {
+        return prefs.edit().putBoolean(KEY_ONBOARDING_COMPLETED, true).commit()
     }
 }

@@ -2,27 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- PERMESSI RICHIESTI -->
+    <!-- ================== PERMESSI ================== -->
 
-    <!-- Permesso chiave per richiedere di ignorare l'ottimizzazione della batteria -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-    <!-- Permessi per il servizio in foreground e notifiche -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Permessi per la registrazione e il servizio in background -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
-    <!-- Permesso per la registrazione audio -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Permessi per la localizzazione (in primo piano e in background) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- Permesso per le notifiche (da Android 13 in su) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Permesso per avviare il servizio al boot del dispositivo -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- Permessi per la localizzazione -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Buona pratica aggiungerlo con FINE_LOCATION -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!-- Permesso per disabilitare l'ottimizzazione della batteria -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- Permesso per la connessione a Internet (per l'upload) -->
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -35,7 +38,9 @@
         android:theme="@style/Theme.LifeLog"
         tools:targetApi="34">
 
-        <!-- Activity di avvio (invisibile) -->
+        <!-- ================== ACTIVITIES ================== -->
+
+        <!-- Activity di avvio: invisibile, decide dove andare -->
         <activity
             android:name=".LauncherActivity"
             android:exported="true"
@@ -46,19 +51,12 @@
             </intent-filter>
         </activity>
 
-        <!-- Activity per l'onboarding -->
+        <!-- Activity per il flusso di configurazione iniziale -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
 
-        <!-- Activity per la richiesta dei permessi -->
-        <!-- NOTA: Questa MainActivity sembra ridondante se il flusso è gestito da LauncherActivity -->
-        <!-- Potrebbe essere un residuo di codice precedente. Per ora la lasciamo. -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Activity per la dashboard principale -->
+        <!-- Activity per la dashboard principale dell'app -->
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
@@ -68,14 +66,16 @@
             android:name=".SettingsActivity"
             android:exported="false" />
 
-        <!-- Servizio di registrazione -->
+        <!-- ================== SERVIZI E RECEIVER ================== -->
+
+        <!-- Servizio principale per la registrazione audio -->
         <service
             android:name=".AudioRecordingService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="microphone" />
 
-        <!-- Receiver per l'avvio del telefono -->
+        <!-- Receiver per riavviare il servizio al boot del dispositivo -->
         <receiver
             android:name=".BootCompletedReceiver"
             android:enabled="true"

@@ -3,11 +3,9 @@ package com.example.lifelog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,24 +15,26 @@ import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity() {
 
-    // Dichiarazione delle View con i nomi corretti
+    companion object {
+        const val EXTRA_FIRST_RUN = "EXTRA_FIRST_RUN"
+    }
+
     private lateinit var recyclerViewSegments: RecyclerView
     private lateinit var buttonToggleService: Button
-    private lateinit var buttonSettings: ImageView // Nel tuo layout è una ImageView
+    private lateinit var buttonSettings: ImageView
     private lateinit var serviceStatusText: TextView
-    private lateinit var footerText: TextView // Useremo questo per il conteggio
+    private lateinit var footerText: TextView
 
     private lateinit var audioSegmentAdapter: AudioSegmentAdapter
     private val audioSegmentDao by lazy { AppDatabase.getDatabase(this).audioSegmentDao() }
-
-    // Variabile per tenere traccia dello stato del servizio (da migliorare in futuro)
-    private var isServiceRunning = true
+    private lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        // Inizializzazione con i tuoi ID corretti
+        appPreferences = AppPreferences.getInstance(this)
+
         recyclerViewSegments = findViewById(R.id.recycler_view_segments)
         buttonToggleService = findViewById(R.id.button_toggle_service)
         buttonSettings = findViewById(R.id.button_settings)
@@ -45,6 +45,24 @@ class DashboardActivity : AppCompatActivity() {
         setupClickListeners()
         observeUnuploadedSegments()
         updateUi() // Chiamata iniziale per impostare la UI
+
+        handleFirstRun()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Aggiorna la UI ogni volta che l'activity torna in primo piano,
+        // per essere sicuri che mostri sempre lo stato corretto.
+        updateUi()
+    }
+
+    private fun handleFirstRun() {
+        if (intent.getBooleanExtra(EXTRA_FIRST_RUN, false)) {
+            Log.d("DashboardActivity", "Primo avvio: avvio automatico del servizio.")
+            startRecordingService() // <-- CORREZIONE APPLICATA QUI
+            appPreferences.isServiceActive = true
+            updateUi()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -57,13 +75,15 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         buttonToggleService.setOnClickListener {
-            isServiceRunning = !isServiceRunning // Inverti lo stato
-            if (isServiceRunning) {
-                startRecordingService()
-            } else {
+            val isCurrentlyActive = appPreferences.isServiceActive
+            if (isCurrentlyActive) {
                 stopRecordingService()
+            } else {
+                startRecordingService()
             }
-            updateUi() // Aggiorna la UI dopo il click
+            // Salviamo il nuovo stato e aggiorniamo la UI
+            appPreferences.isServiceActive = !isCurrentlyActive
+            updateUi()
         }
 
         buttonSettings.setOnClickListener {
@@ -73,7 +93,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun updateUi() {
-        if (isServiceRunning) {
+        val isActive = appPreferences.isServiceActive
+        if (isActive) {
             buttonToggleService.text = "Pausa"
             serviceStatusText.text = "Servizio Attivo"
         } else {
@@ -85,12 +106,8 @@ class DashboardActivity : AppCompatActivity() {
     private fun observeUnuploadedSegments() {
         lifecycleScope.launch {
             audioSegmentDao.getUnuploadedSegmentsFlow().collectLatest { segments ->
-                Log.d("DashboardActivity", "Ricevuti ${segments.size} segmenti non caricati dal DB.")
-
-                // Non abbiamo un text_view_no_files, quindi gestiamo solo l'adapter
+                Log.d("DashboardActivity", "Ricevuti ${segments.size} segmenti non caricati.")
                 audioSegmentAdapter.submitList(segments)
-
-                // Aggiorniamo il footer con il conteggio
                 footerText.text = "File in attesa di upload: ${segments.size}"
             }
         }

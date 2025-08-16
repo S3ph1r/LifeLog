@@ -9,22 +9,21 @@ class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Usiamo AppPreferences per controllare lo stato di completamento dell'onboarding.
-        // Questo flag viene impostato su 'true' solo alla fine del flusso dei permessi
-        // nella MainActivity.
-        val prefs = AppPreferences.getInstance(this)
+        // Otteniamo l'istanza del nostro nuovo gestore di preferenze.
+        val appPreferences = AppPreferences.getInstance(this)
 
-        if (prefs.isOnboardingCompleted) {
-            // L'utente ha già fatto tutto. Andiamo direttamente alla Dashboard.
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
+        // Leggiamo DIRETTAMENTE la proprietà. Non serve più una coroutine
+        // perché SharedPreferences è sincrono e velocissimo.
+        val isOnboardingCompleted = appPreferences.isOnboardingCompleted
+
+        val intent = if (isOnboardingCompleted) {
+            Intent(this, DashboardActivity::class.java)
         } else {
-            // È il primo avvio. Iniziamo il flusso di onboarding.
-            val intent = Intent(this, OnboardingActivity::class.java)
-            startActivity(intent)
+            Intent(this, OnboardingActivity::class.java)
         }
 
-        // Chiudiamo questa Activity per non poterci tornare con il tasto back.
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
         finish()
     }
 }

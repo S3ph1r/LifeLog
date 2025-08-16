@@ -6,26 +6,39 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class OnboardingAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
 
+    // Mappa per tenere traccia dei fragment istanziati dal ViewPager
+    private val fragmentMap = mutableMapOf<Int, Fragment>()
+
     /**
-     * La lista dei fragment che compongono l'onboarding, nel loro ordine di apparizione.
-     * Abbiamo inserito il PermissionsFragment al secondo posto.
+     * La lista delle classi dei fragment da creare.
+     * Creare una nuova istanza ogni volta in createFragment è più sicuro.
      */
-    private val fragments: List<Fragment> = listOf(
-        WelcomeFragment(),          // Posizione 0
-        PermissionsFragment(),      // Posizione 1 (NUOVO)
-        ConfigurationFragment(),    // Posizione 2
-        VoiceprintFragment()        // Posizione 3
+    private val fragmentClasses = listOf(
+        WelcomeFragment::class.java,
+        PermissionsFragment::class.java,
+        ConfigurationFragment::class.java,
+        VoiceprintFragment::class.java,
+        OnboardingCompleteFragment::class.java
     )
 
-    /**
-     * Restituisce il numero totale di pagine nell'onboarding.
-     */
-    override fun getItemCount(): Int = fragments.size
+    override fun getItemCount(): Int = fragmentClasses.size
 
     /**
-     * Crea e restituisce il fragment per la posizione data.
+     * Crea una nuova istanza del fragment per la posizione data.
+     * Questo è il metodo preferito per garantire che ogni fragment sia nuovo.
      */
     override fun createFragment(position: Int): Fragment {
-        return fragments[position]
+        // Usa il costruttore della classe per creare una nuova istanza
+        val fragment = fragmentClasses[position].constructors.first().newInstance() as Fragment
+        fragmentMap[position] = fragment
+        return fragment
+    }
+
+    /**
+     * Funzione per recuperare un fragment già creato dalla nostra mappa.
+     * Sarà usata dall'OnboardingActivity.
+     */
+    fun getFragment(position: Int): Fragment? {
+        return fragmentMap[position]
     }
 }
