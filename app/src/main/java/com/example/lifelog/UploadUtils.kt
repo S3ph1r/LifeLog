@@ -1,20 +1,28 @@
 package com.example.lifelog
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import java.util.concurrent.TimeUnit
 
+/**
+ * Classe di utilità per schedulare i task di upload tramite WorkManager.
+ * In questa nuova architettura, viene usata SOLO per l'upload del voiceprint dall'onboarding.
+ */
 object UploadUtils {
 
-    fun scheduleUpload(context: Context, filePath: String, segmentId: Long, timestamp: Long, isVoiceprint: Boolean) {
+    private const val TAG = "UploadUtils"
+
+    fun scheduleUpload(context: Context, filePath: String, segmentId: Long, isVoiceprint: Boolean) {
+        Log.d(TAG, "Schedulazione upload per: $filePath (isVoiceprint: $isVoiceprint)")
+
         val inputData = Data.Builder()
             .putString(UploadWorker.KEY_FILE_PATH, filePath)
             .putLong(UploadWorker.KEY_SEGMENT_ID, segmentId)
-            .putLong(UploadWorker.KEY_TIMESTAMP, timestamp)
+            // Il timestamp non è più rilevante qui, lo gestirà il backend
             .putBoolean(UploadWorker.KEY_IS_VOICEPRINT, isVoiceprint)
             .build()
 
@@ -25,13 +33,11 @@ object UploadUtils {
         val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
             .setInputData(inputData)
             .setConstraints(constraints)
-            // --- MODIFICA CHIAVE QUI ---
-            // Aggiungiamo un ritardo iniziale di 1 minuto.
-            // Questo assicura che, quando il worker partirà, tutte le operazioni di salvataggio
-            // avviate dall'onboarding saranno state completate da tempo.
-            .setInitialDelay(1, TimeUnit.MINUTES)
+            // Il ritardo di 1 minuto è stato rimosso per avviare l'upload il prima possibile.
             .build()
 
         WorkManager.getInstance(context).enqueue(uploadWorkRequest)
+
+        Log.i(TAG, "Task di upload per $filePath accodato con successo.")
     }
 }

@@ -12,6 +12,9 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,6 +27,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Servizio in foreground con una singola responsabilità: registrare segmenti audio.
+ * Una volta che un segmento è salvato come file .m4a, delega tutto il lavoro
+ * di processamento (GPS, crittografia) e upload a una catena di WorkManager workers.
+ */
 class AudioRecordingService : Service() {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -34,10 +42,8 @@ class AudioRecordingService : Service() {
     private val scope = CoroutineScope(Dispatchers.IO)
     private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
 
-    private val audioSegmentDao by lazy { AppDatabase.getDatabase(this).audioSegmentDao() }
-    // --- MODIFICA CHIAVE ---
-    private val appPreferences by lazy { AppPreferences.getInstance(this) }
-    private val cryptoManager by lazy { CryptoManager() }
+    // Riferimenti a DAO, Preferences e CryptoManager sono stati rimossi.
+    // Il servizio non ne ha più bisogno.
 
     companion object {
         const val ACTION_START = "com.example.lifelog.ACTION_START"
@@ -60,7 +66,7 @@ class AudioRecordingService : Service() {
         when (intent?.action) {
             ACTION_START -> startRecordingLoop()
             ACTION_STOP -> stopServiceAndRecording()
-            else -> startRecordingLoop()
+            else -> startRecordingLoop() // Comportamento di default
         }
         return START_STICKY
     }
@@ -77,20 +83,22 @@ class AudioRecordingService : Service() {
 
         recordingJob = scope.launch {
             while (isActive) {
-                val tempFile = createTempFile()
-                if (tempFile == null) {
-                    Log.e(TAG, "Impossibile creare il file temporaneo. Interrompo il ciclo.")
-                    break
+                // Ora creiamo un file .m4a direttamente nella directory interna
+                val m4aFile = createM4aFile()
+                if (m4aFile == null) {
+                    Log.e(TAG, "Impossibile creare il file .m4a. Interrompo il ciclo.")
+                    break // Esce dal ciclo while
                 }
 
-                Log.d(TAG, "Inizio nuovo segmento: ${tempFile.name}")
-                val success = recordSingleSegment(tempFile)
+                Log.d(TAG, "Inizio nuovo segmento: ${m4aFile.name}")
+                val success = recordSingleSegment(m4aFile)
 
                 if (success) {
-                    processSegment(tempFile)
+                    // La funzione di processamento ora avvia la catena di worker
+                    processSegment(m4aFile)
                 } else {
                     Log.w(TAG, "Registrazione del segmento fallita o interrotta.")
-                    tempFile.delete()
+                    m4aFile.delete() // Pulisce il file .m4a se la registrazione fallisce
                 }
             }
             Log.d(TAG, "Il ciclo di registrazione è terminato.")
@@ -103,7 +111,7 @@ class AudioRecordingService : Service() {
         recordingJob?.cancel()
         recordingJob = null
         stopMediaRecorder()
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 
@@ -145,58 +153,56 @@ class AudioRecordingService : Service() {
         mediaRecorder = null
     }
 
-    private suspend fun processSegment(tempFile: File) {
-        if (!tempFile.exists() || tempFile.length() == 0L) {
-            Log.w(TAG, "File temporaneo vuoto o non esistente.")
+    /**
+     * NUOVA LOGICA: Questa funzione non fa più lavoro pesante.
+     * Il suo unico scopo è avviare la catena di worker per processare il file registrato.
+     */
+    private fun processSegment(m4aFile: File) {
+        if (!m4aFile.exists() || m4aFile.length() == 0L) {
+            Log.w(TAG, "File .m4a vuoto o non esistente. Annullamento del processamento.")
             return
         }
 
-        // --- MODIFICA CHIAVE ---
-        val password = appPreferences.password
-        if (password.isBlank()) {
-            Log.e(TAG, "Password non trovata! Impossibile criptare.")
-            tempFile.delete()
-            return
-        }
+        Log.i(TAG, "Segmento ${m4aFile.name} registrato. Avvio la catena di worker (Processing -> Upload).")
 
-        val encryptedFile = getEncryptedFilePath()
-        try {
-            cryptoManager.encrypt(password, tempFile.inputStream(), encryptedFile.outputStream())
-            Log.d(TAG, "File criptato con successo in: ${encryptedFile.name}")
+        // 1. Prepara i dati di input per il primo worker della catena (ProcessingWorker)
+        val processingInputData = workDataOf(ProcessingWorker.KEY_RAW_AUDIO_PATH to m4aFile.absolutePath)
 
-            val segment = AudioSegment(
-                filePath = encryptedFile.absolutePath,
-                timestamp = System.currentTimeMillis(),
-                isUploaded = false,
-                isVoiceprint = false
-            )
-            audioSegmentDao.insert(segment)
-            Log.d(TAG, "Nuovo segmento salvato nel DB.")
-        } catch (e: Exception) {
-            Log.e(TAG, "Errore durante la crittografia o il salvaggio nel DB.", e)
-            encryptedFile.delete()
-        } finally {
-            tempFile.delete()
-        }
+        // 2. Costruisci la richiesta per il ProcessingWorker
+        val processingWorkRequest = OneTimeWorkRequestBuilder<ProcessingWorker>()
+            .setInputData(processingInputData)
+            .addTag("PROCESSING_TAG") // Aggiungiamo un tag per il debug
+            .build()
+
+        // 3. Costruisci la richiesta per l'UploadWorker (non ha input diretti, li prenderà dal precedente)
+        val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
+            .addTag("UPLOAD_TAG") // Aggiungiamo un tag per il debug
+            .build()
+
+        // 4. Concatena e metti in coda le richieste a WorkManager
+        WorkManager.getInstance(applicationContext)
+            .beginWith(processingWorkRequest) // Inizia con il ProcessingWorker
+            .then(uploadWorkRequest)           // E POI, se il primo ha successo, esegui l'UploadWorker
+            .enqueue()
     }
 
-    private fun createTempFile(): File? {
+    /**
+     * Crea un file .m4a vuoto nella directory interna dell'app (filesDir).
+     * Questa directory è persistente e sicura.
+     */
+    private fun createM4aFile(): File? {
         return try {
-            File.createTempFile("segment_", ".tmp", cacheDir)
+            val timeStamp: String = dateFormat.format(Date())
+            val fileName = "segment_$timeStamp.m4a" // Nome del file non criptato
+            val storageDir = filesDir // Usiamo la directory interna sicura
+            if (!storageDir.exists()) {
+                storageDir.mkdirs()
+            }
+            File(storageDir, fileName)
         } catch (e: IOException) {
-            Log.e(TAG, "Errore nella creazione del file temporaneo", e)
+            Log.e(TAG, "Errore nella creazione del file .m4a", e)
             null
         }
-    }
-
-    private fun getEncryptedFilePath(): File {
-        val timeStamp: String = dateFormat.format(Date())
-        val fileName = "segment_$timeStamp.m4a.enc"
-        val storageDir = filesDir
-        if (!storageDir.exists()) {
-            storageDir.mkdirs()
-        }
-        return File(storageDir, fileName)
     }
 
     private fun createNotificationChannel() {

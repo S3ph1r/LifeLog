@@ -39,7 +39,8 @@
                 android:padding="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/button_settings"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_sync" />
+                app:srcCompat="@drawable/ic_sync"
+                app:tint="@android:color/white" />
 
             <!-- Icona Impostazioni -->
             <ImageView
@@ -55,7 +56,8 @@
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_settings" />
+                app:srcCompat="@drawable/ic_settings"
+                app:tint="@android:color/white" />
 
             <TextView
                 android:id="@+id/text_view_status_title"

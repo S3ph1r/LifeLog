@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     tools:context=".SettingsActivity">
 
     <TextView
@@ -23,9 +25,7 @@
         android:id="@+id/label_user_data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
         android:text="Dati Utente"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -74,7 +74,7 @@
         android:id="@+id/label_server_config"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Configurazione Server"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -115,6 +115,54 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <!-- Sezione Voiceprint -->
+    <TextView
+        android:id="@+id/label_voiceprint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Impronta Vocale"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password" />
+
+    <LinearLayout
+        android:id="@+id/voiceprint_buttons_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_voiceprint">
+
+        <!-- Pulsante Ascolta Voiceprint -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_play_voiceprint"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="Ascolta"
+            app:icon="@android:drawable/ic_media_play" />
+
+        <!-- Pulsante Registra di Nuovo -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_rerecord_voiceprint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Registra di Nuovo"
+            app:icon="@drawable/ic_mic" />
+
+    </LinearLayout>
+
+
     <!-- Pulsante Salva -->
     <Button
         android:id="@+id/button_save_settings"
@@ -123,7 +171,7 @@
         android:layout_marginBottom="32dp"
         android:text="Salva Impostazioni"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/text_input_layout_password"
-        app:layout_constraintStart_toStartOf="@+id/text_input_layout_password" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

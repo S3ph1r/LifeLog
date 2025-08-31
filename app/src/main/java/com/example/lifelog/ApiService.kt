@@ -11,24 +11,25 @@ interface ApiService {
 
     /**
      * Esegue l'upload di un singolo segmento audio criptato.
+     * Corrisponde all'endpoint: POST /api/segments
      */
     @Multipart
-    @POST("upload")
-    suspend fun uploadAudio(
-        @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody
+    @POST("api/segments") // <-- MODIFICA: URL aggiornato
+    suspend fun uploadAudioSegment(
+        @Part file: MultipartBody.Part
+        // La parte "description" è stata rimossa perché non più richiesta dalle specifiche.
     ): Response<Void>
 
     /**
-     * NUOVO METODO: Esegue l'upload del voiceprint insieme ai dati dell'utente.
-     * Invia un file audio e diversi campi di testo in una singola richiesta.
+     * Esegue l'upload del voiceprint e dei dati utente durante l'onboarding.
+     * Corrisponde all'endpoint: POST /api/onboarding
      */
     @Multipart
-    @POST("voiceprint") // Un endpoint dedicato per il voiceprint
-    suspend fun uploadVoiceprint(
-        @Part("first_name") firstName: RequestBody,
-        @Part("last_name") lastName: RequestBody,
+    @POST("api/onboarding") // <-- MODIFICA: URL aggiornato
+    suspend fun uploadOnboardingData(
+        @Part("firstName") firstName: RequestBody, // <-- MODIFICA: name del campo aggiornato
+        @Part("lastName") lastName: RequestBody,  // <-- MODIFICA: name del campo aggiornato
         @Part("alias") alias: RequestBody,
         @Part voiceprintFile: MultipartBody.Part
-    ): Response<Void> // Ipotizziamo che il server risponda solo con OK (200)
+    ): Response<Void>
 }

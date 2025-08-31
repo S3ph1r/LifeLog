@@ -4,13 +4,14 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
@@ -21,113 +22,117 @@ class UploadWorker(
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {
 
-    // --- MODIFICHE CHIAVE ---
-    private val audioSegmentDao = AppDatabase.getDatabase(appContext).audioSegmentDao()
     private val userRepository = UserRepository(AppDatabase.getDatabase(appContext).userDao())
+    private val audioSegmentDao = AppDatabase.getDatabase(appContext).audioSegmentDao()
 
     companion object {
         const val KEY_FILE_PATH = "key_file_path"
         const val KEY_SEGMENT_ID = "key_segment_id"
-        const val KEY_TIMESTAMP = "key_timestamp"
         const val KEY_IS_VOICEPRINT = "key_is_voiceprint"
-        private const val TAG = "UploadWorker"
+        const val TAG = "UploadWorker"
     }
 
-    data class UploadDescription(val timestamp: Long)
-
     override suspend fun doWork(): Result {
-        // Leggi i dati utente (che contengono l'URL) da Room
-        val user = userRepository.user.first()
-        if (user == null || user.serverUrl.isBlank()) {
-            Log.e(TAG, "Dati utente o URL del server non configurati. Riprovo più tardi.")
-            return Result.retry()
-        }
-        val serverUrl = user.serverUrl
+        val filePath = inputData.getString(ProcessingWorker.KEY_ENCRYPTED_AUDIO_PATH)
+            ?: inputData.getString(KEY_FILE_PATH)
+            ?: run {
+                Log.e(TAG, "Input non valido: il percorso del file è nullo.")
+                return Result.failure()
+            }
 
-        val apiService = createApiService(serverUrl)
-
-        val filePath = inputData.getString(KEY_FILE_PATH) ?: return Result.failure()
-        val segmentId = inputData.getLong(KEY_SEGMENT_ID, -1L)
-        val timestamp = inputData.getLong(KEY_TIMESTAMP, 0L)
         val isVoiceprint = inputData.getBoolean(KEY_IS_VOICEPRINT, false)
-
-        if (segmentId == -1L) return Result.failure()
+        val segmentId = inputData.getLong(KEY_SEGMENT_ID, -1L)
 
         val file = File(filePath)
         if (!file.exists()) {
-            audioSegmentDao.updateUploadStatus(segmentId, true)
-            Log.w(TAG, "File non trovato, rimosso dalla coda: $filePath")
-            return Result.failure()
+            Log.e(TAG, "File da caricare non trovato: $filePath")
+            if (isVoiceprint && segmentId != -1L) {
+                audioSegmentDao.updateUploadStatus(segmentId, true)
+            }
+            return Result.success()
         }
 
-        Log.d(TAG, "Tentativo di upload per: ${file.name} (Voiceprint: $isVoiceprint)")
+        Log.i(TAG, "Tentativo di upload per: ${file.name} (Onboarding/Voiceprint: $isVoiceprint)")
+
+        val user = userRepository.user.first()
+        if (user == null || user.serverUrl.isBlank()) {
+            Log.e(TAG, "Dati utente o URL server non configurati. Riprovo.")
+            return Result.retry()
+        }
+        val apiService = createApiService(user.serverUrl)
 
         return try {
             val response = if (isVoiceprint) {
-                // Passiamo l'oggetto user per l'upload del voiceprint
-                uploadVoiceprintRequest(apiService, file, user)
+                uploadOnboardingRequest(apiService, file, user)
             } else {
-                uploadAudioSegmentRequest(apiService, file, timestamp)
+                uploadAudioSegmentRequest(apiService, file)
             }
 
             if (response.isSuccessful) {
-                Log.d(TAG, "Upload completato per: ${file.name}")
-                audioSegmentDao.updateUploadStatus(segmentId, true)
-                file.delete()
+                Log.i(TAG, "Upload completato con successo per: ${file.name}")
+                // Aggiorniamo sempre lo stato nel DB per evitare che venga ricaricato
+                if (segmentId != -1L) { // Controlliamo per sicurezza che l'ID sia valido
+                    audioSegmentDao.updateUploadStatus(segmentId, true)
+                }
+
+                // --- MODIFICA CHIAVE QUI ---
+                // Eliminiamo il file SOLO SE NON è un voiceprint.
+                if (!isVoiceprint) {
+                    file.delete()
+                    Log.d(TAG, "File di segmento ${file.name} eliminato.")
+                } else {
+                    Log.i(TAG, "Il file del voiceprint ${file.name} è stato conservato sul dispositivo.")
+                }
+
                 Result.success()
             } else {
-                Log.e(TAG, "Upload fallito con codice: ${response.code()}. Riprovo.")
+                // Se la risposta non è "successful", Retrofit lancia una HttpException,
+                // quindi questo blocco è una sicurezza aggiuntiva.
+                Log.e(TAG, "Upload fallito (risposta non di successo) con codice: ${response.code()}")
                 Result.retry()
             }
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string() ?: "N/A"
+            Log.e(TAG, "Errore HTTP ${e.code()} durante l'upload di ${file.name}. Body: $errorBody. Riprovo.", e)
+            Result.retry()
         } catch (e: Exception) {
-            Log.e(TAG, "Eccezione durante l'upload. Riprovo.", e)
+            Log.e(TAG, "Eccezione generica durante l'upload di ${file.name}. Riprovo.", e)
             Result.retry()
         }
     }
 
     private fun createApiService(baseUrl: String): ApiService {
         val finalBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
-        // ... (resto della funzione invariato)
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
             .build()
 
-        val retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(finalBaseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        return retrofit.create(ApiService::class.java)
+            .create(ApiService::class.java)
     }
 
-    private suspend fun uploadVoiceprintRequest(api: ApiService, file: File, user: User): retrofit2.Response<Void> {
-        // --- MODIFICA CHIAVE ---
-        // I dati ora provengono dall'oggetto User passato come parametro
+    private suspend fun uploadOnboardingRequest(api: ApiService, file: File, user: User): Response<Void> {
         val firstNameBody = user.firstName.toRequestBody("text/plain".toMediaTypeOrNull())
         val lastNameBody = user.lastName.toRequestBody("text/plain".toMediaTypeOrNull())
         val aliasBody = user.alias.toRequestBody("text/plain".toMediaTypeOrNull())
-
         val requestFileBody = file.asRequestBody("audio/m4a".toMediaTypeOrNull())
-        val filePart = MultipartBody.Part.createFormData("voiceprint", file.name, requestFileBody)
+        val filePart = MultipartBody.Part.createFormData("voiceprintFile", file.name, requestFileBody)
 
-        Log.d(TAG, "Dati per l'upload: nome=${user.firstName}, cognome=${user.lastName}, alias=${user.alias}")
-
-        // Assicurati che il tuo ApiService sia stato aggiornato per questo
-        return api.uploadVoiceprint(firstNameBody, lastNameBody, aliasBody, filePart)
+        Log.d(TAG, "Invio dati di onboarding: nome=${user.firstName}, file=${file.name}")
+        return api.uploadOnboardingData(firstNameBody, lastNameBody, aliasBody, filePart)
     }
 
-    private suspend fun uploadAudioSegmentRequest(api: ApiService, file: File, timestamp: Long): retrofit2.Response<Void> {
-        // ... (questa funzione rimane invariata)
+    private suspend fun uploadAudioSegmentRequest(api: ApiService, file: File): Response<Void> {
         val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        val descriptionObject = UploadDescription(timestamp = timestamp)
-        val descriptionJson = Gson().toJson(descriptionObject)
-        val descriptionPart = descriptionJson.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-
-        return api.uploadAudio(filePart, descriptionPart)
+        Log.d(TAG, "Invio segmento audio: ${file.name}")
+        return api.uploadAudioSegment(filePart)
     }
 }

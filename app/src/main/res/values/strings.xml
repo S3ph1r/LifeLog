@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">LifeLog</string>
-    <string name="voiceprint_phrase">"La volpe veloce e marrone salta sopra il cane pigro. Questo test mi permette di calibrare l'accuratezza del riconoscimento vocale. La mia voce è la mia password, e non devo dimenticarla."</string>
+    <string name="voiceprint_phrase">"La volpe veloce e marrone salta sopra il cane pigro. Questo test mi permette di calibrare l'accuratezza del riconoscimento vocale."</string>
 
     <!-- NUOVE STRINGHE PER L'ONBOARDING -->
     <string name="next">Avanti</string>
-    <string name="skip">Salta</string> <!-- Anche se non lo usiamo ancora, è bene averlo -->
+    <string name="skip">Salta</string>
     <string name="back">Indietro</string>
     <string name="finish">Fine</string>
 </resources>
