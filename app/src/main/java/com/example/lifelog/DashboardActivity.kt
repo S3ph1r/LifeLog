@@ -17,14 +17,16 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class DashboardActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_FIRST_RUN = "EXTRA_FIRST_RUN"
-        private const val TAG = "DashboardActivity" // Aggiunto TAG per i log
+        private const val TAG = "DashboardActivity"
     }
 
+    private lateinit var imageViewBackground: ImageView // <-- NUOVO: Riferimento allo sfondo
     private lateinit var recyclerViewSegments: RecyclerView
     private lateinit var buttonToggleService: Button
     private lateinit var buttonSettings: ImageView
@@ -42,7 +44,8 @@ class DashboardActivity : AppCompatActivity() {
 
         appPreferences = AppPreferences.getInstance(this)
 
-        // L'inizializzazione delle view rimane invariata
+        // Inizializzazione di tutte le view, inclusa la nuova ImageView
+        imageViewBackground = findViewById(R.id.image_view_background)
         recyclerViewSegments = findViewById(R.id.recycler_view_segments)
         buttonToggleService = findViewById(R.id.button_toggle_service)
         buttonSettings = findViewById(R.id.button_settings)
@@ -53,22 +56,39 @@ class DashboardActivity : AppCompatActivity() {
         setupRecyclerView()
         setupClickListeners()
         observeUnuploadedSegments()
-
-        // La logica di primo avvio ora è gestita in onResume, quindi possiamo rimuoverla da qui
-        // handleFirstRun()
     }
 
     override fun onResume() {
         super.onResume()
-        // --- NUOVA LOGICA DI CONTROLLO ROBUSTA ---
-        // Ogni volta che l'activity diventa visibile, controlliamo lo stato.
+        // Ogni volta che l'activity torna visibile:
+        // 1. Controlla e avvia il servizio se necessario.
+        // 2. Aggiorna lo sfondo dinamico.
+        // 3. Aggiorna il testo dei pulsanti e dello stato.
         checkServiceStatusAndStartIfNeeded()
+        updateDynamicBackground()
         updateUi()
     }
 
     /**
-     * NUOVA FUNZIONE: Il cuore della nostra logica di avvio affidabile.
+     * Imposta l'immagine di sfondo in base all'ora del giorno.
      */
+    private fun updateDynamicBackground() {
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+
+        val backgroundResource = when (hourOfDay) {
+            in 6..17 -> { // Dalle 6:00 alle 17:59 (giorno)
+                Log.d(TAG, "Impostazione sfondo: Giorno")
+                R.drawable.background_morning
+            }
+            else -> { // Dalle 18:00 alle 5:59 (sera/notte)
+                Log.d(TAG, "Impostazione sfondo: Sera/Notte")
+                R.drawable.background_evening
+            }
+        }
+        imageViewBackground.setImageResource(backgroundResource)
+    }
+
     private fun checkServiceStatusAndStartIfNeeded() {
         val onboardingCompleted = appPreferences.isOnboardingCompleted
         val serviceShouldBeActive = appPreferences.isServiceActive
@@ -76,8 +96,6 @@ class DashboardActivity : AppCompatActivity() {
         Log.d(TAG, "Controllo stato servizio: Onboarding completato? $onboardingCompleted, Il servizio dovrebbe essere attivo? $serviceShouldBeActive")
 
         if (onboardingCompleted && serviceShouldBeActive) {
-            // Se l'utente ha completato la configurazione e desidera che il servizio sia attivo,
-            // controlliamo se è GIA' in esecuzione per non avviarne duplicati.
             if (!isServiceRunning(AudioRecordingService::class.java)) {
                 Log.i(TAG, "Onboarding completato e servizio richiesto, ma non è in esecuzione. Lo avvio ora.")
                 startRecordingService()
@@ -89,27 +107,12 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Funzione di utilità per verificare se un servizio è attualmente in esecuzione.
-     */
-    @Suppress("DEPRECATION") // Necessario per le vecchie versioni di Android
+    @Suppress("DEPRECATION")
     private fun isServiceRunning(serviceClass: Class<*>): Boolean {
         val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         return manager.getRunningServices(Integer.MAX_VALUE)
             .any { it.service.className == serviceClass.name }
     }
-
-    // La funzione handleFirstRun non è più necessaria, la sua logica è ora in checkServiceStatusAndStartIfNeeded
-    /*
-    private fun handleFirstRun() {
-        if (intent.getBooleanExtra(EXTRA_FIRST_RUN, false)) {
-            Log.d("DashboardActivity", "Primo avvio: avvio automatico del servizio.")
-            startRecordingService()
-            appPreferences.isServiceActive = true
-            updateUi()
-        }
-    }
-    */
 
     private fun setupRecyclerView() {
         audioSegmentAdapter = AudioSegmentAdapter()
@@ -127,7 +130,6 @@ class DashboardActivity : AppCompatActivity() {
             } else {
                 startRecordingService()
             }
-            // Salviamo il nuovo stato desiderato e aggiorniamo la UI
             appPreferences.isServiceActive = !isCurrentlyActive
             updateUi()
         }

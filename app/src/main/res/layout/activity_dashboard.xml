@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <!-- NUOVO: IMMAGINE DI SFONDO -->
+    <!-- Questa ImageView occupa l'intero schermo e funge da sfondo per tutti gli altri elementi. -->
+    <ImageView
+        android:id="@+id/image_view_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Sfondo dinamico"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" /> <!-- 'tools:src' mostra un'immagine di anteprima nell'editor -->
+
     <!-- HEADER -->
     <FrameLayout
         android:id="@+id/header_container"
@@ -14,7 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/bordered_card_background"
+        android:background="@drawable/bordered_card_background_transparent"
         android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +124,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bordered_card_background"
+        android:background="@drawable/bordered_card_background_transparent"
         android:elevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/footer_container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +152,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/bordered_card_background"
+        android:background="@drawable/bordered_card_background_transparent"
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

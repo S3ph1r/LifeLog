@@ -15,21 +15,26 @@ class AudioSegmentAdapter : ListAdapter<AudioSegment, AudioSegmentAdapter.AudioS
 
     class AudioSegmentViewHolder(private val binding: ListItemAudioSegmentBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        // Non abbiamo più bisogno del dateFormat qui dentro
+        // private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
 
         fun bind(segment: AudioSegment) {
-            val dateString = dateFormat.format(Date(segment.timestamp))
-            binding.textViewFileName.text = dateString
-
             val file = File(segment.filePath)
+
+            // --- MODIFICA 1: VISUALIZZA IL NOME REALE DEL FILE ---
+            // Estraiamo il nome del file dal percorso completo.
+            // Il nome del file ora contiene già il timestamp e le coordinate.
+            binding.textViewFileName.text = file.name
+
+            // --- MODIFICA 2: VISUALIZZA LA DIMENSIONE IN MB ---
             if (file.exists()) {
-                val sizeInKb = file.length() / 1024
-                if (sizeInKb < 1024) {
-                    binding.textViewFileSize.text = "$sizeInKb KB"
-                } else {
-                    val sizeInMb = sizeInKb / 1024.0
-                    binding.textViewFileSize.text = String.format(Locale.US, "%.2f MB", sizeInMb)
-                }
+                // Calcoliamo la dimensione in byte
+                val sizeInBytes = file.length()
+                // Convertiamo direttamente i byte in megabyte (1 MB = 1024 * 1024 bytes)
+                val sizeInMb = sizeInBytes / (1024.0 * 1024.0)
+
+                // Formattiamo la stringa per mostrare sempre i MB con due cifre decimali
+                binding.textViewFileSize.text = String.format(Locale.US, "%.2f MB", sizeInMb)
             } else {
                 binding.textViewFileSize.text = "File non trovato"
             }
