@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.work.CoroutineWorker
@@ -20,13 +19,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * Un CoroutineWorker responsabile di:
- * 1. Ricevere il percorso di un file audio .m4a non criptato.
- * 2. Ottenere la posizione GPS attuale del dispositivo.
- * 3. Criptare il file .m4a, includendo le coordinate GPS nel nuovo nome del file.
- * 4. Passare il percorso del nuovo file criptato (.m4a.enc) come output per il worker successivo.
- */
 class ProcessingWorker(
     private val appContext: Context,
     workerParams: WorkerParameters
@@ -37,11 +29,15 @@ class ProcessingWorker(
     private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(appContext) }
     private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
 
+    // --- NUOVO: Aggiunto riferimento al DAO ---
+    private val audioSegmentDao by lazy { AppDatabase.getDatabase(appContext).audioSegmentDao() }
+
     companion object {
-        // Chiave per ricevere il percorso del file audio grezzo in input
         const val KEY_RAW_AUDIO_PATH = "key_raw_audio_path"
-        // Chiave per inviare il percorso del file criptato in output
+
+        // Chiavi per l'OUTPUT (dati da passare al worker successivo)
         const val KEY_ENCRYPTED_AUDIO_PATH = "key_encrypted_audio_path"
+        const val KEY_NEW_SEGMENT_ID = "key_new_segment_id" // <-- NUOVA CHIAVE PER L'ID
         private const val TAG = "ProcessingWorker"
     }
 
@@ -55,7 +51,7 @@ class ProcessingWorker(
         val rawAudioFile = File(rawAudioPath)
         if (!rawAudioFile.exists()) {
             Log.e(TAG, "File audio grezzo non trovato al percorso: $rawAudioPath")
-            return Result.failure() // Il file non esiste, inutile continuare
+            return Result.failure()
         }
 
         Log.d(TAG, "Inizio processamento per il file: ${rawAudioFile.name}")
@@ -69,7 +65,7 @@ class ProcessingWorker(
             if (latitude != null && longitude != null) {
                 Log.i(TAG, "Posizione GPS ottenuta con successo: Lat: $latitude, Lon: $longitude")
             } else {
-                Log.w(TAG, "Impossibile ottenere la posizione GPS. Il nome del file non conterrà le coordinate.")
+                Log.w(TAG, "Impossibile ottenere la posizione GPS.")
             }
 
             // 2. Costruire il nuovo nome del file criptato
@@ -88,12 +84,25 @@ class ProcessingWorker(
                 Log.e(TAG, "Password non trovata! Impossibile criptare.")
                 return Result.failure()
             }
-
             cryptoManager.encrypt(password, rawAudioFile.inputStream(), encryptedFile.outputStream())
             Log.i(TAG, "File criptato con successo in: ${encryptedFile.name}")
 
-            // 4. Preparare l'output per il worker successivo
-            val outputData = workDataOf(KEY_ENCRYPTED_AUDIO_PATH to encryptedFile.absolutePath)
+            // --- NUOVA LOGICA: SALVATAGGIO NEL DATABASE ---
+            val newSegment = AudioSegment(
+                filePath = encryptedFile.absolutePath,
+                timestamp = System.currentTimeMillis(),
+                isUploaded = false,
+                isVoiceprint = false // Questo worker gestisce solo segmenti normali
+            )
+            val newSegmentId = audioSegmentDao.insert(newSegment)
+            Log.i(TAG, "Nuovo segmento salvato nel DB con ID: $newSegmentId")
+            // --- FINE NUOVA LOGICA ---
+
+            // 4. Preparare l'output per l'UploadWorker
+            val outputData = workDataOf(
+                KEY_ENCRYPTED_AUDIO_PATH to encryptedFile.absolutePath,
+                KEY_NEW_SEGMENT_ID to newSegmentId // Passiamo anche il nuovo ID
+            )
 
             // 5. Ritornare successo con i dati di output
             return Result.success(outputData)
@@ -102,7 +111,7 @@ class ProcessingWorker(
             Log.e(TAG, "Errore critico durante il processamento del segmento.", e)
             return Result.failure()
         } finally {
-            // 6. Pulizia finale: il file grezzo .m4a viene sempre cancellato
+            // 6. Pulizia finale
             if (rawAudioFile.exists()) {
                 rawAudioFile.delete()
                 Log.d(TAG, "File audio grezzo ${rawAudioFile.name} eliminato.")
@@ -110,27 +119,17 @@ class ProcessingWorker(
         }
     }
 
-    /**
-     * Ottiene l'ultima posizione conosciuta o richiede un aggiornamento fresco.
-     * Richiede i permessi ACCESS_COARSE_LOCATION o ACCESS_FINE_LOCATION.
-     */
     @SuppressLint("MissingPermission")
     private suspend fun getCurrentLocation(): Location? {
-        // Controlla se i permessi sono stati concessi
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.w(TAG, "Permessi di localizzazione non concessi. Impossibile ottenere il GPS.")
+            Log.w(TAG, "Permessi di localizzazione non concessi.")
             return null
         }
-
-        // Prova a ottenere la posizione attuale con alta priorità
         return try {
-            val locationRequest = Priority.PRIORITY_HIGH_ACCURACY
-            val cancellationToken = CancellationTokenSource().token
-            fusedLocationClient.getCurrentLocation(locationRequest, cancellationToken).await()
+            fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, CancellationTokenSource().token).await()
         } catch (e: Exception) {
-            Log.e(TAG, "Eccezione durante la richiesta della posizione corrente. Tento con l'ultima posizione nota.", e)
-            // Se fallisce, ripiega sull'ultima posizione nota (potrebbe essere null)
+            Log.e(TAG, "Eccezione durante la richiesta della posizione. Tento con l'ultima posizione nota.", e)
             fusedLocationClient.lastLocation.await()
         }
     }

@@ -41,18 +41,22 @@ class UploadWorker(
             }
 
         val isVoiceprint = inputData.getBoolean(KEY_IS_VOICEPRINT, false)
-        val segmentId = inputData.getLong(KEY_SEGMENT_ID, -1L)
+        val segmentId = if (isVoiceprint) {
+            inputData.getLong(KEY_SEGMENT_ID, -1L)
+        } else {
+            inputData.getLong(ProcessingWorker.KEY_NEW_SEGMENT_ID, -1L)
+        }
 
         val file = File(filePath)
         if (!file.exists()) {
             Log.e(TAG, "File da caricare non trovato: $filePath")
-            if (isVoiceprint && segmentId != -1L) {
+            if (segmentId != -1L) {
                 audioSegmentDao.updateUploadStatus(segmentId, true)
             }
             return Result.success()
         }
 
-        Log.i(TAG, "Tentativo di upload per: ${file.name} (Onboarding/Voiceprint: $isVoiceprint)")
+        Log.i(TAG, "Tentativo di upload per: ${file.name} (ID: $segmentId, isVoiceprint: $isVoiceprint)")
 
         val user = userRepository.user.first()
         if (user == null || user.serverUrl.isBlank()) {
@@ -70,13 +74,11 @@ class UploadWorker(
 
             if (response.isSuccessful) {
                 Log.i(TAG, "Upload completato con successo per: ${file.name}")
-                // Aggiorniamo sempre lo stato nel DB per evitare che venga ricaricato
-                if (segmentId != -1L) { // Controlliamo per sicurezza che l'ID sia valido
+                if (segmentId != -1L) {
                     audioSegmentDao.updateUploadStatus(segmentId, true)
+                    Log.d(TAG, "Stato del segmento ID $segmentId aggiornato a 'caricato' nel DB.")
                 }
 
-                // --- MODIFICA CHIAVE QUI ---
-                // Eliminiamo il file SOLO SE NON è un voiceprint.
                 if (!isVoiceprint) {
                     file.delete()
                     Log.d(TAG, "File di segmento ${file.name} eliminato.")
@@ -86,9 +88,6 @@ class UploadWorker(
 
                 Result.success()
             } else {
-                // Se la risposta non è "successful", Retrofit lancia una HttpException,
-                // quindi questo blocco è una sicurezza aggiuntiva.
-                Log.e(TAG, "Upload fallito (risposta non di successo) con codice: ${response.code()}")
                 Result.retry()
             }
         } catch (e: HttpException) {
@@ -99,19 +98,19 @@ class UploadWorker(
             Log.e(TAG, "Eccezione generica durante l'upload di ${file.name}. Riprovo.", e)
             Result.retry()
         }
-    }
+    } // <-- FINE DI doWork()
 
     private fun createApiService(baseUrl: String): ApiService {
         val finalBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .build()
-
         return Retrofit.Builder()
             .baseUrl(finalBaseUrl)
-            .client(okHttpClient)
+            .client(
+                OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .build()
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
