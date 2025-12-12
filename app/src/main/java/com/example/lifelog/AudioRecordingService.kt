@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
@@ -27,11 +28,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * Servizio in foreground con una singola responsabilità: registrare segmenti audio.
- * Una volta che un segmento è salvato come file .m4a, delega tutto il lavoro
- * di processamento (GPS, crittografia) e upload a una catena di WorkManager workers.
- */
 class AudioRecordingService : Service() {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -42,8 +38,7 @@ class AudioRecordingService : Service() {
     private val scope = CoroutineScope(Dispatchers.IO)
     private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
 
-    // Riferimenti a DAO, Preferences e CryptoManager sono stati rimossi.
-    // Il servizio non ne ha più bisogno.
+    private lateinit var audioManager: AudioManager
 
     companion object {
         const val ACTION_START = "com.example.lifelog.ACTION_START"
@@ -56,6 +51,7 @@ class AudioRecordingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         createNotificationChannel()
         Log.d(TAG, "Servizio creato.")
     }
@@ -66,7 +62,7 @@ class AudioRecordingService : Service() {
         when (intent?.action) {
             ACTION_START -> startRecordingLoop()
             ACTION_STOP -> stopServiceAndRecording()
-            else -> startRecordingLoop() // Comportamento di default
+            else -> startRecordingLoop()
         }
         return START_STICKY
     }
@@ -82,23 +78,33 @@ class AudioRecordingService : Service() {
         startForeground(NOTIFICATION_ID, createNotification("Registrazione in corso..."))
 
         recordingJob = scope.launch {
+            // Tentativo iniziale di setup
+            manageBluetoothConnection()
+
             while (isActive) {
-                // Ora creiamo un file .m4a direttamente nella directory interna
                 val m4aFile = createM4aFile()
                 if (m4aFile == null) {
                     Log.e(TAG, "Impossibile creare il file .m4a. Interrompo il ciclo.")
-                    break // Esce dal ciclo while
+                    break
                 }
 
-                Log.d(TAG, "Inizio nuovo segmento: ${m4aFile.name}")
-                val success = recordSingleSegment(m4aFile)
+                Log.d(TAG, "Preparazione nuovo segmento: ${m4aFile.name}")
+
+                // 1. GESTIONE DINAMICA: Controlliamo cosa è connesso ADESSO.
+                // Questa funzione ora restituisce TRUE se stiamo usando il Bluetooth, FALSE se usiamo il telefono.
+                val isUsingBluetooth = manageBluetoothConnection()
+
+                // 2. Passiamo questa informazione al registratore per scegliere la config giusta
+                val success = recordSingleSegment(m4aFile, isUsingBluetooth)
+
+                // NOTA: Non disattiviamo il Bluetooth qui per evitare attacca-stacca continui.
+                // Lo gestisce manageBluetoothConnection() al giro successivo se le cuffie spariscono.
 
                 if (success) {
-                    // La funzione di processamento ora avvia la catena di worker
                     processSegment(m4aFile)
                 } else {
                     Log.w(TAG, "Registrazione del segmento fallita o interrotta.")
-                    m4aFile.delete() // Pulisce il file .m4a se la registrazione fallisce
+                    m4aFile.delete()
                 }
             }
             Log.d(TAG, "Il ciclo di registrazione è terminato.")
@@ -111,11 +117,59 @@ class AudioRecordingService : Service() {
         recordingJob?.cancel()
         recordingJob = null
         stopMediaRecorder()
+        disableBluetoothSco() // Pulizia finale
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 
-    private suspend fun recordSingleSegment(outputFile: File): Boolean {
+    /**
+     * Gestisce la connessione Bluetooth e restituisce TRUE se SCO è attivo.
+     */
+    private suspend fun manageBluetoothConnection(): Boolean {
+        return try {
+            if (audioManager.isBluetoothScoAvailableOffCall) {
+                if (!audioManager.isBluetoothScoOn) {
+                    Log.i(TAG, "Cuffie rilevate ma SCO spento. Attivo connessione...")
+                    audioManager.startBluetoothSco()
+                    audioManager.isBluetoothScoOn = true
+                    Log.d(TAG, "Attesa tecnica 2s per handshake Bluetooth...")
+                    delay(2000)
+                    true // Bluetooth ATTIVO
+                } else {
+                    Log.v(TAG, "Cuffie rilevate e SCO già attivo. Procedo.")
+                    true // Bluetooth ATTIVO
+                }
+            } else {
+                // Se le cuffie non ci sono più, ma SCO era rimasto acceso, spegniamolo.
+                if (audioManager.isBluetoothScoOn) {
+                    Log.i(TAG, "Cuffie disconnesse. Disattivo SCO per usare microfono telefono.")
+                    audioManager.isBluetoothScoOn = false
+                    audioManager.stopBluetoothSco()
+                }
+                false // Bluetooth NON ATTIVO (Uso Telefono)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore gestione Bluetooth: ${e.message}")
+            false
+        }
+    }
+
+    private fun disableBluetoothSco() {
+        try {
+            if (audioManager.isBluetoothScoOn) {
+                audioManager.isBluetoothScoOn = false
+                audioManager.stopBluetoothSco()
+                Log.d(TAG, "Bluetooth SCO disattivato definitivamente.")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Errore disattivazione Bluetooth SCO: ${e.message}")
+        }
+    }
+
+    /**
+     * Registra un segmento applicando la configurazione ottimale in base alla sorgente.
+     */
+    private suspend fun recordSingleSegment(outputFile: File, useBluetooth: Boolean): Boolean {
         return try {
             mediaRecorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 MediaRecorder(applicationContext)
@@ -123,9 +177,33 @@ class AudioRecordingService : Service() {
                 @Suppress("DEPRECATION")
                 MediaRecorder()
             }).apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
+
+                // --- CONFIGURAZIONE DINAMICA ---
+                if (useBluetooth) {
+                    // CASO A: CUFFIE BLUETOOTH
+                    // Usiamo VOICE_RECOGNITION per dire alle cuffie di attivare i loro filtri (ANC/Beamforming)
+                    // e mandarci la voce pulita.
+                    Log.i(TAG, "Configurazione: BLUETOOTH (Source: VOICE_RECOGNITION)")
+                    setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION)
+                } else {
+                    // CASO B: MICROFONO TELEFONO (TCL)
+                    // Usiamo UNPROCESSED per evitare che il secondo microfono del telefono
+                    // cancelli la voce per sbaglio (problema "sott'acqua").
+                    Log.i(TAG, "Configurazione: TELEFONO (Source: UNPROCESSED)")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        setAudioSource(MediaRecorder.AudioSource.UNPROCESSED)
+                    } else {
+                        setAudioSource(MediaRecorder.AudioSource.MIC)
+                    }
+                }
+                // -------------------------------
+
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setAudioEncodingBitRate(128000)
+                setAudioSamplingRate(44100)
+                setAudioChannels(1) // Mono è fondamentale per BT SCO, va bene anche per unprocessed
+
                 setOutputFile(outputFile.absolutePath)
                 prepare()
                 start()
@@ -135,7 +213,7 @@ class AudioRecordingService : Service() {
             Log.d(TAG, "Durata del segmento raggiunta.")
             true
         } catch (e: Exception) {
-            Log.w(TAG, "Registrazione interrotta (potrebbe essere intenzionale).", e)
+            Log.w(TAG, "Registrazione interrotta (switch sorgente o errore).", e)
             false
         } finally {
             stopMediaRecorder()
@@ -147,54 +225,39 @@ class AudioRecordingService : Service() {
             stop()
             release()
             Log.d(TAG, "MediaRecorder fermato e rilasciato.")
-        }?.onFailure { e ->
-            Log.w(TAG, "Eccezione durante lo stop di MediaRecorder: ${e.message}")
         }
         mediaRecorder = null
     }
 
-    /**
-     * NUOVA LOGICA: Questa funzione non fa più lavoro pesante.
-     * Il suo unico scopo è avviare la catena di worker per processare il file registrato.
-     */
     private fun processSegment(m4aFile: File) {
         if (!m4aFile.exists() || m4aFile.length() == 0L) {
-            Log.w(TAG, "File .m4a vuoto o non esistente. Annullamento del processamento.")
+            Log.w(TAG, "File .m4a vuoto o non esistente. Annullamento.")
             return
         }
+        Log.i(TAG, "Segmento ${m4aFile.name} registrato. Avvio catena worker.")
 
-        Log.i(TAG, "Segmento ${m4aFile.name} registrato. Avvio la catena di worker (Processing -> Upload).")
-
-        // 1. Prepara i dati di input per il primo worker della catena (ProcessingWorker)
         val processingInputData = workDataOf(ProcessingWorker.KEY_RAW_AUDIO_PATH to m4aFile.absolutePath)
 
-        // 2. Costruisci la richiesta per il ProcessingWorker
         val processingWorkRequest = OneTimeWorkRequestBuilder<ProcessingWorker>()
             .setInputData(processingInputData)
-            .addTag("PROCESSING_TAG") // Aggiungiamo un tag per il debug
+            .addTag("PROCESSING_TAG")
             .build()
 
-        // 3. Costruisci la richiesta per l'UploadWorker (non ha input diretti, li prenderà dal precedente)
         val uploadWorkRequest = OneTimeWorkRequestBuilder<UploadWorker>()
-            .addTag("UPLOAD_TAG") // Aggiungiamo un tag per il debug
+            .addTag("UPLOAD_TAG")
             .build()
 
-        // 4. Concatena e metti in coda le richieste a WorkManager
         WorkManager.getInstance(applicationContext)
-            .beginWith(processingWorkRequest) // Inizia con il ProcessingWorker
-            .then(uploadWorkRequest)           // E POI, se il primo ha successo, esegui l'UploadWorker
+            .beginWith(processingWorkRequest)
+            .then(uploadWorkRequest)
             .enqueue()
     }
 
-    /**
-     * Crea un file .m4a vuoto nella directory interna dell'app (filesDir).
-     * Questa directory è persistente e sicura.
-     */
     private fun createM4aFile(): File? {
         return try {
             val timeStamp: String = dateFormat.format(Date())
-            val fileName = "segment_$timeStamp.m4a" // Nome del file non criptato
-            val storageDir = filesDir // Usiamo la directory interna sicura
+            val fileName = "segment_$timeStamp.m4a"
+            val storageDir = filesDir
             if (!storageDir.exists()) {
                 storageDir.mkdirs()
             }
@@ -236,6 +299,7 @@ class AudioRecordingService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        disableBluetoothSco()
         if (recordingJob?.isActive == true) {
             recordingJob?.cancel()
         }

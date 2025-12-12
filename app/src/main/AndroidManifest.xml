@@ -26,6 +26,12 @@
     <!-- Permesso per la connessione a Internet (per l'upload) -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Permesso per cambiare le impostazioni audio (necessario per attivare il Bluetooth SCO) -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- Permesso per connettersi ai dispositivi Bluetooth (necessario da Android 12+) -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
 
     <application
         android:allowBackup="true"
